@@ -12,7 +12,7 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
         AffectivaDataRecordingEmotionsandExpressions AffCamFacRec;
         PostAffectivaEvaltionTool PostEvaulTool;
         ManuelTagWindow ManuelWindow;
-        RecordingAffectivaReview GraphWindow;
+        WebRecording GraphWindow;
        
         double fpsProcess;
         bool PostProcess;
@@ -40,11 +40,11 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
 
             return true;
         }
-        public RecordingAffectivaReview GetGraphWindow(string _path)
+        public WebRecording GetGraphWindow(string _path)
         {
             if (GraphWindow == null)
             {
-                GraphWindow = new RecordingAffectivaReview(AffCamFacRec,true);
+                GraphWindow = new WebRecording(AffCamFacRec,true);
             }
             if (PostProcess)
             {

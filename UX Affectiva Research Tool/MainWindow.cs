@@ -25,10 +25,10 @@ namespace UX_Affectiva_Research_Tool
 
 
        //     ScreenCapturePlaybackWindow screenCapturePlaybackWindow = new ScreenCapturePlaybackWindow();
-       //     screenCapturePlaybackWindow.Show();
-       //      screenCapturePlaybackWindow.Show(mainDockPanel, DockState.DockTop);
-       //      CameraFeedPlaybackWindow cameraFeeddPlaybackWindow = new CameraFeedPlaybackWindow();
-       //      cameraFeeddPlaybackWindow.Show(screenCapturePlaybackWindow.Pane, DockAlignment.Right, 0.5);
+           // screenCapturePlaybackWindow.Show();
+      //      screenCapturePlaybackWindow.Show(mainDockPanel, DockState.DockTop);
+           // CameraFeedPlaybackWindow cameraFeeddPlaybackWindow = new CameraFeedPlaybackWindow();
+           // cameraFeeddPlaybackWindow.Show(screenCapturePlaybackWindow.Pane, DockAlignment.Right, 0.5);
 
        //     Affectiva_Files.WebRecording cam = new Affectiva_Files.WebRecording();
       //      cam.Show(screenCapturePlaybackWindow.Pane, DockAlignment.Bottom, 0.5);
@@ -71,7 +71,7 @@ namespace UX_Affectiva_Research_Tool
             }
             else if (_RecorderType.GetType() == typeof(Affectiva_Files.ManuelTagRecordingTool))
             {
-                RecordingAffectivaReview graph = ((Affectiva_Files.ManuelTagRecordingTool)_RecorderType).GetGraphWindow(lk);
+                WebRecording graph = ((Affectiva_Files.ManuelTagRecordingTool)_RecorderType).GetGraphWindow(lk);
                 graph.Show(this.GetMainDockPanel(), DockState.DockBottom);
             }
                 /*            else if (_RecorderType.GetType() == typeof(Audio))

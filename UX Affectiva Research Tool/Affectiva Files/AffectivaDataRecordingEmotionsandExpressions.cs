@@ -75,9 +75,8 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
                             ListofSeriestoBeReturned[HighestEmotion].Points.Last().MarkerSize = 30;
                             
 
-
-
-
+                           
+                           
 
                             break;
                         }

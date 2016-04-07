@@ -102,11 +102,11 @@
     </Compile>
     <Compile Include="Affectiva Files\PostAffectivaEvaltionTool.cs" />
     <Compile Include="Affectiva Files\VideoStreamFileSaver.cs" />
-    <Compile Include="Affectiva Files\RecordingAffectivaReview.cs">
+    <Compile Include="Affectiva Files\WebRecording.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Affectiva Files\RecordingAffectivaReview.Designer.cs">
-      <DependentUpon>RecordingAffectivaReview.cs</DependentUpon>
+    <Compile Include="Affectiva Files\WebRecording.Designer.cs">
+      <DependentUpon>WebRecording.cs</DependentUpon>
     </Compile>
     <Compile Include="Audio.cs" />
     <Compile Include="BaseClasses\BaseData.cs" />
@@ -151,8 +151,8 @@
     <EmbeddedResource Include="Affectiva Files\ManuelTagWindow.resx">
       <DependentUpon>ManuelTagWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Affectiva Files\RecordingAffectivaReview.resx">
-      <DependentUpon>RecordingAffectivaReview.cs</DependentUpon>
+    <EmbeddedResource Include="Affectiva Files\WebRecording.resx">
+      <DependentUpon>WebRecording.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BaseClasses\DockPanelFormBase.resx">
       <DependentUpon>DockPanelFormBase.cs</DependentUpon>
