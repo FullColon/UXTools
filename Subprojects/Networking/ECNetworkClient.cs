@@ -348,6 +348,9 @@ namespace EC.Networking
                             mAesRemote.IV = buffer;
                             send(ECNetworkRequestType.HANDSHAKE_CL_AES_IV, mAesLocal.IV);
                             mKeysWereExchanged = true;
+                            // telling _client that they are connected.
+                            if (onConnectSuccessful != null)
+                                onConnectSuccessful();
                             break;
                         case ECNetworkRequestType.HANDSHAKE_CL_AES_IV:
                             mAesRemote.IV = buffer;
