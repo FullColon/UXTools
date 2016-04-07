@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Affdex">
-      <HintPath>..\..\..\..\Example work\FormSetuptry2\FormSetuptry2\Affdex.dll</HintPath>
+      <HintPath>..\Affectiva Information\DebugDll\Affdex.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Video, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -50,16 +50,18 @@
     <Reference Include="AForge.Video.VFW">
       <HintPath>..\Aforge.Net\AForge.Video.VFW.dll</HintPath>
     </Reference>
-    <Reference Include="AudioSoundRecorderF4, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6dd52dbb299cc1b2, processorArchitecture=MSIL" />
-    <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
+    <Reference Include="NAudio, Version=1.7.2.19, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.1.7.2\lib\net35\NAudio.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="SharpAvi, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpAvi.2.1.0\lib\net45\SharpAvi.dll</HintPath>
+    <Reference Include="SharpAvi, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpAvi.2.0.1\lib\net45\SharpAvi.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpFFmpeg">
+      <HintPath>..\..\ffmpegRecorder\ffmpegRecorder\SharpFFmpeg.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,6 +78,18 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Vlc.DotNet.Core, Version=2.1.122.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=x86">
+      <HintPath>..\packages\Vlc.DotNet.Core.2.1.122\lib\net45\x86\Vlc.DotNet.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Vlc.DotNet.Core.Interops, Version=2.1.115.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=x86">
+      <HintPath>..\packages\Vlc.DotNet.Core.Interops.2.1.115\lib\net45\x86\Vlc.DotNet.Core.Interops.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Vlc.DotNet.Forms, Version=2.1.122.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=x86">
+      <HintPath>..\packages\Vlc.DotNet.Forms.2.1.122\lib\net45\x86\Vlc.DotNet.Forms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WeifenLuo.WinFormsUI.Docking">
       <HintPath>..\DockPanel\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
     </Reference>
@@ -178,7 +192,9 @@
     <EmbeddedResource Include="ScreenCapturePlaybackWindow.resx">
       <DependentUpon>ScreenCapturePlaybackWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -239,7 +255,20 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>ROBOCOPY "$(SolutionDir)Affectiva Information\data" "$(TargetDir)AffectivaFiles\data" /E /XN /XO
+ROBOCOPY "$(SolutionDir)Aforge.Net\Externals\ffmpeg\dlls" "$(TargetDir)\" /E /XN /XO
+ROBOCOPY "$(SolutionDir)Affectiva Information\DebugDll" "$(TargetDir)\" "affdex-native.dll" /XN /XO
+ROBOCOPY "$(SolutionDir)Affectiva Information" "$(TargetDir)AffectivaFiles" "sdk_shawns@fullsail.com.license.txt" /XN /XO</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

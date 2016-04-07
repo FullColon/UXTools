@@ -100,9 +100,9 @@ namespace UX_Affectiva_Research_Tool
         public void SetUpRecordingTools()
         {
             arrayOfRecordingTools = new List<RecordingToolBase>();
-            arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch,20,true));
-            //    arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording());
-            //  arrayOfRecordingTools.Add(new mySharpAVI.myRecorder(mAudioDevice, mCodecInfo));
+           // arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch,20,true));
+                arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording());
+              arrayOfRecordingTools.Add(new mySharpAVI.myRecorder(mAudioDevice, mCodecInfo));
 
 
             // arrayOfRecordingTools.Add(new Audio());
