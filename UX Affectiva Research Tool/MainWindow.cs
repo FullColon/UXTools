@@ -18,6 +18,10 @@ namespace UX_Affectiva_Research_Tool
         List<DockContent> Panels;
        
         string lk = "C:\\DFiles\\WorkFolderFinalProdject\\ux-affectiva.git.0\\UX Affectiva Research Tool\\UX Affectiva Research Tool\\SaveFolder\\TestSave.mp4";
+        private ScreenCapturePlaybackWindow audioFeed;
+        private ScreenCapturePlaybackWindow cameraFeed;
+        private RecordingAffectivaReview webRecord;
+
         public MainWindow()
         {
             Panels = new List<DockContent>();
@@ -45,27 +49,27 @@ namespace UX_Affectiva_Research_Tool
         {
             if (_RecorderType.GetType() == typeof(mySharpAVI.myRecorder))
             {
-                //Console.WriteLine("Screen");
-                //ScreenCapturePlaybackWindow gameFeed;
-                //gameFeed = new ScreenCapturePlaybackWindow(((mySharpAVI.myRecorder)_RecorderType).GetFullName());
+               Console.WriteLine("Screen");
+               ScreenCapturePlaybackWindow gameFeed;
+               gameFeed = new ScreenCapturePlaybackWindow(((mySharpAVI.myRecorder)_RecorderType).GetFullName());
 
-                //gameFeed.Show(cameraFeed.Pane, DockAlignment.Left, 0.5);
-                //Panels.Add(gameFeed);
+               gameFeed.Show(cameraFeed.Pane, DockAlignment.Left, 0.5);
+               Panels.Add(gameFeed);
 
             }
 
             else if (_RecorderType.GetType() == typeof(Affectiva_Files.AffectivaCameraFaceRecordingAndVideoRecording))
             {
-                //Console.WriteLine("CamAff");
-                //webRecord = new WebRecording((AffectivaCameraFaceRecordingAndVideoRecording)_RecorderType);
+               Console.WriteLine("CamAff");
+               webRecord = new RecordingAffectivaReview(((AffectivaCameraFaceRecordingAndVideoRecording)_RecorderType).GetAffectiveData(),false);
 
-                //webRecord.Show(this.GetMainDockPanel(), DockState.DockBottom);
-                //Panels.Add(webRecord);
+               webRecord.Show(this.GetMainDockPanel(), DockState.DockBottom);
+               Panels.Add(webRecord);
 
-                //cameraFeed = new ScreenCapturePlaybackWindow(((AffectivaCameraFaceRecordingAndVideoRecording)_RecorderType).getFileWriterVideo().getFilePath());
+               cameraFeed = new ScreenCapturePlaybackWindow(((AffectivaCameraFaceRecordingAndVideoRecording)_RecorderType).getFileWriterVideo().getFilePath());
 
-                //cameraFeed.Show(this.GetMainDockPanel(), DockState.DockTop);
-                //Panels.Add(cameraFeed);
+               cameraFeed.Show(this.GetMainDockPanel(), DockState.DockTop);
+               Panels.Add(cameraFeed);
 
 
             }
@@ -74,18 +78,18 @@ namespace UX_Affectiva_Research_Tool
                 RecordingAffectivaReview graph = ((Affectiva_Files.ManuelTagRecordingTool)_RecorderType).GetGraphWindow(lk);
                 graph.Show(this.GetMainDockPanel(), DockState.DockBottom);
             }
-                /*            else if (_RecorderType.GetType() == typeof(Audio))
-                            {
-                                Console.WriteLine("Audio");
+                        else if (_RecorderType.GetType() == typeof(Audio))
+                      {
+                          Console.WriteLine("Audio");
 
 
-                                audioFeed = new ScreenCapturePlaybackWindow(((Audio)_RecorderType).getFilePath());
-                                audioFeed.Show(this.GetMainDockPanel(), DockState.DockLeftAutoHide);
+                          audioFeed = new ScreenCapturePlaybackWindow(((Audio)_RecorderType).getFilePath());
+                          audioFeed.Show(this.GetMainDockPanel(), DockState.DockLeftAutoHide);
 
-                                Panels.Add(audioFeed);
-                            }
-                */
-
+                          Panels.Add(audioFeed);
+                      }
+               
+                     
             }
         public void AddPanel(DockContent _Panel)
         {
