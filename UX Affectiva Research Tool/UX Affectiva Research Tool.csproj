@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A2FD9C2D-4B95-40E5-86F9-7334C0660C1B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UX_Affectiva_Research_Tool</RootNamespace>
+    <AssemblyName>UX Affectiva Research Tool</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Affdex">
+      <HintPath>..\..\..\..\Example work\FormSetuptry2\FormSetuptry2\Affdex.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Aforge.Net\AForge.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow">
+      <HintPath>..\Aforge.Net\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.FFMPEG, Version=2.2.5.0, Culture=neutral, PublicKeyToken=03563089b1be05dd, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Aforge.Net\AForge.Video.FFMPEG.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.VFW">
+      <HintPath>..\Aforge.Net\AForge.Video.VFW.dll</HintPath>
+    </Reference>
+    <Reference Include="AudioSoundRecorderF4, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6dd52dbb299cc1b2, processorArchitecture=MSIL" />
+    <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="SharpAvi, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpAvi.2.1.0\lib\net45\SharpAvi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking">
+      <HintPath>..\DockPanel\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Affectiva Files\AffectDataPoint.cs" />
+    <Compile Include="Affectiva Files\AffectivaCameraRecordingAndVideoRecording.cs" />
+    <Compile Include="Affectiva Files\AffectivaCameraRecordingTool.cs" />
+    <Compile Include="Affectiva Files\AffectivaDataRecordingEmotionsandExpressions.cs" />
+    <Compile Include="Affectiva Files\AffectivaOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Affectiva Files\AffectivaOptions.Designer.cs">
+      <DependentUpon>AffectivaOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Affectiva Files\AffectivaRecordingTool.cs" />
+    <Compile Include="Affectiva Files\ManuelTagRecordingTool.cs" />
+    <Compile Include="Affectiva Files\ManuelTagWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Affectiva Files\ManuelTagWindow.Designer.cs">
+      <DependentUpon>ManuelTagWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Affectiva Files\PostAffectivaEvaltionTool.cs" />
+    <Compile Include="Affectiva Files\VideoStreamFileSaver.cs" />
+    <Compile Include="Affectiva Files\RecordingAffectivaReview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Affectiva Files\RecordingAffectivaReview.Designer.cs">
+      <DependentUpon>RecordingAffectivaReview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Audio.cs" />
+    <Compile Include="BaseClasses\BaseData.cs" />
+    <Compile Include="BaseClasses\DockPanelFormBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseClasses\DockPanelFormBase.Designer.cs">
+      <DependentUpon>DockPanelFormBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CameraFeedPlaybackWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CameraFeedPlaybackWindow.Designer.cs">
+      <DependentUpon>CameraFeedPlaybackWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewVideoRecorder.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BaseClasses\RecordingToolBase.cs" />
+    <Compile Include="RecordGui.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RecordGui.Designer.cs">
+      <DependentUpon>RecordGui.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenCapture.cs" />
+    <Compile Include="ScreenCapturePlaybackWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScreenCapturePlaybackWindow.Designer.cs">
+      <DependentUpon>ScreenCapturePlaybackWindow.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Affectiva Files\AffectivaOptions.resx">
+      <DependentUpon>AffectivaOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Affectiva Files\ManuelTagWindow.resx">
+      <DependentUpon>ManuelTagWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Affectiva Files\RecordingAffectivaReview.resx">
+      <DependentUpon>RecordingAffectivaReview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BaseClasses\DockPanelFormBase.resx">
+      <DependentUpon>DockPanelFormBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CameraFeedPlaybackWindow.resx">
+      <DependentUpon>CameraFeedPlaybackWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="RecordGui.resx">
+      <DependentUpon>RecordGui.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScreenCapturePlaybackWindow.resx">
+      <DependentUpon>ScreenCapturePlaybackWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxMSVidCtlLib">
+      <Guid>{B0EDF154-910A-11D2-B632-00C04F79498E}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="AxWMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="MSVidCtlLib">
+      <Guid>{B0EDF154-910A-11D2-B632-00C04F79498E}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

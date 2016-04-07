@@ -1,0 +1,1 @@
+{"token":"57541dfaff11d0e94a47d7ecb700f7765b5465640a627d9959e79a8a59c16a4b","licensor":"Affectiva Inc.","expires":"2016-11-16","developerId":"shawns@fullsail.com","software":"Affdex SDK"}
