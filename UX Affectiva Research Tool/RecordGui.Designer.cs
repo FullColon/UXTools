@@ -38,7 +38,12 @@
             this.affectivaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moreOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-            this.FPSTEXTBOX = new System.Windows.Forms.TextBox();
+            this.lbl_displayQualityValue = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.trackBar_quality = new System.Windows.Forms.TrackBar();
+            this.lbl_screenSelect = new System.Windows.Forms.Label();
+            this.numUpDown_screenSelect = new System.Windows.Forms.ComboBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.FPSLabel = new System.Windows.Forms.Label();
             this.label_screenAudioDevice = new System.Windows.Forms.Label();
             this.comboBox_screenAudioDevice = new System.Windows.Forms.ComboBox();
@@ -63,6 +68,8 @@
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_quality)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -159,13 +166,13 @@
             this.affectivaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.moreOptionsToolStripMenuItem});
             this.affectivaToolStripMenuItem.Name = "affectivaToolStripMenuItem";
-            this.affectivaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.affectivaToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.affectivaToolStripMenuItem.Text = "Affectiva";
             // 
             // moreOptionsToolStripMenuItem
             // 
             this.moreOptionsToolStripMenuItem.Name = "moreOptionsToolStripMenuItem";
-            this.moreOptionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.moreOptionsToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.moreOptionsToolStripMenuItem.Text = "More Options";
             this.moreOptionsToolStripMenuItem.Click += new System.EventHandler(this.moreOptionsToolStripMenuItem_Click);
             // 
@@ -177,7 +184,12 @@
             // 
             // splitContainer4.Panel1
             // 
-            this.splitContainer4.Panel1.Controls.Add(this.FPSTEXTBOX);
+            this.splitContainer4.Panel1.Controls.Add(this.lbl_displayQualityValue);
+            this.splitContainer4.Panel1.Controls.Add(this.label2);
+            this.splitContainer4.Panel1.Controls.Add(this.trackBar_quality);
+            this.splitContainer4.Panel1.Controls.Add(this.lbl_screenSelect);
+            this.splitContainer4.Panel1.Controls.Add(this.numUpDown_screenSelect);
+            this.splitContainer4.Panel1.Controls.Add(this.numericUpDown1);
             this.splitContainer4.Panel1.Controls.Add(this.FPSLabel);
             this.splitContainer4.Panel1.Controls.Add(this.label_screenAudioDevice);
             this.splitContainer4.Panel1.Controls.Add(this.comboBox_screenAudioDevice);
@@ -195,12 +207,59 @@
             this.splitContainer4.SplitterDistance = 261;
             this.splitContainer4.TabIndex = 0;
             // 
-            // FPSTEXTBOX
+            // lbl_displayQualityValue
             // 
-            this.FPSTEXTBOX.Location = new System.Drawing.Point(89, 98);
-            this.FPSTEXTBOX.Name = "FPSTEXTBOX";
-            this.FPSTEXTBOX.Size = new System.Drawing.Size(100, 20);
-            this.FPSTEXTBOX.TabIndex = 6;
+            this.lbl_displayQualityValue.AutoSize = true;
+            this.lbl_displayQualityValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_displayQualityValue.Location = new System.Drawing.Point(51, 157);
+            this.lbl_displayQualityValue.Name = "lbl_displayQualityValue";
+            this.lbl_displayQualityValue.Size = new System.Drawing.Size(19, 20);
+            this.lbl_displayQualityValue.TabIndex = 11;
+            this.lbl_displayQualityValue.Text = "0";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 162);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(42, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Quality:";
+            // 
+            // trackBar_quality
+            // 
+            this.trackBar_quality.LargeChange = 10;
+            this.trackBar_quality.Location = new System.Drawing.Point(89, 151);
+            this.trackBar_quality.Maximum = 100;
+            this.trackBar_quality.Name = "trackBar_quality";
+            this.trackBar_quality.Size = new System.Drawing.Size(156, 45);
+            this.trackBar_quality.SmallChange = 5;
+            this.trackBar_quality.TabIndex = 9;
+            this.trackBar_quality.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // lbl_screenSelect
+            // 
+            this.lbl_screenSelect.AutoSize = true;
+            this.lbl_screenSelect.Location = new System.Drawing.Point(9, 126);
+            this.lbl_screenSelect.Name = "lbl_screenSelect";
+            this.lbl_screenSelect.Size = new System.Drawing.Size(74, 13);
+            this.lbl_screenSelect.TabIndex = 8;
+            this.lbl_screenSelect.Text = "Screen Select";
+            // 
+            // numUpDown_screenSelect
+            // 
+            this.numUpDown_screenSelect.FormattingEnabled = true;
+            this.numUpDown_screenSelect.Location = new System.Drawing.Point(89, 123);
+            this.numUpDown_screenSelect.Name = "numUpDown_screenSelect";
+            this.numUpDown_screenSelect.Size = new System.Drawing.Size(121, 21);
+            this.numUpDown_screenSelect.TabIndex = 7;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(89, 96);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown1.TabIndex = 6;
             // 
             // FPSLabel
             // 
@@ -225,7 +284,7 @@
             this.comboBox_screenAudioDevice.FormattingEnabled = true;
             this.comboBox_screenAudioDevice.Location = new System.Drawing.Point(89, 65);
             this.comboBox_screenAudioDevice.Name = "comboBox_screenAudioDevice";
-            this.comboBox_screenAudioDevice.Size = new System.Drawing.Size(169, 21);
+            this.comboBox_screenAudioDevice.Size = new System.Drawing.Size(156, 21);
             this.comboBox_screenAudioDevice.TabIndex = 3;
             this.comboBox_screenAudioDevice.SelectedIndexChanged += new System.EventHandler(this.comboBox_screenAudioDevice_SelectedIndexChanged);
             // 
@@ -243,7 +302,7 @@
             this.comboBox_screenCodecs.FormattingEnabled = true;
             this.comboBox_screenCodecs.Location = new System.Drawing.Point(89, 37);
             this.comboBox_screenCodecs.Name = "comboBox_screenCodecs";
-            this.comboBox_screenCodecs.Size = new System.Drawing.Size(169, 21);
+            this.comboBox_screenCodecs.Size = new System.Drawing.Size(148, 21);
             this.comboBox_screenCodecs.TabIndex = 1;
             this.comboBox_screenCodecs.SelectedIndexChanged += new System.EventHandler(this.comboBox_screenCodecs_SelectedIndexChanged);
             // 
@@ -334,6 +393,8 @@
             this.splitContainer4.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_quality)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -359,12 +420,17 @@
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem affectivaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moreOptionsToolStripMenuItem;
-        private System.Windows.Forms.TextBox FPSTEXTBOX;
         private System.Windows.Forms.Label FPSLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelPath;
         private System.Windows.Forms.Button buttonFilePath;
         private System.Windows.Forms.TextBox textBoxName;
+        private System.Windows.Forms.Label lbl_displayQualityValue;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TrackBar trackBar_quality;
+        private System.Windows.Forms.Label lbl_screenSelect;
+        private System.Windows.Forms.ComboBox numUpDown_screenSelect;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 
 

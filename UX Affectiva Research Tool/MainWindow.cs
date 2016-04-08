@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UX_Affectiva_Research_Tool.Affectiva_Files;
 using WeifenLuo.WinFormsUI.Docking;
-using RecordingTool;
+using System.IO;
+using System.Reflection;
+using SharpAvi.Codecs;
 
 namespace UX_Affectiva_Research_Tool
 {
@@ -17,25 +19,25 @@ namespace UX_Affectiva_Research_Tool
     {
         List<DockContent> Panels;
        
-        string lk = "C:\\DFiles\\WorkFolderFinalProdject\\ux-affectiva.git.0\\UX Affectiva Research Tool\\UX Affectiva Research Tool\\SaveFolder\\TestSave.mp4";
-        private ScreenCapturePlaybackWindow audioFeed;
-        private ScreenCapturePlaybackWindow cameraFeed;
-        private RecordingAffectivaReview webRecord;
+
 
         public MainWindow()
         {
             Panels = new List<DockContent>();
             InitializeComponent();
 
+ //           var asmDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+  //          var dllName = string.Format("lameenc{0}.dll", Environment.Is64BitProcess ? "64" : "32");
+  //          Mp3AudioEncoderLame.SetLameDllLocation(Path.Combine(asmDir, dllName));
 
-       //     ScreenCapturePlaybackWindow screenCapturePlaybackWindow = new ScreenCapturePlaybackWindow();
-       //     screenCapturePlaybackWindow.Show();
-       //      screenCapturePlaybackWindow.Show(mainDockPanel, DockState.DockTop);
-       //      CameraFeedPlaybackWindow cameraFeeddPlaybackWindow = new CameraFeedPlaybackWindow();
-       //      cameraFeeddPlaybackWindow.Show(screenCapturePlaybackWindow.Pane, DockAlignment.Right, 0.5);
+            //     ScreenCapturePlaybackWindow screenCapturePlaybackWindow = new ScreenCapturePlaybackWindow();
+            //     screenCapturePlaybackWindow.Show();
+            //      screenCapturePlaybackWindow.Show(mainDockPanel, DockState.DockTop);
+            //      CameraFeedPlaybackWindow cameraFeeddPlaybackWindow = new CameraFeedPlaybackWindow();
+            //      cameraFeeddPlaybackWindow.Show(screenCapturePlaybackWindow.Pane, DockAlignment.Right, 0.5);
 
-       //     Affectiva_Files.WebRecording cam = new Affectiva_Files.WebRecording();
-      //      cam.Show(screenCapturePlaybackWindow.Pane, DockAlignment.Bottom, 0.5);
+            //     Affectiva_Files.WebRecording cam = new Affectiva_Files.WebRecording();
+            //      cam.Show(screenCapturePlaybackWindow.Pane, DockAlignment.Bottom, 0.5);
 
 
         }
@@ -45,7 +47,7 @@ namespace UX_Affectiva_Research_Tool
             RecordGui recordGui = new RecordGui(this);
             recordGui.Show();
         }
-        public void MakeFormFromRecordingToolBase(RecordingToolBase _RecorderType)
+ /*       public void MakeFormFromRecordingToolBase(RecordingToolBase _RecorderType)
         {
             if (_RecorderType.GetType() == typeof(RecordingTool.Recorder))
             {
@@ -90,7 +92,7 @@ namespace UX_Affectiva_Research_Tool
                       }
                
                      
-            }
+            } */
         public void AddPanel(DockContent _Panel)
         {
             Panels.Add(_Panel);

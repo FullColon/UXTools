@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using SharpAvi.Codecs;
@@ -9,19 +6,15 @@ using SharpAvi;
 using NAudio.Wave;
 using SharpAvi.Output;
 using System.Diagnostics;
-using System.Windows.Media;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
-using System.Windows;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using UX_Affectiva_Research_Tool;
-using System.IO;
 
 namespace RecordingTool
 {
-   
     class Recorder : RecordingToolBase
     {
         private AudioDevice mAudioDevice;
@@ -35,22 +28,57 @@ namespace RecordingTool
         private int mScreenWidth;
         private int mScreenHeight;
         IAviVideoStream mVideoStream;
-        private int mQuality = 50;
-        private string mFilePath;
+        private int mQuality = 100;
+        private FourCC mSelectedCodec;
+        private int mFramesPerSecond;
+        dynamic mEncoder;
+        private bool mIsEncoded;
         private string mFullPath;
-        private readonly ManualResetEvent stopThread = new ManualResetEvent(false);
-        private readonly AutoResetEvent videoFrameWritten = new AutoResetEvent(false);
-        private readonly AutoResetEvent audioBlockWritten = new AutoResetEvent(false);
+        private string mFilePath;
 
         public string GetFullName()
         {
             return mFullPath;
         }
 
-        public Recorder(AudioDevice _myDevice, CodecInfo _myCodec)
+
+        private readonly ManualResetEvent mStopThread = new ManualResetEvent(false);
+        private readonly AutoResetEvent mVideoFrameWritten = new AutoResetEvent(false);
+        private readonly AutoResetEvent mAudioBlockWritten = new AutoResetEvent(false);
+
+
+
+        public Recorder(AudioDevice _myDevice, CodecInfo _myCodec, int _framesPerSecond, int _quality)
         {
+
+
+
             mAudioDevice = _myDevice;
             mCodecInfo = _myCodec;
+            mFramesPerSecond = _framesPerSecond;
+            mQuality = _quality;
+
+            switch (_myCodec.Name)
+            {
+                case "x264vfw - H.264 / MPEG - 4 AVC codec":
+                    {
+                        mSelectedCodec = mCodecInfo.Codec;
+                    }
+                    break;
+                default:
+                    {
+                        mIsEncoded = false;
+                    }
+                    break;
+            }
+
+            mScreenWidth = Screen.PrimaryScreen.Bounds.Width;
+            mScreenHeight = Screen.PrimaryScreen.Bounds.Height;
+
+
+            mEncoder = mSelectedCodec;
+
+
 
             InitializeRecorder();
         }
@@ -62,33 +90,41 @@ namespace RecordingTool
             {
                 toDevice = source.CompositionTarget.TransformToDevice;
             }
-            mScreenWidth = Screen.PrimaryScreen.Bounds.Width;
-            mScreenHeight = Screen.PrimaryScreen.Bounds.Height;
+
 
             string currentDirectory = Environment.CurrentDirectory;
-            string newDir = Path.GetDirectoryName(Path.GetDirectoryName(currentDirectory));
+            string saveDirectory = @"\SaveFolder";
+            mFilePath = currentDirectory + saveDirectory;
+            mFullPath = mFilePath + @"\screenRecord.avi";
 
-            mFullPath = newDir + @"\SaveFolder\screenRecord.avi";
 
-
-
-            mWriter = new AviWriter(mFullPath)
+            mWriter = new AviWriter("test.avi")
             {
                 FramesPerSecond = 10,
                 EmitIndex1 = true,
             };
 
-            mVideoStream = CreateVideoStream(mCodecInfo.Codec, mQuality);
+
+            if (mIsEncoded)
+            {
+                mVideoStream = mWriter.AddEncodingVideoStream(mEncoder, width: mScreenWidth, height: mScreenHeight);
+            }
+            else
+            {
+                mVideoStream = CreateVideoStream(mCodecInfo.Codec, mQuality);
+            }
 
             mVideoStream.Name = "Screencast";
 
 
 
+
+
             suppForm = SupportedWaveFormat.WAVE_FORMAT_44S16;
             mWaveFormat = ToWaveFormat(suppForm);
-          
 
-            mAudioStream = CreateAudioStream(mWaveFormat, false, 160);
+
+            mAudioStream = CreateAudioStream(mWaveFormat, false, 192);
             mAudioStream.Name = "Voice";
             mAudioSource = new WaveInEvent
             {
@@ -100,22 +136,21 @@ namespace RecordingTool
             mAudioSource.DataAvailable += audioSource_DataAvailable;
 
 
-           
+
 
         }
-        public override bool stopRecording()
-        {
-
        
+        override public bool stopRecording()
+        {
 
             Dispose();
 
             return true;
-           
+
         }
         private void Dispose()
         {
-            stopThread.Set();
+            mStopThread.Set();
             mScreenThread.Join();
             if (mAudioSource != null)
             {
@@ -126,12 +161,12 @@ namespace RecordingTool
             // Close writer: the remaining data is written to a file and file is closed
             mWriter.Close();
 
-            stopThread.Close();
+            mStopThread.Close();
         }
 
-        public override bool startRecording()
+        override public bool startRecording()
         {
-            
+
             mScreenThread = new Thread(RecordScreen)
             {
                 Name = typeof(Recorder).Name + ".RecordScreen",
@@ -139,8 +174,8 @@ namespace RecordingTool
             };
             if (mAudioSource != null)
             {
-                videoFrameWritten.Set();
-                audioBlockWritten.Reset();
+                mVideoFrameWritten.Set();
+                mAudioBlockWritten.Reset();
                 mAudioSource.StartRecording();
             }
             mScreenThread.Start();
@@ -150,7 +185,7 @@ namespace RecordingTool
         private void RecordScreen()
         {
             Stopwatch stopwatch = new Stopwatch();
-            
+
             byte[] buffer = new byte[mScreenWidth * mScreenHeight * 4];
 
             Task videoWriteTask = null;
@@ -166,7 +201,7 @@ namespace RecordingTool
 
 
 
-            while (!stopThread.WaitOne(timeTillNextFrame))
+            while (!mStopThread.WaitOne(timeTillNextFrame))
             {
                 GetScreenshot(buffer);
                 shotsTaken++;
@@ -177,11 +212,11 @@ namespace RecordingTool
 
 
 
-                    videoFrameWritten.Set();
+                    mVideoFrameWritten.Set();
                 }
                 if (mAudioSource != null)
                 {
-                    var signalled = WaitHandle.WaitAny(new WaitHandle[] { audioBlockWritten, stopThread });
+                    var signalled = WaitHandle.WaitAny(new WaitHandle[] { mAudioBlockWritten, mStopThread });
                     if (signalled == 1)
                         break;
                 }
@@ -224,8 +259,9 @@ namespace RecordingTool
             // Create encoding or simple stream based on settings
             if (encode)
             {
-                // LAME DLL path is set in App.OnStartup()
+
                 return mWriter.AddMp3AudioStream(waveFormat.Channels, waveFormat.SampleRate, bitRate);
+
             }
             else
             {
@@ -238,11 +274,11 @@ namespace RecordingTool
 
         private void audioSource_DataAvailable(object sender, WaveInEventArgs e)
         {
-            var signalled = WaitHandle.WaitAny(new WaitHandle[] { videoFrameWritten, stopThread });
+            var signalled = WaitHandle.WaitAny(new WaitHandle[] { mVideoFrameWritten, mStopThread });
             if (signalled == 0)
             {
                 mAudioStream.WriteBlock(e.Buffer, 0, e.BytesRecorded);
-                audioBlockWritten.Set();
+                mAudioBlockWritten.Set();
             }
         }
 
@@ -286,7 +322,9 @@ namespace RecordingTool
             }
         }
 
+
     }
+
 
     public class AudioDevice
     {

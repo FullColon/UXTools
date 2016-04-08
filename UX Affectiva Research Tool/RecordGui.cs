@@ -31,7 +31,7 @@ namespace UX_Affectiva_Research_Tool
 
 
 
-        string FilePath = "C:\\DFiles\\WorkFolderFinalProdject\\ux-affectiva.git.0\\UX Affectiva Research Tool\\UX Affectiva Research Tool\\SaveFolder\\test.avi";
+   //     string FilePath = "C:\\DFiles\\WorkFolderFinalProdject\\ux-affectiva.git.0\\UX Affectiva Research Tool\\UX Affectiva Research Tool\\SaveFolder\\test.avi";
 
 
 
@@ -102,7 +102,7 @@ namespace UX_Affectiva_Research_Tool
             arrayOfRecordingTools = new List<RecordingToolBase>();
            // arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch,20,true));
                 arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording());
-              arrayOfRecordingTools.Add(new RecordingTool.Recorder(mAudioDevice, mCodecInfo));
+              arrayOfRecordingTools.Add(new RecordingTool.Recorder(mAudioDevice, mCodecInfo, 15, 100));
 
 
             // arrayOfRecordingTools.Add(new Audio());
@@ -116,7 +116,7 @@ namespace UX_Affectiva_Research_Tool
             }
             for (int count = 0; count < arrayOfRecordingTools.Count; count++)
             {
-                mDocablePanel.MakeFormFromRecordingToolBase(arrayOfRecordingTools[count]);
+  //              mDocablePanel.MakeFormFromRecordingToolBase(arrayOfRecordingTools[count]);
 
             }
         }
@@ -197,6 +197,11 @@ namespace UX_Affectiva_Research_Tool
                 labelPath.Text = FolderSelect.SelectedPath;
                 
              }
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            lbl_displayQualityValue.Text = trackBar_quality.Value.ToString();
         }
     }
 }
