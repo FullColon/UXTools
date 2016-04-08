@@ -59,8 +59,8 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
             for (int count = 0; count < seri.Count; count++)
             {
                 chart1.Series.Add(seri[count]);
-                chart1.Series[count].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-
+                chart1.Series[count].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+                
                 chart1.Series[count].ChartArea = chart1.ChartAreas[0].Name;
             }
 
