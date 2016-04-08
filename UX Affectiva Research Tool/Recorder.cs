@@ -19,10 +19,10 @@ using System.Windows.Forms;
 using UX_Affectiva_Research_Tool;
 using System.IO;
 
-namespace mySharpAVI
+namespace RecordingTool
 {
    
-    class myRecorder : RecordingToolBase
+    class Recorder : RecordingToolBase
     {
         private AudioDevice mAudioDevice;
         private CodecInfo mCodecInfo;
@@ -47,7 +47,7 @@ namespace mySharpAVI
             return mFullPath;
         }
 
-        public myRecorder(AudioDevice _myDevice, CodecInfo _myCodec)
+        public Recorder(AudioDevice _myDevice, CodecInfo _myCodec)
         {
             mAudioDevice = _myDevice;
             mCodecInfo = _myCodec;
@@ -134,7 +134,7 @@ namespace mySharpAVI
             
             mScreenThread = new Thread(RecordScreen)
             {
-                Name = typeof(myRecorder).Name + ".RecordScreen",
+                Name = typeof(Recorder).Name + ".RecordScreen",
                 IsBackground = true
             };
             if (mAudioSource != null)

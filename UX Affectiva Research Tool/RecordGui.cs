@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using UX_Affectiva_Research_Tool.Affectiva_Files;
 using WeifenLuo.WinFormsUI.Docking;
-using mySharpAVI;
+using RecordingTool;
 using SharpAvi.Codecs;
 using SharpAvi;
 using NAudio.Wave;
@@ -102,7 +102,7 @@ namespace UX_Affectiva_Research_Tool
             arrayOfRecordingTools = new List<RecordingToolBase>();
            // arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch,20,true));
                 arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording());
-              arrayOfRecordingTools.Add(new mySharpAVI.myRecorder(mAudioDevice, mCodecInfo));
+              arrayOfRecordingTools.Add(new RecordingTool.Recorder(mAudioDevice, mCodecInfo));
 
 
             // arrayOfRecordingTools.Add(new Audio());

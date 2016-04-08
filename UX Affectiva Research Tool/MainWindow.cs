@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UX_Affectiva_Research_Tool.Affectiva_Files;
 using WeifenLuo.WinFormsUI.Docking;
-using mySharpAVI;
+using RecordingTool;
 
 namespace UX_Affectiva_Research_Tool
 {
@@ -47,11 +47,11 @@ namespace UX_Affectiva_Research_Tool
         }
         public void MakeFormFromRecordingToolBase(RecordingToolBase _RecorderType)
         {
-            if (_RecorderType.GetType() == typeof(mySharpAVI.myRecorder))
+            if (_RecorderType.GetType() == typeof(RecordingTool.Recorder))
             {
                Console.WriteLine("Screen");
                ScreenCapturePlaybackWindow gameFeed;
-               gameFeed = new ScreenCapturePlaybackWindow(((mySharpAVI.myRecorder)_RecorderType).GetFullName());
+               gameFeed = new ScreenCapturePlaybackWindow(((RecordingTool.Recorder)_RecorderType).GetFullName());
 
                gameFeed.Show(cameraFeed.Pane, DockAlignment.Left, 0.5);
                Panels.Add(gameFeed);
