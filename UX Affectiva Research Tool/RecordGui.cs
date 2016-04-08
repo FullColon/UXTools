@@ -14,12 +14,15 @@ using RecordingTool;
 using SharpAvi.Codecs;
 using SharpAvi;
 using NAudio.Wave;
-
+using System.IO;
+using System.Reflection;
 
 namespace UX_Affectiva_Research_Tool
 {
     public partial class RecordGui : Form
     {
+
+
 
         List<RecordingToolBase> arrayOfRecordingTools;
         Stopwatch stopWatch = new Stopwatch();
@@ -38,6 +41,10 @@ namespace UX_Affectiva_Research_Tool
 
         public RecordGui()
         {
+            var asmDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var dllName = string.Format("libmp3lame.{0}.dll", Environment.Is64BitProcess ? "64" : "32");
+            Mp3AudioEncoderLame.SetLameDllLocation(Path.Combine(asmDir, dllName));
+
             InitializeComponent();
             SetUpOptions();
 

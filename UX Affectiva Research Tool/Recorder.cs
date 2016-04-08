@@ -12,6 +12,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using UX_Affectiva_Research_Tool;
+using System.Reflection;
+using System.IO;
 
 namespace RecordingTool
 {
@@ -124,7 +126,7 @@ namespace RecordingTool
             mWaveFormat = ToWaveFormat(suppForm);
 
 
-            mAudioStream = CreateAudioStream(mWaveFormat, false, 192);
+            mAudioStream = CreateAudioStream(mWaveFormat, true, 192);
             mAudioStream.Name = "Voice";
             mAudioSource = new WaveInEvent
             {
