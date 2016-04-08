@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A2FD9C2D-4B95-40E5-86F9-7334C0660C1B}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UX_Affectiva_Research_Tool</RootNamespace>
     <AssemblyName>UX Affectiva Research Tool</AssemblyName>
@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Affdex">
       <HintPath>..\Affectiva Information\DebugDll\Affdex.dll</HintPath>
@@ -50,14 +53,14 @@
     <Reference Include="AForge.Video.VFW">
       <HintPath>..\Aforge.Net\AForge.Video.VFW.dll</HintPath>
     </Reference>
-    <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
+    <Reference Include="NAudio, Version=1.7.2.19, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.1.7.2\lib\net35\NAudio.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="SharpAvi, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpAvi.2.1.0\lib\net45\SharpAvi.dll</HintPath>
+    <Reference Include="SharpAvi, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpAvi.2.0.1\lib\net45\SharpAvi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -75,16 +78,16 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Vlc.DotNet.Core, Version=2.1.122.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=x86">
-      <HintPath>..\packages\Vlc.DotNet.Core.2.1.122\lib\net45\x86\Vlc.DotNet.Core.dll</HintPath>
+    <Reference Include="Vlc.DotNet.Core, Version=2.1.115.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=x86">
+      <HintPath>..\packages\Vlc.DotNet.Core.2.1.115\lib\net45\x86\Vlc.DotNet.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Vlc.DotNet.Core.Interops, Version=2.1.115.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=x86">
       <HintPath>..\packages\Vlc.DotNet.Core.Interops.2.1.115\lib\net45\x86\Vlc.DotNet.Core.Interops.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Vlc.DotNet.Forms, Version=2.1.122.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=x86">
-      <HintPath>..\packages\Vlc.DotNet.Forms.2.1.122\lib\net45\x86\Vlc.DotNet.Forms.dll</HintPath>
+    <Reference Include="Vlc.DotNet.Forms, Version=2.1.115.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=x86">
+      <HintPath>..\packages\Vlc.DotNet.Forms.2.1.115\lib\net45\x86\Vlc.DotNet.Forms.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WeifenLuo.WinFormsUI.Docking">
@@ -260,7 +263,9 @@
     <PreBuildEvent>ROBOCOPY "$(SolutionDir)Affectiva Information\data" "$(TargetDir)AffectivaFiles\data" /E /XN /XO
 ROBOCOPY "$(SolutionDir)Aforge.Net\Externals\ffmpeg\dlls" "$(TargetDir)\" /E /XN /XO
 ROBOCOPY "$(SolutionDir)Affectiva Information\DebugDll" "$(TargetDir)\" "affdex-native.dll" /XN /XO
-ROBOCOPY "$(SolutionDir)Affectiva Information" "$(TargetDir)AffectivaFiles" "sdk_shawns@fullsail.com.license.txt" /XN /XO</PreBuildEvent>
+ROBOCOPY "$(SolutionDir)Affectiva Information" "$(TargetDir)AffectivaFiles" "sdk_shawns@fullsail.com.license.txt" /XN /XO
+ROBOCOPY "$(SolutionDir)LAME" "$(TargetDir)\" "libmp3lame.32.dll" /XN /XO
+ROBOCOPY "$(SolutionDir)LAME" "$(TargetDir)\" "libmp3lame.64.dll" /XN /XO</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>

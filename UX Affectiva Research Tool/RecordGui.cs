@@ -50,7 +50,6 @@ namespace UX_Affectiva_Research_Tool
 
             InitAvailableCodecs();
             InitAvailableAudioSources();
-            SetUpRecordingTools();
         }
         public void SetUpOptions()
         {
@@ -65,11 +64,11 @@ namespace UX_Affectiva_Research_Tool
 
             InitAvailableCodecs();
             InitAvailableAudioSources();
-            SetUpRecordingTools();
         }
 
         private void startButton_Click(object sender, EventArgs e)
         {
+            SetUpRecordingTools();
 
             stopWatch.Start();
             for (int count = 0; count < arrayOfRecordingTools.Count; count++)

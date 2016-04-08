@@ -17,6 +17,13 @@ using System.IO;
 
 namespace RecordingTool
 {
+    /// <summary>
+    /// Event is fired when a frame buffer is encoded.
+    /// </summary>
+    /// <param name="_buffer">Frame buffer.</param>
+    public delegate void FrameBufferEncoded(byte[] _buffer);
+
+
     class Recorder : RecordingToolBase
     {
         private AudioDevice mAudioDevice;
@@ -37,24 +44,28 @@ namespace RecordingTool
         private bool mIsEncoded;
         private string mFullPath;
         private string mFilePath;
-
-        public string GetFullName()
-        {
-            return mFullPath;
-        }
-
+        private string mFullPath;
+        private Mpeg4VideoEncoderVcm mEncoder;
 
         private readonly ManualResetEvent mStopThread = new ManualResetEvent(false);
         private readonly AutoResetEvent mVideoFrameWritten = new AutoResetEvent(false);
         private readonly AutoResetEvent mAudioBlockWritten = new AutoResetEvent(false);
 
 
+        public string GetFullName()
+        {
+            return mFullPath;
+        }
 
-        public Recorder(AudioDevice _myDevice, CodecInfo _myCodec, int _framesPerSecond, int _quality)
+        public Recorder(AudioDevice _myDevice, CodecInfo _myCodec = null)
         {
 
 
 
+            if (_myCodec == null)
+            {
+                _myCodec = new CodecInfo(Mpeg4VideoEncoderVcm.GetAvailableCodecs()[0].Codec, "v_encoder");
+            }
             mAudioDevice = _myDevice;
             mCodecInfo = _myCodec;
             mFramesPerSecond = _framesPerSecond;
@@ -137,8 +148,14 @@ namespace RecordingTool
             };
             mAudioSource.DataAvailable += audioSource_DataAvailable;
 
-
-
+            mEncoder = new Mpeg4VideoEncoderVcm(
+                    mScreenWidth,
+                    mScreenHeight,
+                    (int)mWriter.FramesPerSecond,
+                    0,
+                    70,
+                    mCodecInfo.Codec
+            );
 
         }
        
@@ -309,24 +326,33 @@ namespace RecordingTool
             }
         }
 
-        private void GetScreenshot(byte[] buffer)
+        private void GetScreenshot(byte[] _buffer)
         {
             using (Bitmap bitmap = new Bitmap(mScreenWidth, mScreenHeight))
             using (Graphics graphics = Graphics.FromImage(bitmap))
             {
                 graphics.CopyFromScreen(0, 0, 0, 0, new System.Drawing.Size(mScreenWidth, mScreenHeight));
                 var bits = bitmap.LockBits(new Rectangle(0, 0, mScreenWidth, mScreenHeight), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
-                Marshal.Copy(bits.Scan0, buffer, 0, buffer.Length);
+                Marshal.Copy(bits.Scan0, _buffer, 0, _buffer.Length);
                 bitmap.UnlockBits(bits);
+
+                byte[] compressed = encodeBuffer(_buffer);
+                Console.WriteLine("CompressedSize: " + compressed.Length);
 
                 // Should also capture the mouse cursor here, but skipping for simplicity
                 // For those who are interested, look at http://www.codeproject.com/Articles/12850/Capturing-the-Desktop-Screen-with-the-Mouse-Cursor
             }
         }
 
+        private byte[] encodeBuffer(byte[] _buffer)
+        {
+            byte[] dest = new byte[_buffer.Length];
+            bool isKeyFrame;
+            int imgSize = mEncoder.EncodeFrame(_buffer, 0, dest, 0, out isKeyFrame);
+            return dest;
+        }
 
     }
-
 
     public class AudioDevice
     {
