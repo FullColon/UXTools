@@ -10,17 +10,20 @@ using System.Windows.Forms;
 using UX_Affectiva_Research_Tool.Affectiva_Files;
 using WeifenLuo.WinFormsUI.Docking;
 using mySharpAVI;
+using EC.Networking;
 
 namespace UX_Affectiva_Research_Tool
 {
     public partial class MainWindow : Form
     {
+        public static int PORT = 4434;
+        private ECNetworkServer mServer;
         List<DockContent> Panels;
        
         string lk = "C:\\DFiles\\WorkFolderFinalProdject\\ux-affectiva.git.0\\UX Affectiva Research Tool\\UX Affectiva Research Tool\\SaveFolder\\TestSave.mp4";
         private ScreenCapturePlaybackWindow audioFeed;
         private ScreenCapturePlaybackWindow cameraFeed;
-        private RecordingAffectivaReview webRecord;
+        //private RecordingAffectivaReview webRecord;
 
         public MainWindow()
         {
@@ -61,10 +64,10 @@ namespace UX_Affectiva_Research_Tool
             else if (_RecorderType.GetType() == typeof(Affectiva_Files.AffectivaCameraFaceRecordingAndVideoRecording))
             {
                Console.WriteLine("CamAff");
-               webRecord = new RecordingAffectivaReview(((AffectivaCameraFaceRecordingAndVideoRecording)_RecorderType).GetAffectiveData(),false);
+               //webRecord = new RecordingAffectivaReview(((AffectivaCameraFaceRecordingAndVideoRecording)_RecorderType).GetAffectiveData(),false);
 
-               webRecord.Show(this.GetMainDockPanel(), DockState.DockBottom);
-               Panels.Add(webRecord);
+               //webRecord.Show(this.GetMainDockPanel(), DockState.DockBottom);
+               //Panels.Add(webRecord);
 
                cameraFeed = new ScreenCapturePlaybackWindow(((AffectivaCameraFaceRecordingAndVideoRecording)_RecorderType).getFileWriterVideo().getFilePath());
 
@@ -94,6 +97,30 @@ namespace UX_Affectiva_Research_Tool
         public void AddPanel(DockContent _Panel)
         {
             Panels.Add(_Panel);
+        }
+
+        private void startServerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                this,
+                "Confirm",
+                "Are you sure you want to start the listening server?",
+                MessageBoxButtons.YesNo
+            );
+            if(mServer != null)
+            {
+                if (result == DialogResult.Yes)
+                {
+                    startServerToolStripMenuItem.Text = "Stop Server";
+                    mServer = new ECNetworkServer(MainWindow.PORT);
+                    mServer.start();
+                }
+            }
+            else
+            {
+                startServerToolStripMenuItem.Text = "Start Server";
+                mServer.stop();
+            }
         }
     }
 }

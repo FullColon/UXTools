@@ -50,6 +50,7 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openRecordWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,6 +59,8 @@
             this.mainDockPanel.ActiveAutoHideContent = null;
             this.mainDockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainDockPanel.DockBackColor = System.Drawing.SystemColors.Control;
+            this.mainDockPanel.DockBottomPortion = 0.5D;
+            this.mainDockPanel.DockTopPortion = 0.5D;
             this.mainDockPanel.Location = new System.Drawing.Point(0, 24);
             this.mainDockPanel.Name = "mainDockPanel";
             this.mainDockPanel.Size = new System.Drawing.Size(1584, 837);
@@ -122,6 +125,8 @@
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startServerToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -153,6 +158,13 @@
             this.openRecordWindowToolStripMenuItem.Text = "Open Record Window";
             this.openRecordWindowToolStripMenuItem.Click += new System.EventHandler(this.openRecordWindowToolStripMenuItem_Click);
             // 
+            // startServerToolStripMenuItem
+            // 
+            this.startServerToolStripMenuItem.Name = "startServerToolStripMenuItem";
+            this.startServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.startServerToolStripMenuItem.Text = "Start Server";
+            this.startServerToolStripMenuItem.Click += new System.EventHandler(this.startServerToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -169,10 +181,6 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-
-            mainDockPanel.DockBottomPortion = 0.5;
-            mainDockPanel.DockTopPortion = 0.5;
-            
         }
 
         #endregion
@@ -189,6 +197,8 @@
         {
             return mainDockPanel;
         }
+
+        private System.Windows.Forms.ToolStripMenuItem startServerToolStripMenuItem;
     }
 }
 

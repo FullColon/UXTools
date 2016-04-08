@@ -68,6 +68,9 @@ namespace EC.Networking
         // Init functions.
         // ========================================================================================
 
+        /// <summary>
+        /// Base initialization. Generalized to be called many times.
+        /// </summary>
         private void baseInit()
         {
             mClient.SendTimeout = 300;
@@ -172,6 +175,7 @@ namespace EC.Networking
         /// <summary>
         /// Attempt to find the server and connect asynchronously.
         /// </summary>
+        [Obsolete("Do not use this function. Threading not perfected and will not die.")]
         public void locateAndConnectToServer()
         {
             //mServerLocator.locateServerAsync();

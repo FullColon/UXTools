@@ -53,6 +53,7 @@
     <ProjectReference Include="..\Networking\Networking.csproj">
       <Project>{603308ea-c167-4892-b30b-f5b270ee80c5}</Project>
       <Name>Networking</Name>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
