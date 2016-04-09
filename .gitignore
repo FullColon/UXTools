@@ -7,6 +7,11 @@
 
 # Movie Files
 *.avi
+*.mp4
+*.mp3
+*.wav
+*.ogg
+*.mov
 
 # User-specific files
 *.suo

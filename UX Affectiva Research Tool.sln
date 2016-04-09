@@ -5,11 +5,9 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UX Affectiva Research Tool", "UX Affectiva Research Tool\UX Affectiva Research Tool.csproj", "{A2FD9C2D-4B95-40E5-86F9-7334C0660C1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FRNetworking", "Subprojects\FRNetworking\FRNetworking.csproj", "{B8129603-820A-49D2-B50A-F75DBB1B8875}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UX Affectiva Recorder Launch", "UX Affectiva Recorder Launch\UX Affectiva Recorder Launch.csproj", "{9B693C76-8DDB-43A0-8C10-2B847E811DE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Networking", "Subprojects\Networking\Networking.csproj", "{603308EA-C167-4892-B30B-F5B270EE80C5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkingUnitTests", "Subprojects\NetworkingUnitTests\NetworkingUnitTests.csproj", "{B6504BF0-9FBC-476E-B728-225353A6C6ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UX Affectiva Launch Researcher", "UX Affectiva Launch Researcher\UX Affectiva Launch Researcher.csproj", "{749CF998-08D3-4A8B-A39E-E01AD5851578}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +19,14 @@ Global
 		{A2FD9C2D-4B95-40E5-86F9-7334C0660C1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2FD9C2D-4B95-40E5-86F9-7334C0660C1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2FD9C2D-4B95-40E5-86F9-7334C0660C1B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B8129603-820A-49D2-B50A-F75DBB1B8875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B8129603-820A-49D2-B50A-F75DBB1B8875}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B8129603-820A-49D2-B50A-F75DBB1B8875}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B8129603-820A-49D2-B50A-F75DBB1B8875}.Release|Any CPU.Build.0 = Release|Any CPU
-		{603308EA-C167-4892-B30B-F5B270EE80C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{603308EA-C167-4892-B30B-F5B270EE80C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{603308EA-C167-4892-B30B-F5B270EE80C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{603308EA-C167-4892-B30B-F5B270EE80C5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6504BF0-9FBC-476E-B728-225353A6C6ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6504BF0-9FBC-476E-B728-225353A6C6ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6504BF0-9FBC-476E-B728-225353A6C6ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6504BF0-9FBC-476E-B728-225353A6C6ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B693C76-8DDB-43A0-8C10-2B847E811DE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B693C76-8DDB-43A0-8C10-2B847E811DE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B693C76-8DDB-43A0-8C10-2B847E811DE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B693C76-8DDB-43A0-8C10-2B847E811DE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{749CF998-08D3-4A8B-A39E-E01AD5851578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{749CF998-08D3-4A8B-A39E-E01AD5851578}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{749CF998-08D3-4A8B-A39E-E01AD5851578}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{749CF998-08D3-4A8B-A39E-E01AD5851578}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,16 +10,19 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using UX_Affectiva_Research_Tool.Affectiva_Files;
 using WeifenLuo.WinFormsUI.Docking;
-using mySharpAVI;
+using RecordingTool;
 using SharpAvi.Codecs;
 using SharpAvi;
 using NAudio.Wave;
-
+using System.IO;
+using System.Reflection;
 
 namespace UX_Affectiva_Research_Tool
 {
     public partial class RecordGui : Form
     {
+
+
 
         List<RecordingToolBase> arrayOfRecordingTools;
         Stopwatch stopWatch = new Stopwatch();
@@ -31,19 +34,22 @@ namespace UX_Affectiva_Research_Tool
 
 
 
-        string FilePath = "C:\\DFiles\\WorkFolderFinalProdject\\ux-affectiva.git.0\\UX Affectiva Research Tool\\UX Affectiva Research Tool\\SaveFolder\\test.avi";
+   //     string FilePath = "C:\\DFiles\\WorkFolderFinalProdject\\ux-affectiva.git.0\\UX Affectiva Research Tool\\UX Affectiva Research Tool\\SaveFolder\\test.avi";
 
 
 
 
         public RecordGui()
         {
+            var asmDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var dllName = string.Format("libmp3lame.{0}.dll", Environment.Is64BitProcess ? "64" : "32");
+            Mp3AudioEncoderLame.SetLameDllLocation(Path.Combine(asmDir, dllName));
+
             InitializeComponent();
             SetUpOptions();
 
             InitAvailableCodecs();
             InitAvailableAudioSources();
-            SetUpRecordingTools();
         }
         public void SetUpOptions()
         {
@@ -58,11 +64,11 @@ namespace UX_Affectiva_Research_Tool
 
             InitAvailableCodecs();
             InitAvailableAudioSources();
-            SetUpRecordingTools();
         }
 
         private void startButton_Click(object sender, EventArgs e)
         {
+            SetUpRecordingTools();
 
             stopWatch.Start();
             for (int count = 0; count < arrayOfRecordingTools.Count; count++)
@@ -102,7 +108,7 @@ namespace UX_Affectiva_Research_Tool
             arrayOfRecordingTools = new List<RecordingToolBase>();
            // arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch,20,true));
                 arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording());
-              arrayOfRecordingTools.Add(new mySharpAVI.myRecorder(mAudioDevice, mCodecInfo));
+              arrayOfRecordingTools.Add(new RecordingTool.Recorder(mAudioDevice, mCodecInfo, 15, 100));
 
 
             // arrayOfRecordingTools.Add(new Audio());
@@ -116,7 +122,7 @@ namespace UX_Affectiva_Research_Tool
             }
             for (int count = 0; count < arrayOfRecordingTools.Count; count++)
             {
-                mDocablePanel.MakeFormFromRecordingToolBase(arrayOfRecordingTools[count]);
+  //              mDocablePanel.MakeFormFromRecordingToolBase(arrayOfRecordingTools[count]);
 
             }
         }
@@ -197,6 +203,11 @@ namespace UX_Affectiva_Research_Tool
                 labelPath.Text = FolderSelect.SelectedPath;
                 
              }
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            lbl_displayQualityValue.Text = trackBar_quality.Value.ToString();
         }
     }
 }
