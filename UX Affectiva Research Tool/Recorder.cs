@@ -34,38 +34,53 @@ namespace RecordingTool
         SupportedWaveFormat suppForm;
         WaveInEvent mAudioSource;
         private Thread mScreenThread;
-        private int mScreenWidth;
-        private int mScreenHeight;
         IAviVideoStream mVideoStream;
         private int mQuality = 100;
         private FourCC mSelectedCodec;
         private int mFramesPerSecond;
-        dynamic mEncoder;
         private bool mIsEncoded;
         private string mFullPath;
-        private string mFilePath;
-        private string mFullPath;
-        private Mpeg4VideoEncoderVcm mEncoder;
+        private IVideoEncoder mEncoder;
+        Rectangle mScreenArea;
+        private int mScreenTop;
+        private int mScreenLeft;
+        private string mAudioCodec;
 
         private readonly ManualResetEvent mStopThread = new ManualResetEvent(false);
         private readonly AutoResetEvent mVideoFrameWritten = new AutoResetEvent(false);
         private readonly AutoResetEvent mAudioBlockWritten = new AutoResetEvent(false);
 
 
-        public string GetFullName()
+        /// <summary>
+        /// Gets the saved file path.
+        /// </summary>
+        /// <returns>System.String.</returns>
+        public string GetSavedFilePath()
         {
             return mFullPath;
         }
 
-        public Recorder(AudioDevice _myDevice, CodecInfo _myCodec = null)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Recorder"/> class.
+        /// </summary>
+        /// <param name="_myDevice">The _my device.</param>
+        /// <param name="_myCodec">The _my codec.</param>
+        /// <param name="_screenArea">The _screen area.</param>
+        /// <param name="_framesPerSecond">The _frames per second.</param>
+        /// <param name="_quality">The _quality.</param>
+        public Recorder(AudioDevice _myDevice, string _audioCodec, CodecInfo _myCodec, Rectangle _screenArea, int  _framesPerSecond, int _quality)
         {
 
 
 
-            if (_myCodec == null)
-            {
-                _myCodec = new CodecInfo(Mpeg4VideoEncoderVcm.GetAvailableCodecs()[0].Codec, "v_encoder");
-            }
+            //           if (_myCodec == null)
+            //           {
+            //              _myCodec = new CodecInfo(Mpeg4VideoEncoderVcm.GetAvailableCodecs()[0].Codec, "v_encoder");
+            //          }
+            mScreenArea = _screenArea;
+            mScreenTop = _screenArea.Top;
+            mScreenLeft = _screenArea.Left;
+            mAudioCodec = _audioCodec;
             mAudioDevice = _myDevice;
             mCodecInfo = _myCodec;
             mFramesPerSecond = _framesPerSecond;
@@ -73,9 +88,10 @@ namespace RecordingTool
 
             switch (_myCodec.Name)
             {
-                case "x264vfw - H.264 / MPEG - 4 AVC codec":
+                case "x264vfw - H.264/MPEG-4 AVC codec":
                     {
                         mSelectedCodec = mCodecInfo.Codec;
+                        mIsEncoded = true;
                     }
                     break;
                 default:
@@ -85,17 +101,19 @@ namespace RecordingTool
                     break;
             }
 
-            mScreenWidth = Screen.PrimaryScreen.Bounds.Width;
-            mScreenHeight = Screen.PrimaryScreen.Bounds.Height;
-
-
-            mEncoder = mSelectedCodec;
+            if (mIsEncoded)
+            {
+                mEncoder = new Mpeg4VideoEncoderVcm(mScreenArea.Width, mScreenArea.Height, mFramesPerSecond, 0, mQuality, mSelectedCodec);
+            }
 
 
 
             InitializeRecorder();
         }
 
+        /// <summary>
+        /// Initializes the recorder.
+        /// </summary>
         public void InitializeRecorder()
         {
             System.Windows.Media.Matrix toDevice;
@@ -105,22 +123,23 @@ namespace RecordingTool
             }
 
 
+
             string currentDirectory = Environment.CurrentDirectory;
             string saveDirectory = @"\SaveFolder";
-            mFilePath = currentDirectory + saveDirectory;
-            mFullPath = mFilePath + @"\screenRecord.avi";
+            string mFilePath = Path.GetDirectoryName(Path.GetDirectoryName(currentDirectory));
+            mFullPath = mFilePath + saveDirectory + @"\screenRecord.avi";
 
 
-            mWriter = new AviWriter("test.avi")
+            mWriter = new AviWriter(mFullPath)
             {
-                FramesPerSecond = 10,
+                FramesPerSecond = mFramesPerSecond,
                 EmitIndex1 = true,
             };
 
 
             if (mIsEncoded)
             {
-                mVideoStream = mWriter.AddEncodingVideoStream(mEncoder, width: mScreenWidth, height: mScreenHeight);
+                mVideoStream = mWriter.AddEncodingVideoStream(mEncoder, width: mScreenArea.Width, height: mScreenArea.Height);
             }
             else
             {
@@ -137,7 +156,7 @@ namespace RecordingTool
             mWaveFormat = ToWaveFormat(suppForm);
 
 
-            mAudioStream = CreateAudioStream(mWaveFormat, true, 192);
+            mAudioStream = CreateAudioStream(mWaveFormat, mAudioCodec, 192);
             mAudioStream.Name = "Voice";
             mAudioSource = new WaveInEvent
             {
@@ -148,17 +167,14 @@ namespace RecordingTool
             };
             mAudioSource.DataAvailable += audioSource_DataAvailable;
 
-            mEncoder = new Mpeg4VideoEncoderVcm(
-                    mScreenWidth,
-                    mScreenHeight,
-                    (int)mWriter.FramesPerSecond,
-                    0,
-                    70,
-                    mCodecInfo.Codec
-            );
+          
 
         }
-       
+
+        /// <summary>
+        /// Stops the recording.
+        /// </summary>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         override public bool stopRecording()
         {
 
@@ -201,11 +217,14 @@ namespace RecordingTool
 
             return true;
         }
+        /// <summary>
+        /// Records the screen.
+        /// </summary>
         private void RecordScreen()
         {
             Stopwatch stopwatch = new Stopwatch();
 
-            byte[] buffer = new byte[mScreenWidth * mScreenHeight * 4];
+            byte[] buffer = new byte[mScreenArea.Width * mScreenArea.Height * 4];
 
             Task videoWriteTask = null;
             bool isFirstFrame = true;
@@ -235,8 +254,8 @@ namespace RecordingTool
                 }
                 if (mAudioSource != null)
                 {
-                    var signalled = WaitHandle.WaitAny(new WaitHandle[] { mAudioBlockWritten, mStopThread });
-                    if (signalled == 1)
+                    var signaled = WaitHandle.WaitAny(new WaitHandle[] { mAudioBlockWritten, mStopThread });
+                    if (signaled == 1)
                         break;
                 }
 
@@ -260,9 +279,15 @@ namespace RecordingTool
             }
 
         }
-        private static WaveFormat ToWaveFormat(SupportedWaveFormat waveFormat)
+        /// <summary>
+        /// To the wave format.
+        /// </summary>
+        /// <param name="_waveFormat">The wave format.</param>
+        /// <returns>WaveFormat.</returns>
+        /// <exception cref="System.NotSupportedException">Wave formats other than '16-bit 44.1kHz' are not currently supported.</exception>
+        private static WaveFormat ToWaveFormat(SupportedWaveFormat _waveFormat)
         {
-            switch (waveFormat)
+            switch (_waveFormat)
             {
                 case SupportedWaveFormat.WAVE_FORMAT_44M16:
                     return new WaveFormat(44100, 16, 1);
@@ -273,87 +298,105 @@ namespace RecordingTool
             }
         }
 
-        private IAviAudioStream CreateAudioStream(WaveFormat waveFormat, bool encode, int bitRate)
+  
+        private IAviAudioStream CreateAudioStream(WaveFormat _waveFormat, string _encode, int _bitRate)
         {
             // Create encoding or simple stream based on settings
-            if (encode)
+            if (_encode == "MP3")
             {
 
-                return mWriter.AddMp3AudioStream(waveFormat.Channels, waveFormat.SampleRate, bitRate);
+                return mWriter.AddMp3AudioStream(_waveFormat.Channels, _waveFormat.SampleRate, _bitRate);
 
             }
             else
             {
                 return mWriter.AddAudioStream(
-                    channelCount: waveFormat.Channels,
-                    samplesPerSecond: waveFormat.SampleRate,
-                    bitsPerSample: waveFormat.BitsPerSample);
+                    channelCount: _waveFormat.Channels,
+                    samplesPerSecond: _waveFormat.SampleRate,
+                    bitsPerSample: _waveFormat.BitsPerSample);
             }
         }
 
-        private void audioSource_DataAvailable(object sender, WaveInEventArgs e)
+        /// <summary>
+        /// Handles the DataAvailable event of the audioSource control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="WaveInEventArgs"/> instance containing the event data.</param>
+        private void audioSource_DataAvailable(object _sender, WaveInEventArgs _waveInEvenArgs)
         {
             var signalled = WaitHandle.WaitAny(new WaitHandle[] { mVideoFrameWritten, mStopThread });
             if (signalled == 0)
             {
-                mAudioStream.WriteBlock(e.Buffer, 0, e.BytesRecorded);
+                mAudioStream.WriteBlock(_waveInEvenArgs.Buffer, 0, _waveInEvenArgs.BytesRecorded);
                 mAudioBlockWritten.Set();
             }
         }
 
 
-        private IAviVideoStream CreateVideoStream(FourCC codec, int quality)
+        /// <summary>
+        /// Creates the video stream.
+        /// </summary>
+        /// <param name="_codec">The codec.</param>
+        /// <param name="_quality">The quality.</param>
+        /// <returns>IAviVideoStream.</returns>
+        private IAviVideoStream CreateVideoStream(FourCC _codec, int _quality)
         {
             // Select encoder type based on FOURCC of codec
-            if (codec == KnownFourCCs.Codecs.Uncompressed)
+            if (_codec == KnownFourCCs.Codecs.Uncompressed)
             {
-                return mWriter.AddUncompressedVideoStream(mScreenWidth, mScreenHeight);
+                return mWriter.AddUncompressedVideoStream(mScreenArea.Width, mScreenArea.Height);
             }
-            else if (codec == KnownFourCCs.Codecs.MotionJpeg)
+            else if (_codec == KnownFourCCs.Codecs.MotionJpeg)
             {
-                return mWriter.AddMotionJpegVideoStream(mScreenWidth, mScreenHeight, quality);
+                return mWriter.AddMotionJpegVideoStream(mScreenArea.Width, mScreenArea.Height, _quality);
             }
             else
             {
-                return mWriter.AddMpeg4VideoStream(mScreenWidth, mScreenHeight, (double)mWriter.FramesPerSecond,
+                return mWriter.AddMpeg4VideoStream(mScreenArea.Width, mScreenArea.Height, (double)mWriter.FramesPerSecond,
                     // It seems that all tested MPEG-4 VfW codecs ignore the quality affecting parameters passed through VfW API
                     // They only respect the settings from their own configuration dialogs, and Mpeg4VideoEncoder currently has no support for this
-                    quality: quality,
-                    codec: codec,
+                    quality: _quality,
+                    codec: _codec,
                     // Most of VfW codecs expect single-threaded use, so we wrap this encoder to special wrapper
                     // Thus all calls to the encoder (including its instantiation) will be invoked on a single thread although encoding (and writing) is performed asynchronously
                     forceSingleThreadedAccess: true);
             }
         }
 
+        /// <summary>
+        /// Gets the screenshot.
+        /// </summary>
+        /// <param name="_buffer">The _buffer.</param>
         private void GetScreenshot(byte[] _buffer)
         {
-            using (Bitmap bitmap = new Bitmap(mScreenWidth, mScreenHeight))
+            using (Bitmap bitmap = new Bitmap(mScreenArea.Width, mScreenArea.Height))
             using (Graphics graphics = Graphics.FromImage(bitmap))
             {
-                graphics.CopyFromScreen(0, 0, 0, 0, new System.Drawing.Size(mScreenWidth, mScreenHeight));
-                var bits = bitmap.LockBits(new Rectangle(0, 0, mScreenWidth, mScreenHeight), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+
+                graphics.CopyFromScreen(mScreenLeft, mScreenTop, 0, 0, new System.Drawing.Size(mScreenArea.Width, mScreenArea.Height));
+                var bits = bitmap.LockBits(new Rectangle(0, 0, mScreenArea.Width, mScreenArea.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppRgb);
                 Marshal.Copy(bits.Scan0, _buffer, 0, _buffer.Length);
                 bitmap.UnlockBits(bits);
 
-                byte[] compressed = encodeBuffer(_buffer);
-                Console.WriteLine("CompressedSize: " + compressed.Length);
+    //            byte[] compressed = encodeBuffer(_buffer);
+   //             Console.WriteLine("CompressedSize: " + compressed.Length);
 
                 // Should also capture the mouse cursor here, but skipping for simplicity
                 // For those who are interested, look at http://www.codeproject.com/Articles/12850/Capturing-the-Desktop-Screen-with-the-Mouse-Cursor
             }
         }
 
-        private byte[] encodeBuffer(byte[] _buffer)
+/*        private byte[] encodeBuffer(byte[] _buffer)
         {
             byte[] dest = new byte[_buffer.Length];
             bool isKeyFrame;
             int imgSize = mEncoder.EncodeFrame(_buffer, 0, dest, 0, out isKeyFrame);
             return dest;
-        }
+        } */
 
     }
 
+  
     public class AudioDevice
     {
 

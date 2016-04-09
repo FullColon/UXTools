@@ -38,18 +38,33 @@
             this.affectivaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moreOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-            this.lbl_displayQualityValue = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.trackBar_quality = new System.Windows.Forms.TrackBar();
+            this.lbl_screenAudioCodecs = new System.Windows.Forms.Label();
+            this.cmbx_screenAudioCodecs = new System.Windows.Forms.ComboBox();
+            this.lbl_screenQualityValue = new System.Windows.Forms.Label();
+            this.lbl_screenQuality = new System.Windows.Forms.Label();
+            this.trkbr_screenQuality = new System.Windows.Forms.TrackBar();
             this.lbl_screenSelect = new System.Windows.Forms.Label();
-            this.numUpDown_screenSelect = new System.Windows.Forms.ComboBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.FPSLabel = new System.Windows.Forms.Label();
+            this.cmbx_screenSelect = new System.Windows.Forms.ComboBox();
+            this.nud_screenFPS = new System.Windows.Forms.NumericUpDown();
+            this.lbl_screenFPS = new System.Windows.Forms.Label();
             this.label_screenAudioDevice = new System.Windows.Forms.Label();
-            this.comboBox_screenAudioDevice = new System.Windows.Forms.ComboBox();
-            this.label_ScreenCodecs = new System.Windows.Forms.Label();
-            this.comboBox_screenCodecs = new System.Windows.Forms.ComboBox();
+            this.cmbx_screenAudioDevice = new System.Windows.Forms.ComboBox();
+            this.label_screenVideoCodecs = new System.Windows.Forms.Label();
+            this.cmbx_screenVideoCodecs = new System.Windows.Forms.ComboBox();
             this.label_RecordOptions = new System.Windows.Forms.Label();
+            this.lbl_cameraAudioCodec = new System.Windows.Forms.Label();
+            this.cmbx_cameraAudioCodecs = new System.Windows.Forms.ComboBox();
+            this.lbl_cameraQualityValue = new System.Windows.Forms.Label();
+            this.lbl_cameraQaulity = new System.Windows.Forms.Label();
+            this.trkbr_cameraQuality = new System.Windows.Forms.TrackBar();
+            this.nud_cameraFPS = new System.Windows.Forms.NumericUpDown();
+            this.lbl_cameraFramesPerSecond = new System.Windows.Forms.Label();
+            this.lbl_cameraAudioInput = new System.Windows.Forms.Label();
+            this.cmbx_cameraAudioInput = new System.Windows.Forms.ComboBox();
+            this.lbl_camaraVideoCodecs = new System.Windows.Forms.Label();
+            this.cmbx_cameraVideoCodecs = new System.Windows.Forms.ComboBox();
+            this.lbl_cameras = new System.Windows.Forms.Label();
+            this.cmbx_cameras = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.labelPath = new System.Windows.Forms.Label();
             this.buttonFilePath = new System.Windows.Forms.Button();
@@ -68,8 +83,10 @@
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar_quality)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trkbr_screenQuality)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_screenFPS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trkbr_cameraQuality)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_cameraFPS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -81,7 +98,7 @@
             this.startButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.startButton.Location = new System.Drawing.Point(0, 0);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(262, 35);
+            this.startButton.Size = new System.Drawing.Size(286, 54);
             this.startButton.TabIndex = 0;
             this.startButton.Text = " Start Recording";
             this.startButton.UseVisualStyleBackColor = true;
@@ -92,7 +109,7 @@
             this.stopButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.stopButton.Location = new System.Drawing.Point(0, 0);
             this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(276, 35);
+            this.stopButton.Size = new System.Drawing.Size(303, 54);
             this.stopButton.TabIndex = 1;
             this.stopButton.Text = "Stop Recording";
             this.stopButton.UseVisualStyleBackColor = true;
@@ -112,8 +129,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(542, 325);
-            this.splitContainer1.SplitterDistance = 286;
+            this.splitContainer1.Size = new System.Drawing.Size(593, 476);
+            this.splitContainer1.SplitterDistance = 418;
             this.splitContainer1.TabIndex = 2;
             // 
             // splitContainer3
@@ -130,8 +147,8 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer3.Size = new System.Drawing.Size(542, 286);
-            this.splitContainer3.SplitterDistance = 25;
+            this.splitContainer3.Size = new System.Drawing.Size(593, 418);
+            this.splitContainer3.SplitterDistance = 36;
             this.splitContainer3.TabIndex = 0;
             // 
             // menuStrip1
@@ -141,7 +158,7 @@
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(542, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(593, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -184,58 +201,92 @@
             // 
             // splitContainer4.Panel1
             // 
-            this.splitContainer4.Panel1.Controls.Add(this.lbl_displayQualityValue);
-            this.splitContainer4.Panel1.Controls.Add(this.label2);
-            this.splitContainer4.Panel1.Controls.Add(this.trackBar_quality);
+            this.splitContainer4.Panel1.Controls.Add(this.lbl_screenAudioCodecs);
+            this.splitContainer4.Panel1.Controls.Add(this.cmbx_screenAudioCodecs);
+            this.splitContainer4.Panel1.Controls.Add(this.lbl_screenQualityValue);
+            this.splitContainer4.Panel1.Controls.Add(this.lbl_screenQuality);
+            this.splitContainer4.Panel1.Controls.Add(this.trkbr_screenQuality);
             this.splitContainer4.Panel1.Controls.Add(this.lbl_screenSelect);
-            this.splitContainer4.Panel1.Controls.Add(this.numUpDown_screenSelect);
-            this.splitContainer4.Panel1.Controls.Add(this.numericUpDown1);
-            this.splitContainer4.Panel1.Controls.Add(this.FPSLabel);
+            this.splitContainer4.Panel1.Controls.Add(this.cmbx_screenSelect);
+            this.splitContainer4.Panel1.Controls.Add(this.nud_screenFPS);
+            this.splitContainer4.Panel1.Controls.Add(this.lbl_screenFPS);
             this.splitContainer4.Panel1.Controls.Add(this.label_screenAudioDevice);
-            this.splitContainer4.Panel1.Controls.Add(this.comboBox_screenAudioDevice);
-            this.splitContainer4.Panel1.Controls.Add(this.label_ScreenCodecs);
-            this.splitContainer4.Panel1.Controls.Add(this.comboBox_screenCodecs);
+            this.splitContainer4.Panel1.Controls.Add(this.cmbx_screenAudioDevice);
+            this.splitContainer4.Panel1.Controls.Add(this.label_screenVideoCodecs);
+            this.splitContainer4.Panel1.Controls.Add(this.cmbx_screenVideoCodecs);
             this.splitContainer4.Panel1.Controls.Add(this.label_RecordOptions);
             // 
             // splitContainer4.Panel2
             // 
+            this.splitContainer4.Panel2.Controls.Add(this.lbl_cameraAudioCodec);
+            this.splitContainer4.Panel2.Controls.Add(this.cmbx_cameraAudioCodecs);
+            this.splitContainer4.Panel2.Controls.Add(this.lbl_cameraQualityValue);
+            this.splitContainer4.Panel2.Controls.Add(this.lbl_cameraQaulity);
+            this.splitContainer4.Panel2.Controls.Add(this.trkbr_cameraQuality);
+            this.splitContainer4.Panel2.Controls.Add(this.nud_cameraFPS);
+            this.splitContainer4.Panel2.Controls.Add(this.lbl_cameraFramesPerSecond);
+            this.splitContainer4.Panel2.Controls.Add(this.lbl_cameraAudioInput);
+            this.splitContainer4.Panel2.Controls.Add(this.cmbx_cameraAudioInput);
+            this.splitContainer4.Panel2.Controls.Add(this.lbl_camaraVideoCodecs);
+            this.splitContainer4.Panel2.Controls.Add(this.cmbx_cameraVideoCodecs);
+            this.splitContainer4.Panel2.Controls.Add(this.lbl_cameras);
+            this.splitContainer4.Panel2.Controls.Add(this.cmbx_cameras);
             this.splitContainer4.Panel2.Controls.Add(this.label1);
             this.splitContainer4.Panel2.Controls.Add(this.labelPath);
             this.splitContainer4.Panel2.Controls.Add(this.buttonFilePath);
             this.splitContainer4.Panel2.Controls.Add(this.textBoxName);
-            this.splitContainer4.Size = new System.Drawing.Size(542, 257);
-            this.splitContainer4.SplitterDistance = 261;
+            this.splitContainer4.Size = new System.Drawing.Size(593, 378);
+            this.splitContainer4.SplitterDistance = 285;
             this.splitContainer4.TabIndex = 0;
             // 
-            // lbl_displayQualityValue
+            // lbl_screenAudioCodecs
             // 
-            this.lbl_displayQualityValue.AutoSize = true;
-            this.lbl_displayQualityValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_displayQualityValue.Location = new System.Drawing.Point(51, 157);
-            this.lbl_displayQualityValue.Name = "lbl_displayQualityValue";
-            this.lbl_displayQualityValue.Size = new System.Drawing.Size(19, 20);
-            this.lbl_displayQualityValue.TabIndex = 11;
-            this.lbl_displayQualityValue.Text = "0";
+            this.lbl_screenAudioCodecs.AutoSize = true;
+            this.lbl_screenAudioCodecs.Location = new System.Drawing.Point(15, 98);
+            this.lbl_screenAudioCodecs.Name = "lbl_screenAudioCodecs";
+            this.lbl_screenAudioCodecs.Size = new System.Drawing.Size(73, 13);
+            this.lbl_screenAudioCodecs.TabIndex = 13;
+            this.lbl_screenAudioCodecs.Text = "Audio Codecs";
             // 
-            // label2
+            // cmbx_screenAudioCodecs
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 162);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Quality:";
+            this.cmbx_screenAudioCodecs.FormattingEnabled = true;
+            this.cmbx_screenAudioCodecs.Location = new System.Drawing.Point(88, 95);
+            this.cmbx_screenAudioCodecs.Name = "cmbx_screenAudioCodecs";
+            this.cmbx_screenAudioCodecs.Size = new System.Drawing.Size(121, 21);
+            this.cmbx_screenAudioCodecs.TabIndex = 12;
             // 
-            // trackBar_quality
+            // lbl_screenQualityValue
             // 
-            this.trackBar_quality.LargeChange = 10;
-            this.trackBar_quality.Location = new System.Drawing.Point(89, 151);
-            this.trackBar_quality.Maximum = 100;
-            this.trackBar_quality.Name = "trackBar_quality";
-            this.trackBar_quality.Size = new System.Drawing.Size(156, 45);
-            this.trackBar_quality.SmallChange = 5;
-            this.trackBar_quality.TabIndex = 9;
-            this.trackBar_quality.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.lbl_screenQualityValue.AutoSize = true;
+            this.lbl_screenQualityValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_screenQualityValue.Location = new System.Drawing.Point(51, 189);
+            this.lbl_screenQualityValue.Name = "lbl_screenQualityValue";
+            this.lbl_screenQualityValue.Size = new System.Drawing.Size(29, 20);
+            this.lbl_screenQualityValue.TabIndex = 11;
+            this.lbl_screenQualityValue.Text = "50";
+            // 
+            // lbl_screenQuality
+            // 
+            this.lbl_screenQuality.AutoSize = true;
+            this.lbl_screenQuality.Location = new System.Drawing.Point(9, 189);
+            this.lbl_screenQuality.Name = "lbl_screenQuality";
+            this.lbl_screenQuality.Size = new System.Drawing.Size(42, 13);
+            this.lbl_screenQuality.TabIndex = 10;
+            this.lbl_screenQuality.Text = "Quality:";
+            // 
+            // trkbr_screenQuality
+            // 
+            this.trkbr_screenQuality.LargeChange = 10;
+            this.trkbr_screenQuality.Location = new System.Drawing.Point(88, 189);
+            this.trkbr_screenQuality.Maximum = 100;
+            this.trkbr_screenQuality.Name = "trkbr_screenQuality";
+            this.trkbr_screenQuality.Size = new System.Drawing.Size(121, 45);
+            this.trkbr_screenQuality.SmallChange = 5;
+            this.trkbr_screenQuality.TabIndex = 9;
+            this.trkbr_screenQuality.TickFrequency = 10;
+            this.trkbr_screenQuality.Value = 50;
+            this.trkbr_screenQuality.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // lbl_screenSelect
             // 
@@ -246,74 +297,220 @@
             this.lbl_screenSelect.TabIndex = 8;
             this.lbl_screenSelect.Text = "Screen Select";
             // 
-            // numUpDown_screenSelect
+            // cmbx_screenSelect
             // 
-            this.numUpDown_screenSelect.FormattingEnabled = true;
-            this.numUpDown_screenSelect.Location = new System.Drawing.Point(89, 123);
-            this.numUpDown_screenSelect.Name = "numUpDown_screenSelect";
-            this.numUpDown_screenSelect.Size = new System.Drawing.Size(121, 21);
-            this.numUpDown_screenSelect.TabIndex = 7;
+            this.cmbx_screenSelect.FormattingEnabled = true;
+            this.cmbx_screenSelect.Location = new System.Drawing.Point(89, 123);
+            this.cmbx_screenSelect.Name = "cmbx_screenSelect";
+            this.cmbx_screenSelect.Size = new System.Drawing.Size(121, 21);
+            this.cmbx_screenSelect.TabIndex = 7;
             // 
-            // numericUpDown1
+            // nud_screenFPS
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(89, 96);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 6;
+            this.nud_screenFPS.Location = new System.Drawing.Point(88, 150);
+            this.nud_screenFPS.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.nud_screenFPS.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nud_screenFPS.Name = "nud_screenFPS";
+            this.nud_screenFPS.Size = new System.Drawing.Size(120, 20);
+            this.nud_screenFPS.TabIndex = 6;
+            this.nud_screenFPS.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nud_screenFPS.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
             // 
-            // FPSLabel
+            // lbl_screenFPS
             // 
-            this.FPSLabel.AutoSize = true;
-            this.FPSLabel.Location = new System.Drawing.Point(40, 101);
-            this.FPSLabel.Name = "FPSLabel";
-            this.FPSLabel.Size = new System.Drawing.Size(27, 13);
-            this.FPSLabel.TabIndex = 5;
-            this.FPSLabel.Text = "FPS";
+            this.lbl_screenFPS.AutoSize = true;
+            this.lbl_screenFPS.Location = new System.Drawing.Point(56, 155);
+            this.lbl_screenFPS.Name = "lbl_screenFPS";
+            this.lbl_screenFPS.Size = new System.Drawing.Size(27, 13);
+            this.lbl_screenFPS.TabIndex = 5;
+            this.lbl_screenFPS.Text = "FPS";
             // 
             // label_screenAudioDevice
             // 
             this.label_screenAudioDevice.AutoSize = true;
-            this.label_screenAudioDevice.Location = new System.Drawing.Point(12, 68);
+            this.label_screenAudioDevice.Location = new System.Drawing.Point(19, 68);
             this.label_screenAudioDevice.Name = "label_screenAudioDevice";
-            this.label_screenAudioDevice.Size = new System.Drawing.Size(71, 13);
+            this.label_screenAudioDevice.Size = new System.Drawing.Size(61, 13);
             this.label_screenAudioDevice.TabIndex = 4;
-            this.label_screenAudioDevice.Text = "Audio Device";
+            this.label_screenAudioDevice.Text = "Audio Input";
             // 
-            // comboBox_screenAudioDevice
+            // cmbx_screenAudioDevice
             // 
-            this.comboBox_screenAudioDevice.FormattingEnabled = true;
-            this.comboBox_screenAudioDevice.Location = new System.Drawing.Point(89, 65);
-            this.comboBox_screenAudioDevice.Name = "comboBox_screenAudioDevice";
-            this.comboBox_screenAudioDevice.Size = new System.Drawing.Size(156, 21);
-            this.comboBox_screenAudioDevice.TabIndex = 3;
-            this.comboBox_screenAudioDevice.SelectedIndexChanged += new System.EventHandler(this.comboBox_screenAudioDevice_SelectedIndexChanged);
+            this.cmbx_screenAudioDevice.FormattingEnabled = true;
+            this.cmbx_screenAudioDevice.Location = new System.Drawing.Point(89, 65);
+            this.cmbx_screenAudioDevice.Name = "cmbx_screenAudioDevice";
+            this.cmbx_screenAudioDevice.Size = new System.Drawing.Size(121, 21);
+            this.cmbx_screenAudioDevice.TabIndex = 3;
             // 
-            // label_ScreenCodecs
+            // label_screenVideoCodecs
             // 
-            this.label_ScreenCodecs.AutoSize = true;
-            this.label_ScreenCodecs.Location = new System.Drawing.Point(40, 40);
-            this.label_ScreenCodecs.Name = "label_ScreenCodecs";
-            this.label_ScreenCodecs.Size = new System.Drawing.Size(43, 13);
-            this.label_ScreenCodecs.TabIndex = 2;
-            this.label_ScreenCodecs.Text = "Codecs";
+            this.label_screenVideoCodecs.AutoSize = true;
+            this.label_screenVideoCodecs.Location = new System.Drawing.Point(12, 44);
+            this.label_screenVideoCodecs.Name = "label_screenVideoCodecs";
+            this.label_screenVideoCodecs.Size = new System.Drawing.Size(73, 13);
+            this.label_screenVideoCodecs.TabIndex = 2;
+            this.label_screenVideoCodecs.Text = "Video Codecs";
             // 
-            // comboBox_screenCodecs
+            // cmbx_screenVideoCodecs
             // 
-            this.comboBox_screenCodecs.FormattingEnabled = true;
-            this.comboBox_screenCodecs.Location = new System.Drawing.Point(89, 37);
-            this.comboBox_screenCodecs.Name = "comboBox_screenCodecs";
-            this.comboBox_screenCodecs.Size = new System.Drawing.Size(148, 21);
-            this.comboBox_screenCodecs.TabIndex = 1;
-            this.comboBox_screenCodecs.SelectedIndexChanged += new System.EventHandler(this.comboBox_screenCodecs_SelectedIndexChanged);
+            this.cmbx_screenVideoCodecs.FormattingEnabled = true;
+            this.cmbx_screenVideoCodecs.Location = new System.Drawing.Point(89, 37);
+            this.cmbx_screenVideoCodecs.Name = "cmbx_screenVideoCodecs";
+            this.cmbx_screenVideoCodecs.Size = new System.Drawing.Size(121, 21);
+            this.cmbx_screenVideoCodecs.TabIndex = 1;
             // 
             // label_RecordOptions
             // 
             this.label_RecordOptions.AutoSize = true;
             this.label_RecordOptions.Location = new System.Drawing.Point(52, 10);
             this.label_RecordOptions.Name = "label_RecordOptions";
-            this.label_RecordOptions.Size = new System.Drawing.Size(95, 13);
+            this.label_RecordOptions.Size = new System.Drawing.Size(132, 13);
             this.label_RecordOptions.TabIndex = 0;
-            this.label_RecordOptions.Text = "Recording Options";
+            this.label_RecordOptions.Text = "Screen Recording Options";
+            // 
+            // lbl_cameraAudioCodec
+            // 
+            this.lbl_cameraAudioCodec.AutoSize = true;
+            this.lbl_cameraAudioCodec.Location = new System.Drawing.Point(11, 219);
+            this.lbl_cameraAudioCodec.Name = "lbl_cameraAudioCodec";
+            this.lbl_cameraAudioCodec.Size = new System.Drawing.Size(73, 13);
+            this.lbl_cameraAudioCodec.TabIndex = 24;
+            this.lbl_cameraAudioCodec.Text = "Audio Codecs";
+            // 
+            // cmbx_cameraAudioCodecs
+            // 
+            this.cmbx_cameraAudioCodecs.FormattingEnabled = true;
+            this.cmbx_cameraAudioCodecs.Location = new System.Drawing.Point(84, 216);
+            this.cmbx_cameraAudioCodecs.Name = "cmbx_cameraAudioCodecs";
+            this.cmbx_cameraAudioCodecs.Size = new System.Drawing.Size(121, 21);
+            this.cmbx_cameraAudioCodecs.TabIndex = 23;
+            // 
+            // lbl_cameraQualityValue
+            // 
+            this.lbl_cameraQualityValue.AutoSize = true;
+            this.lbl_cameraQualityValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_cameraQualityValue.Location = new System.Drawing.Point(47, 310);
+            this.lbl_cameraQualityValue.Name = "lbl_cameraQualityValue";
+            this.lbl_cameraQualityValue.Size = new System.Drawing.Size(29, 20);
+            this.lbl_cameraQualityValue.TabIndex = 22;
+            this.lbl_cameraQualityValue.Text = "50";
+            // 
+            // lbl_cameraQaulity
+            // 
+            this.lbl_cameraQaulity.AutoSize = true;
+            this.lbl_cameraQaulity.Location = new System.Drawing.Point(5, 310);
+            this.lbl_cameraQaulity.Name = "lbl_cameraQaulity";
+            this.lbl_cameraQaulity.Size = new System.Drawing.Size(42, 13);
+            this.lbl_cameraQaulity.TabIndex = 21;
+            this.lbl_cameraQaulity.Text = "Quality:";
+            // 
+            // trkbr_cameraQuality
+            // 
+            this.trkbr_cameraQuality.LargeChange = 10;
+            this.trkbr_cameraQuality.Location = new System.Drawing.Point(84, 310);
+            this.trkbr_cameraQuality.Maximum = 100;
+            this.trkbr_cameraQuality.Name = "trkbr_cameraQuality";
+            this.trkbr_cameraQuality.Size = new System.Drawing.Size(121, 45);
+            this.trkbr_cameraQuality.SmallChange = 5;
+            this.trkbr_cameraQuality.TabIndex = 20;
+            this.trkbr_cameraQuality.TickFrequency = 10;
+            this.trkbr_cameraQuality.Value = 50;
+            this.trkbr_cameraQuality.Scroll += new System.EventHandler(this.trkbr_cameraQuality_Scroll);
+            // 
+            // nud_cameraFPS
+            // 
+            this.nud_cameraFPS.Location = new System.Drawing.Point(84, 271);
+            this.nud_cameraFPS.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.nud_cameraFPS.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nud_cameraFPS.Name = "nud_cameraFPS";
+            this.nud_cameraFPS.Size = new System.Drawing.Size(120, 20);
+            this.nud_cameraFPS.TabIndex = 19;
+            this.nud_cameraFPS.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nud_cameraFPS.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            // 
+            // lbl_cameraFramesPerSecond
+            // 
+            this.lbl_cameraFramesPerSecond.AutoSize = true;
+            this.lbl_cameraFramesPerSecond.Location = new System.Drawing.Point(52, 276);
+            this.lbl_cameraFramesPerSecond.Name = "lbl_cameraFramesPerSecond";
+            this.lbl_cameraFramesPerSecond.Size = new System.Drawing.Size(27, 13);
+            this.lbl_cameraFramesPerSecond.TabIndex = 18;
+            this.lbl_cameraFramesPerSecond.Text = "FPS";
+            // 
+            // lbl_cameraAudioInput
+            // 
+            this.lbl_cameraAudioInput.AutoSize = true;
+            this.lbl_cameraAudioInput.Location = new System.Drawing.Point(15, 189);
+            this.lbl_cameraAudioInput.Name = "lbl_cameraAudioInput";
+            this.lbl_cameraAudioInput.Size = new System.Drawing.Size(61, 13);
+            this.lbl_cameraAudioInput.TabIndex = 17;
+            this.lbl_cameraAudioInput.Text = "Audio Input";
+            // 
+            // cmbx_cameraAudioInput
+            // 
+            this.cmbx_cameraAudioInput.FormattingEnabled = true;
+            this.cmbx_cameraAudioInput.Location = new System.Drawing.Point(85, 186);
+            this.cmbx_cameraAudioInput.Name = "cmbx_cameraAudioInput";
+            this.cmbx_cameraAudioInput.Size = new System.Drawing.Size(121, 21);
+            this.cmbx_cameraAudioInput.TabIndex = 16;
+            // 
+            // lbl_camaraVideoCodecs
+            // 
+            this.lbl_camaraVideoCodecs.AutoSize = true;
+            this.lbl_camaraVideoCodecs.Location = new System.Drawing.Point(8, 165);
+            this.lbl_camaraVideoCodecs.Name = "lbl_camaraVideoCodecs";
+            this.lbl_camaraVideoCodecs.Size = new System.Drawing.Size(73, 13);
+            this.lbl_camaraVideoCodecs.TabIndex = 15;
+            this.lbl_camaraVideoCodecs.Text = "Video Codecs";
+            // 
+            // cmbx_cameraVideoCodecs
+            // 
+            this.cmbx_cameraVideoCodecs.FormattingEnabled = true;
+            this.cmbx_cameraVideoCodecs.Location = new System.Drawing.Point(85, 158);
+            this.cmbx_cameraVideoCodecs.Name = "cmbx_cameraVideoCodecs";
+            this.cmbx_cameraVideoCodecs.Size = new System.Drawing.Size(121, 21);
+            this.cmbx_cameraVideoCodecs.TabIndex = 14;
+            // 
+            // lbl_cameras
+            // 
+            this.lbl_cameras.AutoSize = true;
+            this.lbl_cameras.Location = new System.Drawing.Point(20, 130);
+            this.lbl_cameras.Name = "lbl_cameras";
+            this.lbl_cameras.Size = new System.Drawing.Size(48, 13);
+            this.lbl_cameras.TabIndex = 12;
+            this.lbl_cameras.Text = "Cameras";
+            // 
+            // cmbx_cameras
+            // 
+            this.cmbx_cameras.FormattingEnabled = true;
+            this.cmbx_cameras.Location = new System.Drawing.Point(85, 127);
+            this.cmbx_cameras.Name = "cmbx_cameras";
+            this.cmbx_cameras.Size = new System.Drawing.Size(121, 21);
+            this.cmbx_cameras.TabIndex = 11;
             // 
             // label1
             // 
@@ -364,15 +561,15 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.stopButton);
-            this.splitContainer2.Size = new System.Drawing.Size(542, 35);
-            this.splitContainer2.SplitterDistance = 262;
+            this.splitContainer2.Size = new System.Drawing.Size(593, 54);
+            this.splitContainer2.SplitterDistance = 286;
             this.splitContainer2.TabIndex = 0;
             // 
             // RecordGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(542, 325);
+            this.ClientSize = new System.Drawing.Size(593, 476);
             this.Controls.Add(this.splitContainer1);
             this.Name = "RecordGui";
             this.Text = "RecordGui";
@@ -393,8 +590,10 @@
             this.splitContainer4.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar_quality)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trkbr_screenQuality)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_screenFPS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trkbr_cameraQuality)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_cameraFPS)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -411,26 +610,41 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer4;
         private System.Windows.Forms.Label label_screenAudioDevice;
-        private System.Windows.Forms.ComboBox comboBox_screenAudioDevice;
-        private System.Windows.Forms.Label label_ScreenCodecs;
-        private System.Windows.Forms.ComboBox comboBox_screenCodecs;
+        private System.Windows.Forms.ComboBox cmbx_screenAudioDevice;
+        private System.Windows.Forms.Label label_screenVideoCodecs;
+        private System.Windows.Forms.ComboBox cmbx_screenVideoCodecs;
         private System.Windows.Forms.Label label_RecordOptions;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem affectivaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moreOptionsToolStripMenuItem;
-        private System.Windows.Forms.Label FPSLabel;
+        private System.Windows.Forms.Label lbl_screenFPS;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelPath;
         private System.Windows.Forms.Button buttonFilePath;
         private System.Windows.Forms.TextBox textBoxName;
-        private System.Windows.Forms.Label lbl_displayQualityValue;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TrackBar trackBar_quality;
+        private System.Windows.Forms.Label lbl_screenQualityValue;
+        private System.Windows.Forms.Label lbl_screenQuality;
+        private System.Windows.Forms.TrackBar trkbr_screenQuality;
         private System.Windows.Forms.Label lbl_screenSelect;
-        private System.Windows.Forms.ComboBox numUpDown_screenSelect;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.ComboBox cmbx_screenSelect;
+        private System.Windows.Forms.NumericUpDown nud_screenFPS;
+        private System.Windows.Forms.ComboBox cmbx_screenAudioCodecs;
+        private System.Windows.Forms.Label lbl_screenAudioCodecs;
+        private System.Windows.Forms.Label lbl_cameraAudioCodec;
+        private System.Windows.Forms.ComboBox cmbx_cameraAudioCodecs;
+        private System.Windows.Forms.Label lbl_cameraQualityValue;
+        private System.Windows.Forms.Label lbl_cameraQaulity;
+        private System.Windows.Forms.TrackBar trkbr_cameraQuality;
+        private System.Windows.Forms.NumericUpDown nud_cameraFPS;
+        private System.Windows.Forms.Label lbl_cameraFramesPerSecond;
+        private System.Windows.Forms.Label lbl_cameraAudioInput;
+        private System.Windows.Forms.ComboBox cmbx_cameraAudioInput;
+        private System.Windows.Forms.Label lbl_camaraVideoCodecs;
+        private System.Windows.Forms.ComboBox cmbx_cameraVideoCodecs;
+        private System.Windows.Forms.Label lbl_cameras;
+        private System.Windows.Forms.ComboBox cmbx_cameras;
     }
 
 

@@ -53,7 +53,7 @@ namespace UX_Affectiva_Research_Tool
             {
                Console.WriteLine("Screen");
                ScreenCapturePlaybackWindow gameFeed;
-               gameFeed = new ScreenCapturePlaybackWindow(((RecordingTool.Recorder)_RecorderType).GetFullName());
+               gameFeed = new ScreenCapturePlaybackWindow(((RecordingTool.Recorder)_RecorderType).GetSavedFilePath());
 
                gameFeed.Show(cameraFeed.Pane, DockAlignment.Left, 0.5);
                Panels.Add(gameFeed);
