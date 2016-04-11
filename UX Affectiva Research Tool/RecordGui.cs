@@ -63,17 +63,17 @@ namespace UX_Affectiva_Research_Tool
 
         private void startButton_Click(object sender, EventArgs e)
         {
-
-            stopWatch.Start();
-            for (int count = 0; count < arrayOfRecordingTools.Count; count++)
-            {
-                arrayOfRecordingTools[count].startRecording();
-              
-            }
-
-          
-
-            SetVisibility(true);
+            //Wes test code for DataBase (Saved on External for REF)
+           // stopWatch.Start();
+           // for (int count = 0; count < arrayOfRecordingTools.Count; count++)
+           // {
+           //     arrayOfRecordingTools[count].startRecording();
+           //   
+           // }
+           //
+           //
+           //
+           // SetVisibility(true);
         }
 
         private void stopButton_Click(object sender, EventArgs e)
