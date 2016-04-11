@@ -35,7 +35,7 @@ namespace RecordingTool
         WaveInEvent mAudioSource;
         private Thread mScreenThread;
         IAviVideoStream mVideoStream;
-        private int mQuality = 100;
+        private int mQuality;
         private FourCC mSelectedCodec;
         private int mFramesPerSecond;
         private bool mIsEncoded;
@@ -148,10 +148,6 @@ namespace RecordingTool
 
             mVideoStream.Name = "Screencast";
 
-
-
-
-
             suppForm = SupportedWaveFormat.WAVE_FORMAT_44S16;
             mWaveFormat = ToWaveFormat(suppForm);
 
@@ -165,9 +161,7 @@ namespace RecordingTool
                 BufferMilliseconds = (int)Math.Ceiling(1000 / mWriter.FramesPerSecond),
                 NumberOfBuffers = 3,
             };
-            mAudioSource.DataAvailable += audioSource_DataAvailable;
-
-          
+            mAudioSource.DataAvailable += audioSource_DataAvailable;    
 
         }
 
@@ -231,13 +225,7 @@ namespace RecordingTool
             int shotsTaken = 0;
             TimeSpan timeTillNextFrame = TimeSpan.Zero;
 
-
-
             stopwatch.Start();
-
-
-
-
 
             while (!mStopThread.WaitOne(timeTillNextFrame))
             {
@@ -247,8 +235,6 @@ namespace RecordingTool
                 if (!isFirstFrame)
                 {
                     videoWriteTask.Wait();
-
-
 
                     mVideoFrameWritten.Set();
                 }
@@ -266,8 +252,6 @@ namespace RecordingTool
                     timeTillNextFrame = TimeSpan.Zero;
 
                 isFirstFrame = false;
-
-
             }
             stopwatch.Stop();
             // Wait for the last frame is written
@@ -277,7 +261,6 @@ namespace RecordingTool
                 videoWriteTask.Wait();
 
             }
-
         }
         /// <summary>
         /// To the wave format.
