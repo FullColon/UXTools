@@ -29,7 +29,7 @@ namespace UX_Affectiva_Research_Tool
         private Stopwatch mStopWatch = new Stopwatch();
         private MainWindow mDocablePanel;
         private AudioDevice mScreenAudioInput, mCameraAudioInput;
-        private dynamic mScreenCodecInfo, mCameraCodecInfo;
+        private CodecInfo mScreenCodecInfo, mCameraCodecInfo;
         private AffectOptions SetupAffectiva;
         private int mScreenQuality, mCameraQuality;
         private int mScreenFramesPerSecond, mCameraFramesPerSecond;
