@@ -361,21 +361,28 @@ namespace RecordingTool
                 Marshal.Copy(bits.Scan0, _buffer, 0, _buffer.Length);
                 bitmap.UnlockBits(bits);
 
-    //            byte[] compressed = encodeBuffer(_buffer);
-   //             Console.WriteLine("CompressedSize: " + compressed.Length);
+                int imgSize;
+                byte[] compressed = encodeBuffer(_buffer, out imgSize);
+                Console.WriteLine("CompressedSize: " + imgSize);
 
                 // Should also capture the mouse cursor here, but skipping for simplicity
                 // For those who are interested, look at http://www.codeproject.com/Articles/12850/Capturing-the-Desktop-Screen-with-the-Mouse-Cursor
             }
         }
 
-/*        private byte[] encodeBuffer(byte[] _buffer)
+        /// <summary>
+        /// Encode a frame buffer with the requested codec.
+        /// </summary>
+        /// <param name="_buffer">Buffer to encode</param>
+        /// <param name="_imgSize">Size of image after compression</param>
+        /// <returns></returns>
+        private byte[] encodeBuffer(byte[] _buffer, out int _imgSize)
         {
             byte[] dest = new byte[_buffer.Length];
             bool isKeyFrame;
-            int imgSize = mEncoder.EncodeFrame(_buffer, 0, dest, 0, out isKeyFrame);
+            _imgSize = mEncoder.EncodeFrame(_buffer, 0, dest, 0, out isKeyFrame);
             return dest;
-        } */
+        }
 
     }
 
