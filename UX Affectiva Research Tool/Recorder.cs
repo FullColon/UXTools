@@ -18,10 +18,11 @@ using System.IO;
 namespace RecordingTool
 {
     /// <summary>
-    /// Event is fired when a frame buffer is encoded.
+    /// Event is fired when a frame buffer is captured.
     /// </summary>
     /// <param name="_buffer">Frame buffer.</param>
-    public delegate void FrameBufferEncoded(byte[] _buffer);
+    /// <param name="_imgSize">Size of image in buffer</param>
+    public delegate void FrameBufferCaptured(byte[] _buffer, int _imgSize);
 
 
     class Recorder : RecordingToolBase
@@ -45,10 +46,13 @@ namespace RecordingTool
         private int mScreenTop;
         private int mScreenLeft;
         private string mAudioCodec;
+        private byte[] mFrameBuffer;
 
         private readonly ManualResetEvent mStopThread = new ManualResetEvent(false);
         private readonly AutoResetEvent mVideoFrameWritten = new AutoResetEvent(false);
         private readonly AutoResetEvent mAudioBlockWritten = new AutoResetEvent(false);
+
+        public FrameBufferCaptured onFrameCaptured;
 
 
         /// <summary>
@@ -223,6 +227,7 @@ namespace RecordingTool
             Stopwatch stopwatch = new Stopwatch();
 
             byte[] buffer = new byte[mScreenArea.Width * mScreenArea.Height * 4];
+            mFrameBuffer = new byte[mScreenArea.Width * mScreenArea.Height * 4];
 
             Task videoWriteTask = null;
             bool isFirstFrame = true;
@@ -365,9 +370,18 @@ namespace RecordingTool
                 Marshal.Copy(bits.Scan0, _buffer, 0, _buffer.Length);
                 bitmap.UnlockBits(bits);
 
-                int imgSize;
-                byte[] compressed = encodeBuffer(_buffer, out imgSize);
-                Console.WriteLine("CompressedSize: " + imgSize);
+                if(mEncoder != null)
+                {
+                    int imgSize = encodeBuffer(_buffer);
+                    Console.WriteLine("CompressedSize: " + imgSize);
+                    if (onFrameCaptured != null)
+                        onFrameCaptured(mFrameBuffer, imgSize);
+                }
+                else
+                {
+                    if (onFrameCaptured != null)
+                        onFrameCaptured(_buffer, _buffer.Length);
+                }
 
                 // Should also capture the mouse cursor here, but skipping for simplicity
                 // For those who are interested, look at http://www.codeproject.com/Articles/12850/Capturing-the-Desktop-Screen-with-the-Mouse-Cursor
@@ -376,16 +390,14 @@ namespace RecordingTool
 
         /// <summary>
         /// Encode a frame buffer with the requested codec.
+        /// Saves compressed data to mFrameBuffer
         /// </summary>
         /// <param name="_buffer">Buffer to encode</param>
-        /// <param name="_imgSize">Size of image after compression</param>
-        /// <returns></returns>
-        private byte[] encodeBuffer(byte[] _buffer, out int _imgSize)
+        /// <returns>Size of encoded buffer</returns>
+        private int encodeBuffer(byte[] _buffer)
         {
-            byte[] dest = new byte[_buffer.Length];
             bool isKeyFrame;
-            _imgSize = mEncoder.EncodeFrame(_buffer, 0, dest, 0, out isKeyFrame);
-            return dest;
+            return mEncoder.EncodeFrame(_buffer, 0, mFrameBuffer, 0, out isKeyFrame);
         }
 
     }
