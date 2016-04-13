@@ -129,6 +129,10 @@ namespace RecordingTool
             string mFilePath = Path.GetDirectoryName(Path.GetDirectoryName(currentDirectory));
             mFullPath = mFilePath + saveDirectory + @"\screenRecord.avi";
 
+            if(!Directory.Exists(mFilePath + saveDirectory))
+            {
+                Directory.CreateDirectory(mFilePath + saveDirectory);
+            }
 
             mWriter = new AviWriter(mFullPath)
             {

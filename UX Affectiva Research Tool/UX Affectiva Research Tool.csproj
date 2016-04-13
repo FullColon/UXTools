@@ -266,6 +266,7 @@
     <PreBuildEvent>ROBOCOPY "$(SolutionDir)Affectiva Information\data" "$(TargetDir)AffectivaFiles\data" /E /XN /XO
 ROBOCOPY "$(SolutionDir)Aforge.Net\Externals\ffmpeg\dlls" "$(TargetDir)\" /E /XN /XO
 ROBOCOPY "$(SolutionDir)Affectiva Information\DebugDll" "$(TargetDir)\" "affdex-native.dll" /XN /XO
+ROBOCOPY "$(SolutionDir)Affectiva Information" "$(TargetDir)\" "opencv_ffmpeg248.dll" /XN /XO
 ROBOCOPY "$(SolutionDir)Affectiva Information" "$(TargetDir)AffectivaFiles" "sdk_shawns@fullsail.com.license.txt" /XN /XO
 ROBOCOPY "$(SolutionDir)LAME" "$(TargetDir)\" "libmp3lame.32.dll" /XN /XO
 ROBOCOPY "$(SolutionDir)LAME" "$(TargetDir)\" "libmp3lame.64.dll" /XN /XO</PreBuildEvent>
