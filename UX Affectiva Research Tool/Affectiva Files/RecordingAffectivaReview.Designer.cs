@@ -142,6 +142,7 @@
             this.textBoxYValue.Name = "textBoxYValue";
             this.textBoxYValue.Size = new System.Drawing.Size(100, 20);
             this.textBoxYValue.TabIndex = 1;
+            this.textBoxYValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxValue_KeyPress);
             // 
             // textBoxXValue
             // 
@@ -149,6 +150,7 @@
             this.textBoxXValue.Name = "textBoxXValue";
             this.textBoxXValue.Size = new System.Drawing.Size(100, 20);
             this.textBoxXValue.TabIndex = 0;
+            this.textBoxXValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxValue_KeyPress);
             // 
             // chart1
             // 
