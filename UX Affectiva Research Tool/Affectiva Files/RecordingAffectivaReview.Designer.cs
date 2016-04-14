@@ -31,8 +31,9 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonRemove = new System.Windows.Forms.Button();
+            this.buttonReset = new System.Windows.Forms.Button();
+            this.comboBoxEmotionSelect = new System.Windows.Forms.ComboBox();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.textBoxLabel = new System.Windows.Forms.TextBox();
@@ -54,8 +55,9 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.button3);
-            this.splitContainer1.Panel1.Controls.Add(this.button2);
+            this.splitContainer1.Panel1.Controls.Add(this.buttonRemove);
+            this.splitContainer1.Panel1.Controls.Add(this.buttonReset);
+            this.splitContainer1.Panel1.Controls.Add(this.comboBoxEmotionSelect);
             this.splitContainer1.Panel1.Controls.Add(this.buttonAdd);
             this.splitContainer1.Panel1.Controls.Add(this.button1);
             this.splitContainer1.Panel1.Controls.Add(this.textBoxLabel);
@@ -69,25 +71,43 @@
             this.splitContainer1.SplitterDistance = 386;
             this.splitContainer1.TabIndex = 0;
             // 
-            // button3
+            // buttonRemove
             // 
-            this.button3.Location = new System.Drawing.Point(13, 181);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "Zoom -";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.buttonRemove.Location = new System.Drawing.Point(13, 151);
+            this.buttonRemove.Name = "buttonRemove";
+            this.buttonRemove.Size = new System.Drawing.Size(75, 23);
+            this.buttonRemove.TabIndex = 10;
+            this.buttonRemove.Text = "Remove";
+            this.buttonRemove.UseVisualStyleBackColor = true;
+            this.buttonRemove.Click += new System.EventHandler(this.RemovePeice);
             // 
-            // button2
+            // buttonReset
             // 
-            this.button2.Location = new System.Drawing.Point(13, 152);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Zoom +";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.buttonReset.Location = new System.Drawing.Point(284, 3);
+            this.buttonReset.Name = "buttonReset";
+            this.buttonReset.Size = new System.Drawing.Size(99, 23);
+            this.buttonReset.TabIndex = 9;
+            this.buttonReset.Text = "Zoom  Reset";
+            this.buttonReset.UseVisualStyleBackColor = true;
+            this.buttonReset.Click += new System.EventHandler(this.ZoomReset);
+            // 
+            // comboBoxEmotionSelect
+            // 
+            this.comboBoxEmotionSelect.FormattingEnabled = true;
+            this.comboBoxEmotionSelect.Items.AddRange(new object[] {
+            "Sadness",
+            "Anger",
+            "Disgust",
+            "Fear",
+            "Joy",
+            "Surprise",
+            "Contempt",
+            "Engagment",
+            "Valence"});
+            this.comboBoxEmotionSelect.Location = new System.Drawing.Point(118, 11);
+            this.comboBoxEmotionSelect.Name = "comboBoxEmotionSelect";
+            this.comboBoxEmotionSelect.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxEmotionSelect.TabIndex = 8;
             // 
             // buttonAdd
             // 
@@ -155,6 +175,9 @@
             this.chart1.Size = new System.Drawing.Size(768, 548);
             this.chart1.TabIndex = 1;
             this.chart1.Text = "chart1";
+            this.chart1.Paint += new System.Windows.Forms.PaintEventHandler(this.chart1_Paint);
+            this.chart1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.chart1_MouseDown);
+            this.chart1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.chart1_MouseMove);
             this.chart1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.chart1_MouseUp);
             // 
             // RecordingAffectivaReview
@@ -184,7 +207,8 @@
         private System.Windows.Forms.TextBox textBoxXValue;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button buttonAdd;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button buttonRemove;
+        private System.Windows.Forms.Button buttonReset;
+        private System.Windows.Forms.ComboBox comboBoxEmotionSelect;
     }
 }
