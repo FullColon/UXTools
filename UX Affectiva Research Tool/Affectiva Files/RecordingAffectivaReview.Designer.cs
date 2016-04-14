@@ -40,6 +40,7 @@
             this.textBoxYValue = new System.Windows.Forms.TextBox();
             this.textBoxXValue = new System.Windows.Forms.TextBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.richTextBoxDesrciption = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -55,6 +56,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.richTextBoxDesrciption);
             this.splitContainer1.Panel1.Controls.Add(this.buttonRemove);
             this.splitContainer1.Panel1.Controls.Add(this.buttonReset);
             this.splitContainer1.Panel1.Controls.Add(this.comboBoxEmotionSelect);
@@ -73,7 +75,7 @@
             // 
             // buttonRemove
             // 
-            this.buttonRemove.Location = new System.Drawing.Point(13, 151);
+            this.buttonRemove.Location = new System.Drawing.Point(12, 251);
             this.buttonRemove.Name = "buttonRemove";
             this.buttonRemove.Size = new System.Drawing.Size(75, 23);
             this.buttonRemove.TabIndex = 10;
@@ -111,7 +113,7 @@
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(13, 122);
+            this.buttonAdd.Location = new System.Drawing.Point(12, 222);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(75, 23);
             this.buttonAdd.TabIndex = 4;
@@ -121,7 +123,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(13, 92);
+            this.button1.Location = new System.Drawing.Point(12, 193);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 3;
@@ -182,6 +184,14 @@
             this.chart1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.chart1_MouseMove);
             this.chart1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.chart1_MouseUp);
             // 
+            // richTextBoxDesrciption
+            // 
+            this.richTextBoxDesrciption.Location = new System.Drawing.Point(12, 91);
+            this.richTextBoxDesrciption.Name = "richTextBoxDesrciption";
+            this.richTextBoxDesrciption.Size = new System.Drawing.Size(100, 96);
+            this.richTextBoxDesrciption.TabIndex = 11;
+            this.richTextBoxDesrciption.Text = "";
+            // 
             // RecordingAffectivaReview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -212,5 +222,6 @@
         private System.Windows.Forms.Button buttonRemove;
         private System.Windows.Forms.Button buttonReset;
         private System.Windows.Forms.ComboBox comboBoxEmotionSelect;
+        private System.Windows.Forms.RichTextBox richTextBoxDesrciption;
     }
 }

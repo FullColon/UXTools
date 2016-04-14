@@ -213,11 +213,12 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
             if (LastPoint != null)
             {
                 RemovePoint(LastPoint, LastSeris);
-
+                LastPoint.ToolTip = richTextBoxDesrciption.Text;
                 LastPoint.Label = textBoxLabel.Text;
                 LastPoint.XValue = Convert.ToDouble(textBoxXValue.Text);
                 LastPoint.YValues[0] = Convert.ToDouble(textBoxYValue.Text);
-
+                LastPoint.MarkerStyle = MarkerStyle.Circle;
+                LastPoint.MarkerSize = 20;
                 LastSeris = chart1.Series[comboBoxEmotionSelect.Text];
                 InsertDataPoint(LastPoint, LastSeris);
             }
@@ -248,7 +249,9 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
 
             LastPoint = new DataPoint(Convert.ToDouble(textBoxXValue.Text), Convert.ToDouble(textBoxYValue.Text));
             LastPoint.Label = textBoxLabel.Text;
-
+            LastPoint.ToolTip = richTextBoxDesrciption.Text;
+            LastPoint.MarkerStyle = MarkerStyle.Triangle;
+            LastPoint.MarkerSize = 20;
             LastSeris = chart1.Series[comboBoxEmotionSelect.Text];
             InsertDataPoint(LastPoint, LastSeris);
 
@@ -366,15 +369,24 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
             if (MouseEventsToHandle != null)
                 if (MouseEventsToHandle.Button == MouseButtons.Right)
                 {
-                    MouseposX = chart1.ChartAreas[0].AxisX.PixelPositionToValue(MouseEventsToHandle.Location.X);
+                    //if (!(MouseEventsToHandle.Location.X > 100 || MouseEventsToHandle.Location.X < 0 || MouseEventsToHandle.Location.Y > 100 || MouseEventsToHandle.Location.Y < 0))
+                    //{
+                    try {
+                        MouseposX = chart1.ChartAreas[0].AxisX.PixelPositionToValue(MouseEventsToHandle.Location.X);
 
-                    MouseposY = chart1.ChartAreas[0].AxisY.PixelPositionToValue(MouseEventsToHandle.Location.Y);
+                        MouseposY = chart1.ChartAreas[0].AxisY.PixelPositionToValue(MouseEventsToHandle.Location.Y);
 
 
 
-                    textBoxXValue.Text = MouseposX.ToString();
-                    textBoxYValue.Text = MouseposY.ToString();
-
+                        textBoxXValue.Text = MouseposX.ToString();
+                        textBoxYValue.Text = MouseposY.ToString();
+                    }
+                    catch(Exception exc)
+                    {
+                       
+                    }
+                    
+                   // }
                 }
 
         }
@@ -402,6 +414,7 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
                 textBoxLabel.Text = LastSeris.Points[EmotionIndex].Label;
                 textBoxXValue.Text = LastSeris.Points[EmotionIndex].XValue.ToString();
                 textBoxYValue.Text = LastSeris.Points[EmotionIndex].YValues[0].ToString();
+                richTextBoxDesrciption.Text=LastPoint.ToolTip;
             }
 
         }
