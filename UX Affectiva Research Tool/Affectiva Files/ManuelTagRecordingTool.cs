@@ -9,7 +9,12 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
 {
     class ManuelTagRecordingTool: RecordingToolBase
     {
+        
         AffectivaDataRecordingEmotionsandExpressions AffCamFacRec;
+        public AffectivaDataRecordingEmotionsandExpressions getAffRecordingData()
+        {
+            return AffCamFacRec;
+        }
         PostAffectivaEvaltionTool PostEvaulTool;
         ManuelTagWindow ManuelWindow;
         RecordingAffectivaReview GraphWindow;
