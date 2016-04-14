@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Affdex;
 using System.IO;
+using SharpAvi.Output;
+using SharpAvi.Codecs;
+using SharpAvi;
+using System.Drawing.Imaging;
+using System.Drawing;
+using System.Runtime.InteropServices;
+
 namespace UX_Affectiva_Research_Tool.Affectiva_Files
 {
     /// <summary>
@@ -13,19 +20,55 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
     /// </summary>
    public class VideoStreamFileSaver
     {
-        private AForge.Video.FFMPEG.VideoFileWriter mFileWriter = new AForge.Video.FFMPEG.VideoFileWriter();
+        IAviVideoStream mVideoStream;
+        AviWriter mWriter;
+        //   private AForge.Video.FFMPEG.VideoFileWriter mFileWriter = new AForge.Video.FFMPEG.VideoFileWriter();
         private System.Windows.Forms.SaveFileDialog mSaveAvi;
         bool mOpened = false;
         /// <summary>
         /// Byte Arrays for bitmas need allocated memory, this will speed up the process
         /// </summary>
         IntPtr mAllocatedPointer;
-        int countofFramesToadd = 0;
-        AffectivaCameraRecordingTool mCamDect;
+      
+        
         string mFilePath;
+        int mScreenHeight;
+         int mScreenWidth;
+        byte[] mCopyToStreammBuffer;
+
         public string getFilePath()
         {
             return mFilePath;
+        }
+        /// <summary>
+        /// Set up Codec and stream for videowriter
+        /// </summary>
+        /// <param name="codec"></param>
+        /// <param name="quality"></param>
+        /// <returns></returns>
+        private IAviVideoStream CreateVideoStream(FourCC codec, int quality)
+        {
+            // Select encoder type based on FOURCC of codec
+            if (codec == SharpAvi.KnownFourCCs.Codecs.Uncompressed)
+            {
+                return mWriter.AddUncompressedVideoStream(mScreenWidth, mScreenHeight);
+            }
+            else if (codec == KnownFourCCs.Codecs.MotionJpeg)
+            {
+                return mWriter.AddMotionJpegVideoStream(mScreenWidth, mScreenHeight, quality);
+            }
+            else
+            {
+                return mWriter.AddMpeg4VideoStream(mScreenWidth, mScreenHeight, (double)mWriter.FramesPerSecond,
+                    // It seems that all tested MPEG-4 VfW codecs ignore the quality affecting parameters passed through VfW API
+                    // They only respect the settings from their own configuration dialogs, and Mpeg4VideoEncoder currently has no support for this
+                    quality: quality,
+                    codec: codec,
+                    // Most of VfW codecs expect single-threaded use, so we wrap this encoder to special wrapper
+                    // Thus all calls to the encoder (including its instantiation) will be invoked on a single thread although encoding (and writing) is performed asynchronously
+                    forceSingleThreadedAccess: true);
+            }
+            
         }
         /// <summary>
         ///  Set Up SaveFileDialog to AVI
@@ -48,7 +91,7 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
         {
             mSaveAvi = new SaveFileDialog();
             mSaveAvi.Filter = "Avi Files (*.avi)|*.avi";
-            mCamDect = _camdect;
+          
 
             string currentDirectory = Environment.CurrentDirectory;
             string newDir = Path.GetDirectoryName(Path.GetDirectoryName(currentDirectory));
@@ -60,15 +103,21 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
         /// <param name="_currenFrame"></param>
         public void OpenStream(Frame _currenFrame)
         {
-            System.Drawing.Bitmap currentImage=FrameToBitmap(_currenFrame);
-            int h = currentImage.Height;
-            int w = currentImage.Width;
-           // if (mSaveAvi.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-             
-            mFileWriter.Open(mFilePath, w, h, 30, AForge.Video.FFMPEG.VideoCodec.Default, 5000000);
            
+            System.Drawing.Bitmap currentImage=FrameToBitmap(_currenFrame);
+             mScreenHeight = currentImage.Height;
+             mScreenWidth = currentImage.Width;
+           
+            mWriter = new AviWriter(mFilePath);
+           
+            mWriter.FramesPerSecond = 30;
+            mVideoStream = CreateVideoStream(KnownFourCCs.Codecs.MotionJpeg, 20);
+           
+            mVideoStream.Height = _currenFrame.getHeight();
+            mVideoStream.Width = _currenFrame.getWidth();
             mAllocatedPointer = System.Runtime.InteropServices.Marshal.AllocHGlobal(_currenFrame.getBGRByteArray().Length);
             mOpened = true;
+            mCopyToStreammBuffer = new byte[mScreenWidth * mScreenHeight * 4];
             AddBitmap(_currenFrame.getWidth(), _currenFrame.getHeight(), _currenFrame.getBGRByteArray(), _currenFrame.getColorFormat(), _currenFrame.getTimestamp());
         }
         /// <summary>
@@ -83,6 +132,9 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
         }
         /// <summary>
         /// Adds a Bit map to a stream
+        /// by turning frame into a bitmap
+        /// then convert bitmap into proper pixel format for streaming
+        /// then passing it to stream
         /// </summary>
         /// <param name="frameWidth"></param>
         /// <param name="frameHeight"></param>
@@ -92,40 +144,62 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
         public void AddBitmap(int frameWidth, int frameHeight, byte[] pixels, Frame.COLOR_FORMAT frameColorFormat, float timestamp)
         {
 
-           
-                Frame _currentImage = new Frame(frameWidth, frameHeight,(byte[]) pixels.Clone(), frameColorFormat, timestamp);
 
-                System.Runtime.InteropServices.Marshal.Copy(_currentImage.getBGRByteArray(), 0, mAllocatedPointer, _currentImage.getBGRByteArray().Length);
+            // Frame _currentImage = new Frame(frameWidth, frameHeight,(byte[]) pixels.Clone(), frameColorFormat, timestamp);
+             ///setup bitmap from frame
+            System.Runtime.InteropServices.Marshal.Copy(pixels, 0, mAllocatedPointer, pixels.Length);
+           System.Drawing.Bitmap _bitmap = new System.Drawing.Bitmap(frameWidth, frameHeight, (frameWidth * System.Windows.Media.PixelFormats.Bgr24.BitsPerPixel + 7) / 8,
+                        System.Drawing.Imaging.PixelFormat.Format24bppRgb, mAllocatedPointer);
+         
+            /// convert bitmap into proper format for stream
+            var bmp = new Bitmap(_bitmap.Width, _bitmap.Height, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+            using (var gr = Graphics.FromImage(bmp))
+                gr.DrawImage(_bitmap, new Rectangle(0, 0, _bitmap.Width, _bitmap.Height));
 
-                System.Drawing.Bitmap _bitmap = new System.Drawing.Bitmap(_currentImage.getWidth(), _currentImage.getHeight(), (_currentImage.getWidth() * System.Windows.Media.PixelFormats.Bgr24.BitsPerPixel + 7) / 8,
-                             System.Drawing.Imaging.PixelFormat.Format24bppRgb, mAllocatedPointer);
-                try
+           // place into buffer
+            var bits = bmp.LockBits(new Rectangle(0, 0, frameWidth, frameHeight), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+            Marshal.Copy(bits.Scan0, mCopyToStreammBuffer, 0, mCopyToStreammBuffer.Length);
+            bmp.UnlockBits(bits);
+            try
                 {
-                    mFileWriter.WriteVideoFrame(_bitmap);
-
-                }
+                
+              
+                /// pass in buffer
+               mVideoStream.WriteFrame(true, mCopyToStreammBuffer, 0, mCopyToStreammBuffer.Length);
+               
+                
+            }
                 catch (Exception e)
                 {
                     MessageBox.Show(e.ToString());
                 }
-                if (mOpened)
-                    countofFramesToadd--;
-                else
-                    mFileWriter.Close();
+                
+          
             
            
-           //     System.Runtime.InteropServices.Marshal.FreeHGlobal(pt);
+             
         }
+        /// <summary>
+        /// shuts mwriter off
+        /// </summary>
         public void CloseFileSaver()
         {
 
             mOpened = false;
-            mFileWriter.Close();
+         
+          
+            mWriter.Close();
+            System.Runtime.InteropServices.Marshal.FreeHGlobal(mAllocatedPointer);
 
         }
+        /// <summary>
+        /// passes back variable for checking if streamer is open
+        /// </summary>
+        /// <returns></returns>
         public bool IsOpen()
         {
-            return mFileWriter.IsOpen;
+            // return mFileWriter.IsOpen;
+            return mOpened;
         }
     }
 }
