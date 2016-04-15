@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Management;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -14,7 +15,12 @@ using mySharpAVI;
 using SharpAvi.Codecs;
 using SharpAvi;
 using NAudio.Wave;
-
+using System.Windows.Forms.DataVisualization.Charting;
+using System.Data.SQLite;
+using NAudio.CoreAudioApi;
+using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
+using Microsoft.Win32;
 
 namespace UX_Affectiva_Research_Tool
 {
@@ -27,6 +33,7 @@ namespace UX_Affectiva_Research_Tool
         AudioDevice mAudioDevice;
         CodecInfo mCodecInfo;
         AffectOptions SetupAffectiva;
+        TesterDB temp;
 
 
 
@@ -44,6 +51,7 @@ namespace UX_Affectiva_Research_Tool
             InitAvailableCodecs();
             InitAvailableAudioSources();
             SetUpRecordingTools();
+            temp = new TesterDB();
         }
         public void SetUpOptions()
         {
@@ -61,34 +69,56 @@ namespace UX_Affectiva_Research_Tool
             SetUpRecordingTools();
         }
 
+        List<Series> templist = new List<Series>();
+        SQLiteCommand myCommand = new SQLiteCommand();
+
+        DataTable data = new DataTable();
+
+        DataGridView myDGV = new DataGridView();
         private void startButton_Click(object sender, EventArgs e)
         {
-
-            stopWatch.Start();
-            for (int count = 0; count < arrayOfRecordingTools.Count; count++)
-            {
-                arrayOfRecordingTools[count].startRecording();
-              
-            }
-
-          
-
-            SetVisibility(true);
+            //Wes test code for DataBase (Saved on External for REF)
+            // stopWatch.Start();
+            // for (int count = 0; count < arrayOfRecordingTools.Count; count++)
+            // {
+            //     arrayOfRecordingTools[count].startRecording();
+            //   
+            // }
+            //
+            //
+            //
+            // SetVisibility(true);
+          //  string connectionString = @"data srouce =database.db ";
+          //  string selectQuery = "SELECT * FROM Emotions;";
+           // var table = TesterDB.ReadOut(connectionString, selectQuery);
+            //  TesterDB.WriteToCSV(table, /*EXAMPLE OUTPUTFILE*/, false, ",");
+            ////////////////////////////////////////////////
+            ////////Create New DB/////////////////////////
+            templist.Add(chart1.Series[0]);
+            myDGV.DataSource = templist;
+            temp.CreateNewDBConnection();
+            ///////////////////////////////////////////////////
+            ////////////Crate New Table///////////////////////
+            temp.NewTableCommand();
+            ////////////Populate Table//////////////////////
+            temp.PopulateNewTable(templist);
+            ////////////////////////////////////////////////////
+          //  temp.TESTEXPORT(ref myDGV);
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
-            stopWatch.Stop();
-            for (int count = 0; count < arrayOfRecordingTools.Count; count++)
-            {
-                arrayOfRecordingTools[count].stopRecording();
-              
-            }
-
-
-
-            SetVisibility(false);
-            MakeNeedForms();
+           //stopWatch.Stop();
+           //for (int count = 0; count < arrayOfRecordingTools.Count; count++)
+           //{
+           //    arrayOfRecordingTools[count].stopRecording();
+           //  
+           //}
+           //
+           //
+           //
+           //SetVisibility(false);
+           //MakeNeedForms();
         }
 
         public void SetVisibility(bool _visibility)
@@ -198,5 +228,7 @@ namespace UX_Affectiva_Research_Tool
                 
              }
         }
+
+      
     }
 }
