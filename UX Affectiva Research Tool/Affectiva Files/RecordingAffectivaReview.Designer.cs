@@ -31,6 +31,8 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.buttonSave = new System.Windows.Forms.Button();
+            this.richTextBoxDesrciption = new System.Windows.Forms.RichTextBox();
             this.buttonRemove = new System.Windows.Forms.Button();
             this.buttonReset = new System.Windows.Forms.Button();
             this.comboBoxEmotionSelect = new System.Windows.Forms.ComboBox();
@@ -40,7 +42,6 @@
             this.textBoxYValue = new System.Windows.Forms.TextBox();
             this.textBoxXValue = new System.Windows.Forms.TextBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.richTextBoxDesrciption = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -56,6 +57,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.buttonSave);
             this.splitContainer1.Panel1.Controls.Add(this.richTextBoxDesrciption);
             this.splitContainer1.Panel1.Controls.Add(this.buttonRemove);
             this.splitContainer1.Panel1.Controls.Add(this.buttonReset);
@@ -72,6 +74,24 @@
             this.splitContainer1.Size = new System.Drawing.Size(1158, 548);
             this.splitContainer1.SplitterDistance = 386;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.Location = new System.Drawing.Point(12, 280);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(75, 23);
+            this.buttonSave.TabIndex = 12;
+            this.buttonSave.Text = "Save";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
+            // richTextBoxDesrciption
+            // 
+            this.richTextBoxDesrciption.Location = new System.Drawing.Point(12, 91);
+            this.richTextBoxDesrciption.Name = "richTextBoxDesrciption";
+            this.richTextBoxDesrciption.Size = new System.Drawing.Size(100, 96);
+            this.richTextBoxDesrciption.TabIndex = 11;
+            this.richTextBoxDesrciption.Text = "";
             // 
             // buttonRemove
             // 
@@ -184,14 +204,6 @@
             this.chart1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.chart1_MouseMove);
             this.chart1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.chart1_MouseUp);
             // 
-            // richTextBoxDesrciption
-            // 
-            this.richTextBoxDesrciption.Location = new System.Drawing.Point(12, 91);
-            this.richTextBoxDesrciption.Name = "richTextBoxDesrciption";
-            this.richTextBoxDesrciption.Size = new System.Drawing.Size(100, 96);
-            this.richTextBoxDesrciption.TabIndex = 11;
-            this.richTextBoxDesrciption.Text = "";
-            // 
             // RecordingAffectivaReview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -223,5 +235,6 @@
         private System.Windows.Forms.Button buttonReset;
         private System.Windows.Forms.ComboBox comboBoxEmotionSelect;
         private System.Windows.Forms.RichTextBox richTextBoxDesrciption;
+        private System.Windows.Forms.Button buttonSave;
     }
 }

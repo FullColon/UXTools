@@ -78,47 +78,47 @@ namespace UX_Affectiva_Research_Tool
         private void startButton_Click(object sender, EventArgs e)
         {
             //Wes test code for DataBase (Saved on External for REF)
-            // stopWatch.Start();
-            // for (int count = 0; count < arrayOfRecordingTools.Count; count++)
-            // {
-            //     arrayOfRecordingTools[count].startRecording();
-            //   
-            // }
-            //
-            //
-            //
-            // SetVisibility(true);
-          //  string connectionString = @"data srouce =database.db ";
-          //  string selectQuery = "SELECT * FROM Emotions;";
-           // var table = TesterDB.ReadOut(connectionString, selectQuery);
-            //  TesterDB.WriteToCSV(table, /*EXAMPLE OUTPUTFILE*/, false, ",");
+           stopWatch.Start();
+           for (int count = 0; count < arrayOfRecordingTools.Count; count++)
+           {
+               arrayOfRecordingTools[count].startRecording();
+             
+           }
+          
+          
+          
+           SetVisibility(true);
+        //  string connectionString = @"data srouce =database.db ";
+         // string selectQuery = "SELECT * FROM Emotions;";
+         // var table = TesterDB.ReadOut(connectionString, selectQuery);
+           // TesterDB.WriteToCSV(table, /*EXAMPLE OUTPUTFILE*/, false, ",");
             ////////////////////////////////////////////////
             ////////Create New DB/////////////////////////
-            templist.Add(chart1.Series[0]);
-            myDGV.DataSource = templist;
-            temp.CreateNewDBConnection();
-            ///////////////////////////////////////////////////
-            ////////////Crate New Table///////////////////////
-            temp.NewTableCommand();
-            ////////////Populate Table//////////////////////
-            temp.PopulateNewTable(templist);
+            //templist.Add(chart1.Series[0]);
+            //myDGV.DataSource = templist;
+            //temp.CreateNewDBConnection();
+            /////////////////////////////////////////////////////
+            //////////////Crate New Table///////////////////////
+            //temp.NewTableCommand();
+            //////////////Populate Table//////////////////////
+            //temp.PopulateNewTable(templist);
             ////////////////////////////////////////////////////
           //  temp.TESTEXPORT(ref myDGV);
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
-           //stopWatch.Stop();
-           //for (int count = 0; count < arrayOfRecordingTools.Count; count++)
-           //{
-           //    arrayOfRecordingTools[count].stopRecording();
-           //  
-           //}
-           //
-           //
-           //
-           //SetVisibility(false);
-           //MakeNeedForms();
+           stopWatch.Stop();
+           for (int count = 0; count < arrayOfRecordingTools.Count; count++)
+           {
+               arrayOfRecordingTools[count].stopRecording();
+             
+           }
+           
+           
+           
+           SetVisibility(false);
+           MakeNeedForms();
         }
 
         public void SetVisibility(bool _visibility)
@@ -132,7 +132,7 @@ namespace UX_Affectiva_Research_Tool
             arrayOfRecordingTools = new List<RecordingToolBase>();
            // arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch,20,true));
                 arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording());
-              arrayOfRecordingTools.Add(new mySharpAVI.myRecorder(mAudioDevice, mCodecInfo));
+           //   arrayOfRecordingTools.Add(new mySharpAVI.myRecorder(mAudioDevice, mCodecInfo));
 
 
             // arrayOfRecordingTools.Add(new Audio());

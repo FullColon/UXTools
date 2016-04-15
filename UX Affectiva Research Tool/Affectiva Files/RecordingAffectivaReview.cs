@@ -420,5 +420,27 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
 
         }
 
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            SaveDataToDataBase();
+        }
+
+        private void SaveDataToDataBase()
+        {
+          
+           
+
+                        TesterDB TempDataBase = new TesterDB();
+            TempDataBase.CreateNewDBConnection();
+            TempDataBase.NewTableCommand();
+            List<Series> temp = new List<Series>();
+            for(int i = 0; i < chart1.Series.Count; i++)
+            {
+                temp.Add(chart1.Series[i]);
+            }
+
+          TempDataBase.PopulateNewTable(temp);
+              
+        }
     }
 }
