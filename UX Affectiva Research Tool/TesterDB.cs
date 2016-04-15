@@ -53,12 +53,15 @@ namespace UX_Affectiva_Research_Tool
         //will add parameter for switch ase
         public void NewTableCommand()
         {
-            CreateNewDBConnection();
+            //CreateNewDBConnection();
             // string _query = "CREATE TABLE IF NOT EXISTS Emotions ( emotion INT, XValue FLOAT, Yvalue FLOAT );";
             string SQL = "CREATE TABLE IF NOT EXISTS Emotions ( emotion VARCHAR(20), XValue FLOAT, Yvalue FLOAT )";
             sqlite_cmd = new SQLiteCommand(SQL, sqlite_conn);
             // sqlite_cmd.CommandText = "CREATE TABLE IF NOT EXISTS Emotions ( emotion VARCHAR(20), XValue FLOAT, Yvalue FLOAT );";
-            sqlite_cmd.ExecuteNonQuery();
+             sqlite_cmd.ExecuteNonQuery();
+       
+           
+            
         }
 
         //-------------------------------------------------------------------------------------------------------------------

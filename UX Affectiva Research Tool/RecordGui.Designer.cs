@@ -28,6 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 3D);
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 1D);
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.startButton = new System.Windows.Forms.Button();
             this.stopButton = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -38,6 +46,7 @@
             this.affectivaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moreOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.FPSTEXTBOX = new System.Windows.Forms.TextBox();
             this.FPSLabel = new System.Windows.Forms.Label();
             this.label_screenAudioDevice = new System.Windows.Forms.Label();
@@ -63,6 +72,7 @@
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -74,7 +84,7 @@
             this.startButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.startButton.Location = new System.Drawing.Point(0, 0);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(262, 35);
+            this.startButton.Size = new System.Drawing.Size(548, 67);
             this.startButton.TabIndex = 0;
             this.startButton.Text = " Start Recording";
             this.startButton.UseVisualStyleBackColor = true;
@@ -85,7 +95,7 @@
             this.stopButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.stopButton.Location = new System.Drawing.Point(0, 0);
             this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(276, 35);
+            this.stopButton.Size = new System.Drawing.Size(582, 67);
             this.stopButton.TabIndex = 1;
             this.stopButton.Text = "Stop Recording";
             this.stopButton.UseVisualStyleBackColor = true;
@@ -105,8 +115,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(542, 325);
-            this.splitContainer1.SplitterDistance = 286;
+            this.splitContainer1.Size = new System.Drawing.Size(1134, 579);
+            this.splitContainer1.SplitterDistance = 508;
             this.splitContainer1.TabIndex = 2;
             // 
             // splitContainer3
@@ -123,8 +133,8 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer3.Size = new System.Drawing.Size(542, 286);
-            this.splitContainer3.SplitterDistance = 25;
+            this.splitContainer3.Size = new System.Drawing.Size(1134, 508);
+            this.splitContainer3.SplitterDistance = 43;
             this.splitContainer3.TabIndex = 0;
             // 
             // menuStrip1
@@ -134,7 +144,7 @@
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(542, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1134, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -159,13 +169,13 @@
             this.affectivaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.moreOptionsToolStripMenuItem});
             this.affectivaToolStripMenuItem.Name = "affectivaToolStripMenuItem";
-            this.affectivaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.affectivaToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.affectivaToolStripMenuItem.Text = "Affectiva";
             // 
             // moreOptionsToolStripMenuItem
             // 
             this.moreOptionsToolStripMenuItem.Name = "moreOptionsToolStripMenuItem";
-            this.moreOptionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.moreOptionsToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.moreOptionsToolStripMenuItem.Text = "More Options";
             this.moreOptionsToolStripMenuItem.Click += new System.EventHandler(this.moreOptionsToolStripMenuItem_Click);
             // 
@@ -177,6 +187,7 @@
             // 
             // splitContainer4.Panel1
             // 
+            this.splitContainer4.Panel1.Controls.Add(this.chart1);
             this.splitContainer4.Panel1.Controls.Add(this.FPSTEXTBOX);
             this.splitContainer4.Panel1.Controls.Add(this.FPSLabel);
             this.splitContainer4.Panel1.Controls.Add(this.label_screenAudioDevice);
@@ -191,9 +202,39 @@
             this.splitContainer4.Panel2.Controls.Add(this.labelPath);
             this.splitContainer4.Panel2.Controls.Add(this.buttonFilePath);
             this.splitContainer4.Panel2.Controls.Add(this.textBoxName);
-            this.splitContainer4.Size = new System.Drawing.Size(542, 257);
-            this.splitContainer4.SplitterDistance = 261;
+            this.splitContainer4.Size = new System.Drawing.Size(1134, 461);
+            this.splitContainer4.SplitterDistance = 546;
             this.splitContainer4.TabIndex = 0;
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(12, 158);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            series1.Points.Add(dataPoint1);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series2";
+            series2.Points.Add(dataPoint2);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series3";
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series4";
+            this.chart1.Series.Add(series1);
+            this.chart1.Series.Add(series2);
+            this.chart1.Series.Add(series3);
+            this.chart1.Series.Add(series4);
+            this.chart1.Size = new System.Drawing.Size(531, 300);
+            this.chart1.TabIndex = 7;
+            this.chart1.Text = "chart1";
             // 
             // FPSTEXTBOX
             // 
@@ -305,15 +346,15 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.stopButton);
-            this.splitContainer2.Size = new System.Drawing.Size(542, 35);
-            this.splitContainer2.SplitterDistance = 262;
+            this.splitContainer2.Size = new System.Drawing.Size(1134, 67);
+            this.splitContainer2.SplitterDistance = 548;
             this.splitContainer2.TabIndex = 0;
             // 
             // RecordGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(542, 325);
+            this.ClientSize = new System.Drawing.Size(1134, 579);
             this.Controls.Add(this.splitContainer1);
             this.Name = "RecordGui";
             this.Text = "RecordGui";
@@ -334,6 +375,7 @@
             this.splitContainer4.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -365,6 +407,7 @@
         private System.Windows.Forms.Label labelPath;
         private System.Windows.Forms.Button buttonFilePath;
         private System.Windows.Forms.TextBox textBoxName;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 
 
