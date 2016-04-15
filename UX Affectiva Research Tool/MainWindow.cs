@@ -20,8 +20,8 @@ namespace UX_Affectiva_Research_Tool
         string lk = "C:\\DFiles\\WorkFolderFinalProdject\\ux-affectiva.git.0\\UX Affectiva Research Tool\\UX Affectiva Research Tool\\SaveFolder\\TestSave.mp4";
         private ScreenCapturePlaybackWindow audioFeed;
         private ScreenCapturePlaybackWindow cameraFeed;
-        private RecordingAffectivaReview webRecord;
-
+        private RecordingAffectivaReview graphWindow;
+      
         public MainWindow()
         {
             Panels = new List<DockContent>();
@@ -61,11 +61,18 @@ namespace UX_Affectiva_Research_Tool
             else if (_RecorderType.GetType() == typeof(Affectiva_Files.AffectivaCameraFaceRecordingAndVideoRecording))
             {
                Console.WriteLine("CamAff");
-               webRecord = new RecordingAffectivaReview(((AffectivaCameraFaceRecordingAndVideoRecording)_RecorderType).GetAffectiveData(),false);
+                if (graphWindow == null)
+                {
+                    graphWindow = new RecordingAffectivaReview(((AffectivaCameraFaceRecordingAndVideoRecording)_RecorderType).GetAffectiveData(), false);
 
-               webRecord.Show(this.GetMainDockPanel(), DockState.DockBottom);
-               Panels.Add(webRecord);
-
+                    graphWindow.Show(this.GetMainDockPanel(), DockState.DockBottom);
+                    Panels.Add(graphWindow);
+                }
+                else
+                {
+                  
+                    graphWindow.MergeInData(((Affectiva_Files.AffectivaCameraFaceRecordingAndVideoRecording)_RecorderType).GetAffectiveData());
+                }
                cameraFeed = new ScreenCapturePlaybackWindow(((AffectivaCameraFaceRecordingAndVideoRecording)_RecorderType).getFileWriterVideo().getFilePath());
 
                cameraFeed.Show(this.GetMainDockPanel(), DockState.DockTop);
@@ -75,8 +82,13 @@ namespace UX_Affectiva_Research_Tool
             }
             else if (_RecorderType.GetType() == typeof(Affectiva_Files.ManuelTagRecordingTool))
             {
-                RecordingAffectivaReview graph = ((Affectiva_Files.ManuelTagRecordingTool)_RecorderType).GetGraphWindow(lk);
-                graph.Show(this.GetMainDockPanel(), DockState.DockBottom);
+                if (graphWindow == null)
+                {
+                    graphWindow = new RecordingAffectivaReview(((Affectiva_Files.ManuelTagRecordingTool)_RecorderType).getAffRecordingData(), false);
+                    graphWindow.Show(this.GetMainDockPanel(), DockState.DockBottom);
+                }
+                else
+                    graphWindow.MergeInData(((Affectiva_Files.ManuelTagRecordingTool)_RecorderType).getAffRecordingData());
             }
                         else if (_RecorderType.GetType() == typeof(Audio))
                       {

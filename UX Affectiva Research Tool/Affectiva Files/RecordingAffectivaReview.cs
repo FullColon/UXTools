@@ -7,6 +7,9 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace UX_Affectiva_Research_Tool.Affectiva_Files
 {
+    /// <summary>
+    /// Graph Window For Revewing data
+    /// </summary>
     public partial class RecordingAffectivaReview : DockPanelFormBase, Affdex.ProcessStatusListener
     {
         public double chartx, charty;
@@ -14,7 +17,7 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
         public delegate void LetOthersTakeMyData(AffectivaDataRecordingEmotionsandExpressions _Var);
         public LetOthersTakeMyData PassOffMyDataDelegate;
         public delegate void GraphWorkDelegate();
-        int SeriIndex = -1, EmotionIndex = -1;
+        int EmotionIndex = -1;
         Series LastSeris;
         public GraphWorkDelegate DrawingWorkDelegate;
         DataPoint LastPoint;
@@ -30,36 +33,54 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
                 AfCFRAVR = value;
             }
         }
-
+        double MouseposX;
+        double MouseposY;
+        double ChartLength = 0;
+        MouseEventArgs MouseEventsToHandle;
+        /// <summary>
+        /// bare bones for standard graph
+        /// </summary>
         public RecordingAffectivaReview()
         {
             InitializeComponent();
-
-          
+            comboBoxEmotionSelect.SelectedIndex = 1;
+            LastSeris = chart1.Series[comboBoxEmotionSelect.Text];
+            comboBoxEmotionSelect.SelectedIndex = 0;
         }
-
+        /// <summary>
+        /// For setting up for post processing
+        /// </summary>
+        /// <param name="_AFCAMandVIdeo"></param>
+        /// <param name="_PostProcesses"></param>
         public RecordingAffectivaReview(AffectivaDataRecordingEmotionsandExpressions _AFCAMandVIdeo, bool _PostProcesses)
         {
             InitializeComponent();
-
+            comboBoxEmotionSelect.SelectedIndex = 0;
             AffData = _AFCAMandVIdeo;
-            
+
             SetupChart(_AFCAMandVIdeo);
 
         }
-
+        /// <summary>
+        /// For Starting a chart from Recording Tool
+        /// </summary>
+        /// <param name="AfCFRAVR"></param>
         private void SetupChart(AffectivaDataRecordingEmotionsandExpressions AfCFRAVR)
         {
-            SetupChartFromSeries( AfCFRAVR.GetChartSeriesOfData());
-           
+            SetupChartFromSeries(AfCFRAVR.GetChartSeriesOfData());
+
         }
-        private void SetupChartFromSeries(List<System.Windows.Forms.DataVisualization.Charting.Series> seri )
+        /// <summary>
+        /// Start a chart from a series
+        /// </summary>
+        /// <param name="seri"></param>
+        private void SetupChartFromSeries(List<System.Windows.Forms.DataVisualization.Charting.Series> seri)
         {
-            
+
             for (int count = 0; count < seri.Count; count++)
             {
                 chart1.Series.Add(seri[count]);
-                chart1.Series[count].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+                chart1.Series[count].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 
                 chart1.Series[count].ChartArea = chart1.ChartAreas[0].Name;
             }
@@ -67,23 +88,31 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
 
             chart1.Invalidate();
         }
+        /// <summary>
+        /// Push in data from another recording tool
+        /// </summary>
+        /// <param name="_MergeIn"></param>
         public void MergeInData(AffectivaDataRecordingEmotionsandExpressions _MergeIn)
         {
             if (chart1.Series.Count > 0)
             {
-                MergeInSeriesOfList( _MergeIn.GetChartSeriesOfData());
-                
+                MergeInSeriesOfList(_MergeIn.GetChartSeriesOfData());
+
             }
             else
             {
                 SetupChart(_MergeIn);
             }
         }
+        /// <summary>
+        /// Get new Series to mereged list
+        /// </summary>
+        /// <param name="seri"></param>
         public void MergeInSeriesOfList(List<System.Windows.Forms.DataVisualization.Charting.Series> seri)
         {
             if (chart1.Series.Count > 0)
             {
-             
+
                 for (int countofseries = 0; countofseries < seri.Count; countofseries++)
                 {
                     System.Windows.Forms.DataVisualization.Charting.Series tempSeriesNew = seri[countofseries];
@@ -118,140 +147,277 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
                 SetupChartFromSeries(seri);
             }
         }
+        /// <summary>
+        /// This is where the Processor listener returns information for post processing excetions
+        /// </summary>
+        /// <param name="ex"></param>
         public void onProcessingException(AffdexException ex)
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// This is where the Processor listener returns information for post processing
+        /// </summary>
+        /// <param name="ex"></param>
         public void onProcessingFinished()
         {
             PassOffMyDataDelegate += MergeInData;
             Invoke(PassOffMyDataDelegate, AffData);
         }
-        MouseEventArgs pt;
-       
 
-        
-
-       
-
-        
-
-        
 
         private void chart1_MouseUp(object sender, MouseEventArgs e)
         {
-            pt = e;
-            HitTestResult result = chart1.HitTest(e.X, e.Y);
-            MessageBox.Show(e.X.ToString()+" "+ e.Y.ToString());
-            EmotionIndex = result.PointIndex;
-            LastSeris = result.Series;
-
-
-            if (result.PointIndex > -1)
+            if (e.Button == MouseButtons.Left)
             {
-                for (int i = 0; i < chart1.Series.Count; i++)
+                MouseEventsToHandle = e;
+                HitTestResult result = chart1.HitTest(e.X, e.Y);
+
+                EmotionIndex = result.PointIndex;
+                LastSeris = result.Series;
+
+
+                if (result.PointIndex > -1)
                 {
-                    if (chart1.Series[i] == LastSeris)
+                    for (int i = 0; i < chart1.Series.Count; i++)
                     {
-                        //MessageBox.Show(chart1.Series[i].Points[result.PointIndex].Label);
-                        SeriIndex = i;
-                        break;
+                        if (chart1.Series[i] == LastSeris)
+                        {
+                            //MessageBox.Show(chart1.Series[i].Points[result.PointIndex].Label);
+                            comboBoxEmotionSelect.SelectedIndex = i;
+                            break;
+                        }
                     }
+                    PointOnGraph();
+
                 }
-                PointOnGraph();
+            }
+            if (e.Button == MouseButtons.Right)
+            {
+                // add drag feature
+                if (LastPoint != null && LastSeris != null)
+                {
+
+                    LastPoint.Color = LastSeris.Color;
+                    LastPoint.XValue = MouseposX;
+                    LastPoint.YValues[0] = MouseposY;
+                    RemovePoint(LastPoint, LastSeris);
+                    InsertDataPoint(LastPoint, LastSeris);
+                }
             }
         }
 
         private void button1_Edit_Click(object sender, EventArgs e)
         {
-       
 
-             LastPoint.Label = textBoxLabel.Text;
-             LastPoint.XValue = Convert.ToDouble(textBoxXValue.Text);
-             LastPoint.YValues[0] = Convert.ToDouble(textBoxYValue.Text);
-            
-            LastSeris.Points.RemoveAt(EmotionIndex);
-            InsertDataPoint(LastPoint);
-        }
-        void InsertDataPoint(DataPoint temp)
-        {
-            bool added = false;
-            for (int i = 0; i < LastSeris.Points.Count; i++)
+            if (LastPoint != null)
             {
-                if (LastSeris.Points[i].XValue >= temp.XValue)
+                RemovePoint(LastPoint, LastSeris);
+                LastPoint.ToolTip = richTextBoxDesrciption.Text;
+                LastPoint.Label = textBoxLabel.Text;
+                LastPoint.XValue = Convert.ToDouble(textBoxXValue.Text);
+                LastPoint.YValues[0] = Convert.ToDouble(textBoxYValue.Text);
+                LastPoint.MarkerStyle = MarkerStyle.Circle;
+                LastPoint.MarkerSize = 20;
+                LastSeris = chart1.Series[comboBoxEmotionSelect.Text];
+                InsertDataPoint(LastPoint, LastSeris);
+            }
+        }
+        void InsertDataPoint(DataPoint temp, Series _LastSerie)
+        {
+
+            bool added = false;
+            for (int i = 0; i < _LastSerie.Points.Count; i++)
+            {
+                if (_LastSerie.Points[i].XValue >= temp.XValue)
                 {
 
-                    LastSeris.Points.Insert(i, temp);
+                    _LastSerie.Points.Insert(i, temp);
                     chart1.Invalidate();
                     added = true;
                     break;
                 }
             }
-            if(!added)
+            if (!added)
             {
-                LastSeris.Points.Add(temp);
+                _LastSerie.Points.Add(temp);
             }
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-          
+
             LastPoint = new DataPoint(Convert.ToDouble(textBoxXValue.Text), Convert.ToDouble(textBoxYValue.Text));
             LastPoint.Label = textBoxLabel.Text;
-            InsertDataPoint(LastPoint);
-            
+            LastPoint.ToolTip = richTextBoxDesrciption.Text;
+            LastPoint.MarkerStyle = MarkerStyle.Triangle;
+            LastPoint.MarkerSize = 20;
+            LastSeris = chart1.Series[comboBoxEmotionSelect.Text];
+            InsertDataPoint(LastPoint, LastSeris);
+
 
         }
-        double s = 100;
-        double c = 0;
-        private void button2_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Removes Points from series
+        /// </summary>
+        /// <param name="_Point"></param>
+        /// <param name="_LastSerie"></param>
+        private void RemovePoint(DataPoint _Point, Series _LastSerie)
         {
-            zoom(.01f);
-            chart1.Invalidate();
+            if (_LastSerie != null)
+                if (_LastSerie.Points.Contains(_Point))
+                    _LastSerie.Points.Remove(_Point);
         }
+        /// <summary>
+        /// Button Click for removing a ppoint
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RemovePeice(object sender, EventArgs e)
+        {
+            if (LastPoint != null)
+            {
+                RemovePoint(LastPoint, LastSeris);
+                chart1.Invalidate();
+            }
+        }
+        /// <summary>
+        /// SetZoom for Chart Area of chart
+        /// </summary>
+        /// <param name="_amount"></param>
         void zoom(double _amount)
         {
-            s -= _amount;
-            c += _amount;
-           
-            chart1.ChartAreas[0].AxisX.ScaleView.Zoom(c, s);
-            chart1.ChartAreas[0].AxisY.ScaleView.Zoom(c, s);
-            
-        }
 
-        private void button3_Click(object sender, EventArgs e)
+
+            FindLenghtOfInformation();
+            chart1.ChartAreas[0].AxisX.ScaleView.Zoom(0, ChartLength);
+            chart1.ChartAreas[0].AxisY.ScaleView.Zoom(0, 100);
+
+        }
+        /// <summary>
+        /// Finds te longest x value point in the Chart
+        /// </summary>
+        void FindLenghtOfInformation()
         {
-            zoom(-.01f);
+            chart1.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            chart1.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
+            int count;
+            double tempx;
+            for (int countofseries = 0; countofseries < chart1.Series.Count; countofseries++)
+            {
+                count = chart1.Series[countofseries].Points.Count;
+                tempx = chart1.Series[countofseries].Points[count - 1].XValue;
+                if (ChartLength < tempx)
+                    ChartLength = tempx;
+            }
+        }
+        private void ZoomReset(object sender, EventArgs e)
+        {
+            zoom(0);
+        }
+        /// <summary>
+        /// Made to see if mouse is right click while moveing to move a point
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chart1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+
+                MouseEventsToHandle = e;
+
+                chart1.Invalidate();
+            }
         }
 
+        private void chart1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                MouseEventsToHandle = e;
+                HitTestResult result = chart1.HitTest(e.X, e.Y);
+                //  MessageBox.Show(e.X.ToString()+" "+ e.Y.ToString());
+                EmotionIndex = result.PointIndex;
+                LastSeris = result.Series;
+
+
+                if (result.PointIndex > -1)
+                {
+                    for (int i = 0; i < chart1.Series.Count; i++)
+                    {
+                        if (chart1.Series[i] == LastSeris)
+                        {
+                            //MessageBox.Show(chart1.Series[i].Points[result.PointIndex].Label);
+                            comboBoxEmotionSelect.SelectedIndex = i;
+                            break;
+                        }
+                    }
+                    PointOnGraph();
+                    LastPoint.Color = System.Drawing.Color.AliceBlue;
+                }
+            }
+        }
+        /// <summary>
+        /// Paint function is needed to find the postion on map realted to coordinates
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chart1_Paint(object sender, PaintEventArgs e)
         {
 
-            //if (pt != null)
-            //{
-              
-             //   chartx = chart1.ChartAreas[0].AxisX.PixelPositionToValue(pt.X);
-             //  charty = chart1.ChartAreas[0].AxisY.PixelPositionToValue(pt.Y);
-                
-            //   // MessageBox.Show(chartx.ToString() + " " + charty.ToString());
-            //}
-        }
-    
+            if (MouseEventsToHandle != null)
+                if (MouseEventsToHandle.Button == MouseButtons.Right)
+                {
+                    //if (!(MouseEventsToHandle.Location.X > 100 || MouseEventsToHandle.Location.X < 0 || MouseEventsToHandle.Location.Y > 100 || MouseEventsToHandle.Location.Y < 0))
+                    //{
+                    try {
+                        MouseposX = chart1.ChartAreas[0].AxisX.PixelPositionToValue(MouseEventsToHandle.Location.X);
 
+                        MouseposY = chart1.ChartAreas[0].AxisY.PixelPositionToValue(MouseEventsToHandle.Location.Y);
+
+
+
+                        textBoxXValue.Text = MouseposX.ToString();
+                        textBoxYValue.Text = MouseposY.ToString();
+                    }
+                    catch(Exception exc)
+                    {
+                       
+                    }
+                    
+                   // }
+                }
+
+        }
+        /// <summary>
+        /// Make sure text boxes are only numbers
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBoxValue_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char c = e.KeyChar;
+            if (!Char.IsDigit(c) && c != 8 && c != '.')
+            {
+                e.Handled = true;
+            }
+        }
+        /// <summary>
+        /// Finds Last point found by click from the index
+        /// </summary>
         private void PointOnGraph()
         {
-            if (SeriIndex > 0)
+            if (EmotionIndex != -1)
             {
-                LastPoint = chart1.Series[SeriIndex].Points[EmotionIndex];
-                textBoxLabel.Text = chart1.Series[SeriIndex].Points[EmotionIndex].Label;
-                textBoxXValue.Text = chart1.Series[SeriIndex].Points[EmotionIndex].XValue.ToString();
-                textBoxYValue.Text = chart1.Series[SeriIndex].Points[EmotionIndex].YValues[0].ToString();
+                LastPoint = LastSeris.Points[EmotionIndex];
+                textBoxLabel.Text = LastSeris.Points[EmotionIndex].Label;
+                textBoxXValue.Text = LastSeris.Points[EmotionIndex].XValue.ToString();
+                textBoxYValue.Text = LastSeris.Points[EmotionIndex].YValues[0].ToString();
+                richTextBoxDesrciption.Text=LastPoint.ToolTip;
             }
-         
 
-            //   chart1.Invalidate();
         }
-        
+
     }
 }
