@@ -21,6 +21,7 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
         Series LastSeris;
         public GraphWorkDelegate DrawingWorkDelegate;
         DataPoint LastPoint;
+        int markersize = 20;
         public AffectivaDataRecordingEmotionsandExpressions AffData
         {
             get
@@ -218,7 +219,7 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
                 LastPoint.XValue = Convert.ToDouble(textBoxXValue.Text);
                 LastPoint.YValues[0] = Convert.ToDouble(textBoxYValue.Text);
                 LastPoint.MarkerStyle = MarkerStyle.Circle;
-                LastPoint.MarkerSize = 20;
+                LastPoint.MarkerSize = markersize;
                 LastSeris = chart1.Series[comboBoxEmotionSelect.Text];
                 InsertDataPoint(LastPoint, LastSeris);
             }
@@ -251,7 +252,7 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
             LastPoint.Label = textBoxLabel.Text;
             LastPoint.ToolTip = richTextBoxDesrciption.Text;
             LastPoint.MarkerStyle = MarkerStyle.Triangle;
-            LastPoint.MarkerSize = 20;
+            LastPoint.MarkerSize = markersize;
             LastSeris = chart1.Series[comboBoxEmotionSelect.Text];
             InsertDataPoint(LastPoint, LastSeris);
 
