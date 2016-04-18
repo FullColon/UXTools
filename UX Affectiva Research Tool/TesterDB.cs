@@ -38,13 +38,17 @@ namespace UX_Affectiva_Research_Tool
         System.Data.SQLite.SQLiteCommand sqlite_cmd;
         System.Data.SQLite.SQLiteDataReader sqlite_datareader;
         SQLiteDataAdapter sqlite_dataAdapter;
-        const String connString = "Data Source=database.db;Version=3";
+        public string filepath;
+        string inputFile = "C:\\DFiles\\TestStuf\\test.db";
+        String connString;
 
         public string Emotion { get; set; }
         public int TimeStamp { get; set; }
         //unused for now. might leave for additional features
         public void CreateNewDBConnection()
         {
+
+            connString = String.Format("Data Source={0}", inputFile);
             sqlite_conn = new SQLiteConnection(connString);
             // sqlite_conn.Open();
         }
@@ -53,22 +57,46 @@ namespace UX_Affectiva_Research_Tool
         //will add parameter for switch ase
         public void NewTableCommand()
         {
-            //CreateNewDBConnection();
-            // string _query = "CREATE TABLE IF NOT EXISTS Emotions ( emotion INT, XValue FLOAT, Yvalue FLOAT );";
-            string SQL = "CREATE TABLE IF NOT EXISTS Emotions ( emotion VARCHAR(20), XValue FLOAT, Yvalue FLOAT )";
-            sqlite_cmd = new SQLiteCommand(SQL, sqlite_conn);
-            // sqlite_cmd.CommandText = "CREATE TABLE IF NOT EXISTS Emotions ( emotion VARCHAR(20), XValue FLOAT, Yvalue FLOAT );";
-             sqlite_cmd.ExecuteNonQuery();
-       
-           
-            
+            try
+            {
+                string createsql = "CREATE TABLE IF NOT EXISTS Emotions (emotion VARCHAR(20), Xvalue FLOAT, Yvalue FLOAT)";
+                connString = String.Format("Data Source={0}", inputFile);
+                SQLiteConnection newConn = new SQLiteConnection(connString);
+                newConn.Open();
+                SQLiteCommand newCom;
+
+                using (SQLiteTransaction sqlTransaction = newConn.BeginTransaction())
+                {
+                    newCom = new SQLiteCommand(createsql, newConn);
+                    newCom.ExecuteNonQuery();
+                    newCom.Dispose();
+
+                    sqlTransaction.Commit();
+                }
+                //CreateNewDBConnection();
+                // string _query = "CREATE TABLE IF NOT EXISTS Emotions ( emotion INT, XValue FLOAT, Yvalue FLOAT );";
+                //string SQL = "CREATE TABLE IF NOT EXISTS Emotions ( emotion VARCHAR(20), XValue FLOAT, Yvalue FLOAT )";
+                //sqlite_cmd = new SQLiteCommand(SQL, sqlite_conn);
+                // sqlite_cmd.CommandText = "CREATE TABLE IF NOT EXISTS Emotions ( emotion VARCHAR(20), XValue FLOAT, Yvalue FLOAT );";
+
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message);
+            }
+
         }
 
         //-------------------------------------------------------------------------------------------------------------------
         //from a list (passed by todd) If grabbing from a from, use NewTableCommand
         public void PopulateNewTable(List<System.Windows.Forms.DataVisualization.Charting.Series> _newData)
         {
-
+            connString = String.Format("Data Source={0}", inputFile);
+            sqlite_conn = new SQLiteConnection(connString);
+            sqlite_cmd = new SQLiteCommand(sqlite_conn);
+            string sql;
+            sqlite_conn.Open();
             //change to loop through whole list given by todd
             //sqlite_cmd.CommandText = "INSERT INTO Emotions (emotion, timestamp) VALUES ('Test Text 1', 252525);";
             //sqlite_cmd.ExecuteNonQuery();
@@ -78,12 +106,14 @@ namespace UX_Affectiva_Research_Tool
                 // _newData[i].Points[0].YValues[0];
 
                 for (var j = 0; j < _newData[i].Points.Count; j++)
-                    sqlite_cmd.CommandText = "INSERT INTO database.Emotions (emotion, Xvalue, Yvalue) VALUES ('" + i + "','" + _newData[i].Points[j].XValue + "', _newData[i].Points[j].Yvalues[0]'" + "')";
-                sqlite_cmd.ExecuteNonQuery();
-                System.Windows.Forms.MessageBox.Show("Saved");
+                {
+                    sql = "INSERT INTO Emotions (emotion, Xvalue, Yvalue) VALUES ('" + i.ToString() + "','" + _newData[i].Points[j].XValue + "','" + _newData[i].Points[j].YValues[0] + "')";
+                    sqlite_cmd.CommandText = sql;//"INSERT INTO Emotions (emotion, Xvalue, Yvalue) VALUES ('" + i.ToString() + "','" + _newData[i].Points[j].XValue + "','" + _newData[i].Points[j].YValues[0] + "')";
+                    int rowsUpdated = sqlite_cmd.ExecuteNonQuery();
+                }
             }
+                    System.Windows.Forms.MessageBox.Show("Saved");
         }
-
         //-------------------------------------------------------------------------------------------------------------------
         //prints out the whole table in meesage box/ can do console output
         public void ReadOutTable()//read out the whole table
