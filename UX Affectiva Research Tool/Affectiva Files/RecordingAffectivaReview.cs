@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Affdex;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Data;
+using System.Data.SQLite;
 
 namespace UX_Affectiva_Research_Tool.Affectiva_Files
 {
@@ -66,11 +68,11 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
         /// For Starting a chart from Recording Tool
         /// </summary>
         /// <param name="AfCFRAVR"></param>
-        private void SetupChart(AffectivaDataRecordingEmotionsandExpressions AfCFRAVR)
-        {
-            SetupChartFromSeries(AfCFRAVR.GetChartSeriesOfData());
-
-        }
+       private void SetupChart(AffectivaDataRecordingEmotionsandExpressions AfCFRAVR)
+       {
+           SetupChartFromSeries(AfCFRAVR.GetChartSeriesOfData());
+      
+       }
         /// <summary>
         /// Start a chart from a series
         /// </summary>
@@ -372,7 +374,8 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
                 {
                     //if (!(MouseEventsToHandle.Location.X > 100 || MouseEventsToHandle.Location.X < 0 || MouseEventsToHandle.Location.Y > 100 || MouseEventsToHandle.Location.Y < 0))
                     //{
-                    try {
+                    try
+                    {
                         MouseposX = chart1.ChartAreas[0].AxisX.PixelPositionToValue(MouseEventsToHandle.Location.X);
 
                         MouseposY = chart1.ChartAreas[0].AxisY.PixelPositionToValue(MouseEventsToHandle.Location.Y);
@@ -382,12 +385,12 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
                         textBoxXValue.Text = MouseposX.ToString();
                         textBoxYValue.Text = MouseposY.ToString();
                     }
-                    catch(Exception exc)
+                    catch (Exception exc)
                     {
-                       
+                        MessageBox.Show(exc.Message);
                     }
-                    
-                   // }
+
+                    // }
                 }
 
         }
@@ -415,7 +418,7 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
                 textBoxLabel.Text = LastSeris.Points[EmotionIndex].Label;
                 textBoxXValue.Text = LastSeris.Points[EmotionIndex].XValue.ToString();
                 textBoxYValue.Text = LastSeris.Points[EmotionIndex].YValues[0].ToString();
-                richTextBoxDesrciption.Text=LastPoint.ToolTip;
+                richTextBoxDesrciption.Text = LastPoint.ToolTip;
             }
 
         }
@@ -425,22 +428,36 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
             SaveDataToDataBase();
         }
 
+        //Load data from DataBase (returns table, named dt that holds all the data from the DB)
+        private void Load_Button_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TesterDB temp = new TesterDB();
+                temp.LoadToChart(ref chart1);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+                   
+        }
+        //------------------------------------------------------------------------------------------------
+        
+
         private void SaveDataToDataBase()
         {
-          
-           
-
-                        TesterDB TempDataBase = new TesterDB();
+            TesterDB TempDataBase = new TesterDB();
             TempDataBase.CreateNewDBConnection();
             TempDataBase.NewTableCommand();
             List<Series> temp = new List<Series>();
-            for(int i = 0; i < chart1.Series.Count; i++)
+            for (int i = 0; i < chart1.Series.Count; i++)
             {
                 temp.Add(chart1.Series[i]);
             }
 
-          TempDataBase.PopulateNewTable(temp);
-              
+            TempDataBase.PopulateNewTable(temp);
         }
     }
 }

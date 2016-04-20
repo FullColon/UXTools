@@ -39,7 +39,7 @@ namespace UX_Affectiva_Research_Tool
         System.Data.SQLite.SQLiteDataReader sqlite_datareader;
         SQLiteDataAdapter sqlite_dataAdapter;
         public string filepath;
-        string inputFile = "C:\\DFiles\\TestStuf\\test.db";
+        string inputFile = "C:\\Users\\Wesley Osborn\\Desktop\\MyTextDB\\Teststuff.db";
         String connString;
 
         public string Emotion { get; set; }
@@ -53,8 +53,6 @@ namespace UX_Affectiva_Research_Tool
             // sqlite_conn.Open();
         }
         //-------------------------------------------------------------------------------------------------------------------
-        //can handle rading from Form (will add to if DB is already created
-        //will add parameter for switch ase
         public void NewTableCommand()
         {
             try
@@ -73,18 +71,50 @@ namespace UX_Affectiva_Research_Tool
 
                     sqlTransaction.Commit();
                 }
-                //CreateNewDBConnection();
-                // string _query = "CREATE TABLE IF NOT EXISTS Emotions ( emotion INT, XValue FLOAT, Yvalue FLOAT );";
-                //string SQL = "CREATE TABLE IF NOT EXISTS Emotions ( emotion VARCHAR(20), XValue FLOAT, Yvalue FLOAT )";
-                //sqlite_cmd = new SQLiteCommand(SQL, sqlite_conn);
-                // sqlite_cmd.CommandText = "CREATE TABLE IF NOT EXISTS Emotions ( emotion VARCHAR(20), XValue FLOAT, Yvalue FLOAT );";
-
-
             }
             catch (Exception e)
             {
                 System.Windows.Forms.MessageBox.Show(e.Message);
             }
+
+        }
+
+        //--------------------------------------------------------------------------------
+        public void LoadToChart(ref Chart _chart)
+        {
+
+            connString = String.Format("Data Source={0}", inputFile);
+            SQLiteConnection newConn = new SQLiteConnection(connString);
+            SQLiteCommand newComm = new SQLiteCommand("Select * From Emotions", newConn);
+            SQLiteDataReader sdr;
+            try
+            {
+                newConn.Open();
+                sdr = newComm.ExecuteReader();
+                _chart.Series.Add(new Series("0"));
+                _chart.Series.Add(new Series("1"));
+                _chart.Series.Add(new Series("2"));
+                _chart.Series.Add(new Series("3"));
+                _chart.Series.Add(new Series("4"));
+                _chart.Series.Add(new Series("5"));
+                int i = 0;
+                while (sdr.Read() && i < 6 )
+                {          
+                    //query out emotion column, xvalue column, yvalue column
+                    string name = sdr.GetString(0);
+                    if (name != "6")
+                        _chart.Series[name].Points.AddXY(sdr.GetFloat(1), sdr.GetFloat(2));
+                    else
+                        name = "0";
+                    i++;           
+                }
+            }
+            catch (Exception ex)
+            {
+
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+
 
         }
 
@@ -97,14 +127,8 @@ namespace UX_Affectiva_Research_Tool
             sqlite_cmd = new SQLiteCommand(sqlite_conn);
             string sql;
             sqlite_conn.Open();
-            //change to loop through whole list given by todd
-            //sqlite_cmd.CommandText = "INSERT INTO Emotions (emotion, timestamp) VALUES ('Test Text 1', 252525);";
-            //sqlite_cmd.ExecuteNonQuery();
             for (var i = 0; i < _newData.Count; i++)
             {
-                // _newData[i].Points[0].XValue;
-                // _newData[i].Points[0].YValues[0];
-
                 for (var j = 0; j < _newData[i].Points.Count; j++)
                 {
                     sql = "INSERT INTO Emotions (emotion, Xvalue, Yvalue) VALUES ('" + i.ToString() + "','" + _newData[i].Points[j].XValue + "','" + _newData[i].Points[j].YValues[0] + "')";
@@ -112,7 +136,7 @@ namespace UX_Affectiva_Research_Tool
                     int rowsUpdated = sqlite_cmd.ExecuteNonQuery();
                 }
             }
-                    System.Windows.Forms.MessageBox.Show("Saved");
+            System.Windows.Forms.MessageBox.Show("Saved");
         }
         //-------------------------------------------------------------------------------------------------------------------
         //prints out the whole table in meesage box/ can do console output
@@ -122,8 +146,6 @@ namespace UX_Affectiva_Research_Tool
             sqlite_datareader = sqlite_cmd.ExecuteReader();
             while (sqlite_datareader.Read()) // Read() returns true if there is still a result line to read
             {
-                // Print out the content of the text field
-                // System.Console.WriteLine(sqlite_datareader["text"]); //used for console output
                 string myReader = sqlite_datareader.GetString(0);
                 System.Windows.MessageBox.Show(myReader);
             }
@@ -156,7 +178,6 @@ namespace UX_Affectiva_Research_Tool
             catch (Exception ex)
             {
                 trans.Rollback();
-
             }
             finally
             {
@@ -168,8 +189,7 @@ namespace UX_Affectiva_Research_Tool
 
         //-------------------------------------------------------------
         public void DeleteFromDB(string _toDelete)
-        {   //
-            //bool ret = false;
+        {  
             string delQuery = "DELETE FROM Emotions WHERE emotion='" + _toDelete + "'";
 
             using (sqlite_conn = new SQLiteConnection(connString))
@@ -184,9 +204,6 @@ namespace UX_Affectiva_Research_Tool
         //can use without passing in a DGV (might not need to pass a DGV at all?)
         public void TESTEXPORT(ref DataGridView _DVG) //chart passed in (database of info)
         {
-            //Testing so see in DataGridView (viewable database basically)
-            //uncomment if not passing a DGV
-            // DataGridView _DVG;
             SQLiteCommand myCMD = new SQLiteCommand("SELECT * FROM Emotions", sqlite_conn);
             try
             {
@@ -225,12 +242,8 @@ namespace UX_Affectiva_Research_Tool
         {
             SQLiteCommand myCommand = new SQLiteCommand();
 
-            //  myCommand.Connection = 
-
             myCommand.CommandText = "SELECT * FROM Emotions";
             System.Data.DataTable data = new System.Data.DataTable();
-            //  DataTable NewTable;
-
 
             SQLiteDataAdapter myAdapter = new SQLiteDataAdapter(myCommand);
             myAdapter.Fill(data);
@@ -281,10 +294,8 @@ namespace UX_Affectiva_Research_Tool
         //Wonky (dont use for now) List<Series> passing (needs testing)
         public void SaveToExcel(List<Microsoft.Office.Interop.Excel.Series> _series)//include another param for table name & filepath
         {
-            // string constring = "Data Source = C:\\Users\\Wesley Osborn\\Desktop\\DBtest;//_filepath";
-            // System.Data.SQLite.SQLiteConnection conDataBase = new System.Data.SQLite.SQLiteConnection(connString);
             System.Data.SQLite.SQLiteCommand cmdDataBase = new System.Data.SQLite.SQLiteCommand(" SELECT * FROM Emotions ;", sqlite_conn);
-            //  DataGridView DataGrid = _DGV;
+         
             try
             {
                 System.Data.SQLite.SQLiteDataAdapter sda = new System.Data.SQLite.SQLiteDataAdapter();
@@ -309,10 +320,8 @@ namespace UX_Affectiva_Research_Tool
             }
             catch (Exception)
             {
-
                 throw;
             }
-
         }
 
         //---------------------------------------------------------------------------------------------------------------
@@ -325,7 +334,6 @@ namespace UX_Affectiva_Research_Tool
             try
             {
                 conn.Open();
-                // var command = new SQLiteCommand(selectqueer, conn);
                 var command = new SQLiteCommand(selectQuery);
 
                 using (var adapter = new SQLiteDataAdapter(command))

@@ -42,6 +42,7 @@
             this.textBoxYValue = new System.Windows.Forms.TextBox();
             this.textBoxXValue = new System.Windows.Forms.TextBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.Load_Button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -57,6 +58,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.Load_Button);
             this.splitContainer1.Panel1.Controls.Add(this.buttonSave);
             this.splitContainer1.Panel1.Controls.Add(this.richTextBoxDesrciption);
             this.splitContainer1.Panel1.Controls.Add(this.buttonRemove);
@@ -204,6 +206,16 @@
             this.chart1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.chart1_MouseMove);
             this.chart1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.chart1_MouseUp);
             // 
+            // Load_Button
+            // 
+            this.Load_Button.Location = new System.Drawing.Point(13, 310);
+            this.Load_Button.Name = "Load_Button";
+            this.Load_Button.Size = new System.Drawing.Size(75, 23);
+            this.Load_Button.TabIndex = 13;
+            this.Load_Button.Text = "Load";
+            this.Load_Button.UseVisualStyleBackColor = true;
+            this.Load_Button.Click += new System.EventHandler(this.Load_Button_Click);
+            // 
             // RecordingAffectivaReview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -236,5 +248,6 @@
         private System.Windows.Forms.ComboBox comboBoxEmotionSelect;
         private System.Windows.Forms.RichTextBox richTextBoxDesrciption;
         private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.Button Load_Button;
     }
 }
