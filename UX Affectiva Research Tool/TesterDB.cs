@@ -44,7 +44,6 @@ namespace UX_Affectiva_Research_Tool
 
         public string Emotion { get; set; }
         public int TimeStamp { get; set; }
-        //unused for now. might leave for additional features
         public void CreateNewDBConnection()
         {
 
@@ -78,9 +77,23 @@ namespace UX_Affectiva_Research_Tool
             }
 
         }
-
         //--------------------------------------------------------------------------------
-        public void LoadToChart(ref Chart _chart)
+        public void LoadChartFromDB()
+        {
+            inputFile = "C:\\Users\\Wesley Osborn\\Desktop\\MyTextDB\\Teststuff.db";
+            connString = String.Format("Data Source={0}", inputFile);
+            SQLiteConnection newConn = new SQLiteConnection(connString);
+            newConn.Open();
+            SQLiteCommand cmd = new SQLiteCommand();
+            DataSet dt = new DataSet();
+            SQLiteDataAdapter sda = new SQLiteDataAdapter("SELECT * FROM Emotions", newConn);
+            sda.Fill(dt);
+            DataView dv = new DataView(dt.Tables[0]);
+            //replace chart1 with name of chart trying to display to
+            chart1.Series[0].Points.DataBindXY(dv, "Xvalue", dv, "Yvalue");
+        }
+        //--------------------------------------------------------------------------------------------
+        public void LoadToChart(ref Chart _chart)//from a series
         {
 
             connString = String.Format("Data Source={0}", inputFile);
@@ -117,9 +130,7 @@ namespace UX_Affectiva_Research_Tool
 
 
         }
-
         //-------------------------------------------------------------------------------------------------------------------
-        //from a list (passed by todd) If grabbing from a from, use NewTableCommand
         public void PopulateNewTable(List<System.Windows.Forms.DataVisualization.Charting.Series> _newData)
         {
             connString = String.Format("Data Source={0}", inputFile);
@@ -150,7 +161,6 @@ namespace UX_Affectiva_Research_Tool
                 System.Windows.MessageBox.Show(myReader);
             }
         }
-
         //----------------------------------------------------------------------
         //should be fastest bulk update
         //pass in the DB, and two variables to update with it (string, float , float)
@@ -186,7 +196,6 @@ namespace UX_Affectiva_Research_Tool
                 sqlite_conn.Close();
             }
         }
-
         //-------------------------------------------------------------
         public void DeleteFromDB(string _toDelete)
         {  
@@ -201,7 +210,7 @@ namespace UX_Affectiva_Research_Tool
 
         }
         //---------------------------------------------------------------------------------
-        //can use without passing in a DGV (might not need to pass a DGV at all?)
+        //can use without passing in a DGV
         public void TESTEXPORT(ref DataGridView _DVG) //chart passed in (database of info)
         {
             SQLiteCommand myCMD = new SQLiteCommand("SELECT * FROM Emotions", sqlite_conn);
@@ -234,10 +243,7 @@ namespace UX_Affectiva_Research_Tool
             }
             // end of DGV---------------------------------------------------------------------
         }
-
         //------------------------------------------------------------------------------------------------
-        // didnt test,  long export
-        //rework using system.data instead of Finisar
         public void ExportingToCSV(DataGridView source)
         {
             SQLiteCommand myCommand = new SQLiteCommand();
@@ -289,9 +295,7 @@ namespace UX_Affectiva_Research_Tool
             }
             swOut.Close();
         }
-
         //-------------------------------------------------------------------------------------------------------------------
-        //Wonky (dont use for now) List<Series> passing (needs testing)
         public void SaveToExcel(List<Microsoft.Office.Interop.Excel.Series> _series)//include another param for table name & filepath
         {
             System.Data.SQLite.SQLiteCommand cmdDataBase = new System.Data.SQLite.SQLiteCommand(" SELECT * FROM Emotions ;", sqlite_conn);
@@ -323,7 +327,6 @@ namespace UX_Affectiva_Research_Tool
                 throw;
             }
         }
-
         //---------------------------------------------------------------------------------------------------------------
         //select specific items in the DataBase for viewing (console of MessageBox)
         public static DataTable ReadOut(string connectionString, string selectQuery)//Returns a DataTable
@@ -367,7 +370,6 @@ namespace UX_Affectiva_Research_Tool
             }
         }
         //----------------------------------------------------------------------------------------------------------------------
-        //(Both need testing)
         public static void WriteToCSV(DataTable _dataSource, string _fileOutPath, bool firstRowIsCoulmnHeader = false, string seperator = ";")
         {
             var sw = new StreamWriter(_fileOutPath, false);
@@ -403,7 +405,6 @@ namespace UX_Affectiva_Research_Tool
             }
             sw.Close();
         }
-
         public void CloseConnection()
         {
             sqlite_conn.Close();
