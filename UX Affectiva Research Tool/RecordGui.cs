@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using UX_Affectiva_Research_Tool.Affectiva_Files;
 using WeifenLuo.WinFormsUI.Docking;
-using mySharpAVI;
+using RecordingTool;
 using SharpAvi.Codecs;
 using SharpAvi;
 using NAudio.Wave;
@@ -30,15 +30,18 @@ namespace UX_Affectiva_Research_Tool
         List<RecordingToolBase> arrayOfRecordingTools;
         Stopwatch stopWatch = new Stopwatch();
         MainWindow mDocablePanel;
+        String mAudioCodecName;
         AudioDevice mAudioDevice;
         CodecInfo mCodecInfo;
-        AffectOptions SetupAffectiva;
-        TesterDB temp;
+        Rectangle mSelectArea;
+        AffectOptions SetupAffectiva = new AffectOptions();
+      //  TesterDB temp;
+        int mqualty = 50;
 
 
 
 
-        string FilePath = "C:\\DFiles\\WorkFolderFinalProdject\\ux-affectiva.git.0\\UX Affectiva Research Tool\\UX Affectiva Research Tool\\SaveFolder\\test.avi";
+        string mBaseFilePath = "C:\\";
 
 
 
@@ -46,12 +49,12 @@ namespace UX_Affectiva_Research_Tool
         public RecordGui()
         {
             InitializeComponent();
-            SetUpOptions();
+           SetUpOptions();
 
-            InitAvailableCodecs();
-            InitAvailableAudioSources();
-            SetUpRecordingTools();
-            temp = new TesterDB();
+          InitAvailableCodecs();
+         InitAvailableAudioSources();
+           
+          //  temp = new TesterDB();
         }
         public void SetUpOptions()
         {
@@ -69,16 +72,14 @@ namespace UX_Affectiva_Research_Tool
             SetUpRecordingTools();
         }
 
-        List<Series> templist = new List<Series>();
-        SQLiteCommand myCommand = new SQLiteCommand();
 
-        DataTable data = new DataTable();
-
-        DataGridView myDGV = new DataGridView();
         private void startButton_Click(object sender, EventArgs e)
         {
+            
+            mBaseFilePath =  labelPath.Text + "\\" + textBoxName.Text;
+            SetUpRecordingTools();
             //Wes test code for DataBase (Saved on External for REF)
-           stopWatch.Start();
+            stopWatch.Start();
            for (int count = 0; count < arrayOfRecordingTools.Count; count++)
            {
                arrayOfRecordingTools[count].startRecording();
@@ -88,22 +89,7 @@ namespace UX_Affectiva_Research_Tool
           
           
            SetVisibility(true);
-        //  string connectionString = @"data srouce =database.db ";
-         // string selectQuery = "SELECT * FROM Emotions;";
-         // var table = TesterDB.ReadOut(connectionString, selectQuery);
-           // TesterDB.WriteToCSV(table, /*EXAMPLE OUTPUTFILE*/, false, ",");
-            ////////////////////////////////////////////////
-            ////////Create New DB/////////////////////////
-            //templist.Add(chart1.Series[0]);
-            //myDGV.DataSource = templist;
-            //temp.CreateNewDBConnection();
-            /////////////////////////////////////////////////////
-            //////////////Crate New Table///////////////////////
-            //temp.NewTableCommand();
-            //////////////Populate Table//////////////////////
-            //temp.PopulateNewTable(templist);
-            ////////////////////////////////////////////////////
-          //  temp.TESTEXPORT(ref myDGV);
+       
         }
 
         private void stopButton_Click(object sender, EventArgs e)
@@ -119,6 +105,7 @@ namespace UX_Affectiva_Research_Tool
            
            SetVisibility(false);
            MakeNeedForms();
+            arrayOfRecordingTools.Clear();
         }
 
         public void SetVisibility(bool _visibility)
@@ -127,16 +114,17 @@ namespace UX_Affectiva_Research_Tool
             this.stopButton.Enabled = _visibility;
        
         }
+       
         public void SetUpRecordingTools()
         {
             arrayOfRecordingTools = new List<RecordingToolBase>();
-           // arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch,20,true));
-                arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording());
-           //   arrayOfRecordingTools.Add(new mySharpAVI.myRecorder(mAudioDevice, mCodecInfo));
-
-
-            // arrayOfRecordingTools.Add(new Audio());
-        }
+            
+            arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording(mBaseFilePath,(float) SetupAffectiva.DectectionValence, .1f, 0, (int)(FPSUPDOWN.Value), SetupAffectiva.ProcessPerSec, affectivaToolStripMenuItem.Checked));
+            if(affectivaToolStripMenuItem.Checked || SetupAffectiva.Post)
+                arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch, 20, SetupAffectiva.Post));
+            arrayOfRecordingTools.Add(new RecordingTool.Recorder(mAudioDevice, mAudioCodecName,mCodecInfo, mSelectArea,(int)( FPSUPDOWN.Value), mqualty, mBaseFilePath));
+         //   arrayOfRecordingTools.Add(new Audio());
+        }     
         private void MakeNeedForms()
         {
             if(mDocablePanel == null)

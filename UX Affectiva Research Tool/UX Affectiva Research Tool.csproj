@@ -180,6 +180,7 @@
     <Compile Include="CameraFeedPlaybackWindow.Designer.cs">
       <DependentUpon>CameraFeedPlaybackWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Recorder.cs" />
     <Compile Include="TesterDB.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>

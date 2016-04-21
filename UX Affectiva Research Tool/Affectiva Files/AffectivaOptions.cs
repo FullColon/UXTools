@@ -71,11 +71,11 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
     }
 
 
-    public struct AffectOptions
+    public class AffectOptions
     {
-      public  bool Post;
-      public  Affdex.FaceDetectorMode FaceMode;
-      public  int ProcessPerSec;
-      public  double DectectionValence;
+      public  bool Post=false;
+      public  Affdex.FaceDetectorMode FaceMode = Affdex.FaceDetectorMode.SMALL_FACES;
+      public  int ProcessPerSec = 10;
+      public  double DectectionValence = .1d;
     }
 }

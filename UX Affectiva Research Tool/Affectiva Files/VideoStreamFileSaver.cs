@@ -44,15 +44,16 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
         /// Pass in Affectiva Camera Tool to receive frames from it;
         /// </summary>
         /// <param name="_camdect"></param>
-        public VideoStreamFileSaver(AffectivaCameraRecordingTool _camdect)
+        public VideoStreamFileSaver(AffectivaCameraRecordingTool _camdect, String _BaseFilePath)
         {
             mSaveAvi = new SaveFileDialog();
             mSaveAvi.Filter = "Avi Files (*.avi)|*.avi";
             mCamDect = _camdect;
 
-            string currentDirectory = Environment.CurrentDirectory;
-            string newDir = Path.GetDirectoryName(Path.GetDirectoryName(currentDirectory));
-            mFilePath = newDir + @"\SaveFolder\TestSave.avi";
+            //string currentDirectory = Environment.CurrentDirectory;
+           // string newDir = Path.GetDirectoryName(Path.GetDirectoryName(currentDirectory));
+           // mFilePath = newDir + @"\SaveFolder\TestSave.avi";
+            mFilePath = _BaseFilePath + "_TestSave.avi";
         }
         /// <summary>
         /// This needs a frame to start for height and width, will change when setting up camera resoultion section

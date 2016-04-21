@@ -28,14 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 3D);
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 1D);
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.startButton = new System.Windows.Forms.Button();
             this.stopButton = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -46,8 +38,7 @@
             this.affectivaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moreOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.FPSTEXTBOX = new System.Windows.Forms.TextBox();
+            this.FPSUPDOWN = new System.Windows.Forms.NumericUpDown();
             this.FPSLabel = new System.Windows.Forms.Label();
             this.label_screenAudioDevice = new System.Windows.Forms.Label();
             this.comboBox_screenAudioDevice = new System.Windows.Forms.ComboBox();
@@ -72,7 +63,7 @@
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FPSUPDOWN)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -169,13 +160,13 @@
             this.affectivaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.moreOptionsToolStripMenuItem});
             this.affectivaToolStripMenuItem.Name = "affectivaToolStripMenuItem";
-            this.affectivaToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.affectivaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.affectivaToolStripMenuItem.Text = "Affectiva";
             // 
             // moreOptionsToolStripMenuItem
             // 
             this.moreOptionsToolStripMenuItem.Name = "moreOptionsToolStripMenuItem";
-            this.moreOptionsToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.moreOptionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.moreOptionsToolStripMenuItem.Text = "More Options";
             this.moreOptionsToolStripMenuItem.Click += new System.EventHandler(this.moreOptionsToolStripMenuItem_Click);
             // 
@@ -187,8 +178,7 @@
             // 
             // splitContainer4.Panel1
             // 
-            this.splitContainer4.Panel1.Controls.Add(this.chart1);
-            this.splitContainer4.Panel1.Controls.Add(this.FPSTEXTBOX);
+            this.splitContainer4.Panel1.Controls.Add(this.FPSUPDOWN);
             this.splitContainer4.Panel1.Controls.Add(this.FPSLabel);
             this.splitContainer4.Panel1.Controls.Add(this.label_screenAudioDevice);
             this.splitContainer4.Panel1.Controls.Add(this.comboBox_screenAudioDevice);
@@ -206,42 +196,27 @@
             this.splitContainer4.SplitterDistance = 546;
             this.splitContainer4.TabIndex = 0;
             // 
-            // chart1
+            // FPSUPDOWN
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(12, 158);
-            this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            series1.Points.Add(dataPoint1);
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series2";
-            series2.Points.Add(dataPoint2);
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series3";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series4";
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
-            this.chart1.Series.Add(series3);
-            this.chart1.Series.Add(series4);
-            this.chart1.Size = new System.Drawing.Size(531, 300);
-            this.chart1.TabIndex = 7;
-            this.chart1.Text = "chart1";
-            // 
-            // FPSTEXTBOX
-            // 
-            this.FPSTEXTBOX.Location = new System.Drawing.Point(89, 98);
-            this.FPSTEXTBOX.Name = "FPSTEXTBOX";
-            this.FPSTEXTBOX.Size = new System.Drawing.Size(100, 20);
-            this.FPSTEXTBOX.TabIndex = 6;
+            this.FPSUPDOWN.Location = new System.Drawing.Point(89, 91);
+            this.FPSUPDOWN.Maximum = new decimal(new int[] {
+            70,
+            0,
+            0,
+            0});
+            this.FPSUPDOWN.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.FPSUPDOWN.Name = "FPSUPDOWN";
+            this.FPSUPDOWN.Size = new System.Drawing.Size(169, 20);
+            this.FPSUPDOWN.TabIndex = 7;
+            this.FPSUPDOWN.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
             // 
             // FPSLabel
             // 
@@ -286,6 +261,7 @@
             this.comboBox_screenCodecs.Name = "comboBox_screenCodecs";
             this.comboBox_screenCodecs.Size = new System.Drawing.Size(169, 21);
             this.comboBox_screenCodecs.TabIndex = 1;
+            this.comboBox_screenCodecs.Visible = false;
             this.comboBox_screenCodecs.SelectedIndexChanged += new System.EventHandler(this.comboBox_screenCodecs_SelectedIndexChanged);
             // 
             // label_RecordOptions
@@ -375,7 +351,7 @@
             this.splitContainer4.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FPSUPDOWN)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -401,13 +377,13 @@
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem affectivaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moreOptionsToolStripMenuItem;
-        private System.Windows.Forms.TextBox FPSTEXTBOX;
         private System.Windows.Forms.Label FPSLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelPath;
         private System.Windows.Forms.Button buttonFilePath;
         private System.Windows.Forms.TextBox textBoxName;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.NumericUpDown FPSUPDOWN;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
     }
 
 

@@ -154,15 +154,19 @@ namespace UX_Affectiva_Research_Tool
             }
 
            }
-        public AffectivaCameraRecordingTool(float _valenceEmotion,float _timeStep, int _cameraId,double _camperaCaptureRate, double _processRate)
+        public AffectivaCameraRecordingTool(float _valenceEmotion,float _timeStep, int _cameraId,double _camperaCaptureRate, double _processRate, bool _camerON)
         {
             uint maxAmountOfFaces = 2;
 
 
             try
             {
+                if (!_camerON)
+                {
+                    _processRate = 1;
+                }
 
-                setValenceOfEmotion(_valenceEmotion);
+                    setValenceOfEmotion(_valenceEmotion);
                 setoldValues();
                 setTimeStep(_timeStep);
                 setDataDirectory(Environment.CurrentDirectory + "\\AffectivaFiles\\data");
@@ -171,13 +175,18 @@ namespace UX_Affectiva_Research_Tool
                 setLicensePath(getLincenseDirectory());
                 setClassiferFolderPath(getDataDirectory());
                 /// turn on detectors for defualt
-                mcamDetector.setDetectAllEmotions(true);
-                mcamDetector.setDetectAllExpressions(true);
+                mcamDetector.setDetectAllEmotions(_camerON);
+                mcamDetector.setDetectAllExpressions(_camerON);
                 /// set types of detectors for Affdex
-                mcamDetector.setFaceListener(this);
-                mcamDetector.setImageListener(this);
-             //   mcamDetector.setProcessStatusListener(this);
-                maffectData = new AffectivaDataRecordingEmotionsandExpressions();
+                if (_camerON)
+                {
+                    mcamDetector.setFaceListener(this);
+
+                    mcamDetector.setImageListener(this);
+                    maffectData = new AffectivaDataRecordingEmotionsandExpressions();
+                }
+            
+               
                 
                     mcamDetector.start();
                
