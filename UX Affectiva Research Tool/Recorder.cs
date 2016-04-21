@@ -159,7 +159,7 @@ namespace RecordingTool
             suppForm = SupportedWaveFormat.WAVE_FORMAT_44S16;
             mWaveFormat = ToWaveFormat(suppForm);
 
-
+            mAudioCodec = "MP3";
             mAudioStream = CreateAudioStream(mWaveFormat, mAudioCodec, 192);
             mAudioStream.Name = "Voice";
             mAudioSource = new WaveInEvent
