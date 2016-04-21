@@ -50,6 +50,8 @@
             this.buttonFilePath = new System.Windows.Forms.Button();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.cmbx_selectDisplay = new System.Windows.Forms.ComboBox();
+            this.lbl_screenSelect = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -160,13 +162,13 @@
             this.affectivaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.moreOptionsToolStripMenuItem});
             this.affectivaToolStripMenuItem.Name = "affectivaToolStripMenuItem";
-            this.affectivaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.affectivaToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.affectivaToolStripMenuItem.Text = "Affectiva";
             // 
             // moreOptionsToolStripMenuItem
             // 
             this.moreOptionsToolStripMenuItem.Name = "moreOptionsToolStripMenuItem";
-            this.moreOptionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.moreOptionsToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.moreOptionsToolStripMenuItem.Text = "More Options";
             this.moreOptionsToolStripMenuItem.Click += new System.EventHandler(this.moreOptionsToolStripMenuItem_Click);
             // 
@@ -178,6 +180,8 @@
             // 
             // splitContainer4.Panel1
             // 
+            this.splitContainer4.Panel1.Controls.Add(this.lbl_screenSelect);
+            this.splitContainer4.Panel1.Controls.Add(this.cmbx_selectDisplay);
             this.splitContainer4.Panel1.Controls.Add(this.FPSUPDOWN);
             this.splitContainer4.Panel1.Controls.Add(this.FPSLabel);
             this.splitContainer4.Panel1.Controls.Add(this.label_screenAudioDevice);
@@ -248,11 +252,11 @@
             // label_ScreenCodecs
             // 
             this.label_ScreenCodecs.AutoSize = true;
-            this.label_ScreenCodecs.Location = new System.Drawing.Point(40, 40);
+            this.label_ScreenCodecs.Location = new System.Drawing.Point(12, 44);
             this.label_ScreenCodecs.Name = "label_ScreenCodecs";
-            this.label_ScreenCodecs.Size = new System.Drawing.Size(43, 13);
+            this.label_ScreenCodecs.Size = new System.Drawing.Size(73, 13);
             this.label_ScreenCodecs.TabIndex = 2;
-            this.label_ScreenCodecs.Text = "Codecs";
+            this.label_ScreenCodecs.Text = "Video Codecs";
             // 
             // comboBox_screenCodecs
             // 
@@ -326,6 +330,23 @@
             this.splitContainer2.SplitterDistance = 548;
             this.splitContainer2.TabIndex = 0;
             // 
+            // cmbx_selectDisplay
+            // 
+            this.cmbx_selectDisplay.FormattingEnabled = true;
+            this.cmbx_selectDisplay.Location = new System.Drawing.Point(89, 117);
+            this.cmbx_selectDisplay.Name = "cmbx_selectDisplay";
+            this.cmbx_selectDisplay.Size = new System.Drawing.Size(169, 21);
+            this.cmbx_selectDisplay.TabIndex = 8;
+            // 
+            // lbl_screenSelect
+            // 
+            this.lbl_screenSelect.AutoSize = true;
+            this.lbl_screenSelect.Location = new System.Drawing.Point(9, 125);
+            this.lbl_screenSelect.Name = "lbl_screenSelect";
+            this.lbl_screenSelect.Size = new System.Drawing.Size(74, 13);
+            this.lbl_screenSelect.TabIndex = 9;
+            this.lbl_screenSelect.Text = "Screen Select";
+            // 
             // RecordGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -384,6 +405,8 @@
         private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.NumericUpDown FPSUPDOWN;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.Label lbl_screenSelect;
+        private System.Windows.Forms.ComboBox cmbx_selectDisplay;
     }
 
 

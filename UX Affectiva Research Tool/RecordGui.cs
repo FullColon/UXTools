@@ -35,7 +35,9 @@ namespace UX_Affectiva_Research_Tool
         CodecInfo mCodecInfo;
         Rectangle mSelectArea;
         AffectOptions SetupAffectiva = new AffectOptions();
-      //  TesterDB temp;
+
+        private List<string> mListOfScreens;
+        //  TesterDB temp;
         int mqualty = 50;
 
 
@@ -50,8 +52,9 @@ namespace UX_Affectiva_Research_Tool
         {
             InitializeComponent();
            SetUpOptions();
+            InitAvailableDisplays();
 
-          InitAvailableCodecs();
+            InitAvailableCodecs();
          InitAvailableAudioSources();
            
           //  temp = new TesterDB();
@@ -66,12 +69,48 @@ namespace UX_Affectiva_Research_Tool
             InitializeComponent();
             mDocablePanel = _DocPanel;
 
-
+            InitAvailableDisplays();
             InitAvailableCodecs();
             InitAvailableAudioSources();
             SetUpRecordingTools();
         }
 
+
+        /// <summary>
+        /// Sets the screen area.
+        /// </summary>
+        private void SetScreenArea()
+        {
+            // get entire desktop area size
+            string screenName = this.cmbx_selectDisplay.SelectedValue.ToString();
+            if (string.Compare(screenName, @"Select ALL", StringComparison.OrdinalIgnoreCase) == 0)
+            {
+                foreach (Screen screen in Screen.AllScreens)
+                {
+                    this.mSelectArea = Rectangle.Union(mSelectArea, screen.Bounds);
+                    int x = 5;
+                }
+            }
+            else
+            {
+                this.mSelectArea = Screen.AllScreens.First(scr => scr.DeviceName.Equals(screenName)).Bounds;
+                
+            }
+        }
+
+        private void InitAvailableDisplays()
+        {
+            mListOfScreens = new List<string>();
+            mListOfScreens.Add(@"Select ALL");
+            foreach (var screen in Screen.AllScreens)
+            {
+                mListOfScreens.Add(screen.DeviceName);
+            }
+
+            this.cmbx_selectDisplay.DataSource = mListOfScreens;
+            this.cmbx_selectDisplay.DropDownStyle = ComboBoxStyle.DropDownList;
+
+        }
 
         private void startButton_Click(object sender, EventArgs e)
         {
@@ -85,10 +124,11 @@ namespace UX_Affectiva_Research_Tool
                arrayOfRecordingTools[count].startRecording();
              
            }
-          
-          
-          
-           SetVisibility(true);
+
+            SetScreenArea();
+
+
+            SetVisibility(true);
        
         }
 
@@ -117,11 +157,12 @@ namespace UX_Affectiva_Research_Tool
        
         public void SetUpRecordingTools()
         {
+            SetScreenArea();
             arrayOfRecordingTools = new List<RecordingToolBase>();
             
             arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording(mBaseFilePath,(float) SetupAffectiva.DectectionValence, .1f, 0, (int)(FPSUPDOWN.Value), SetupAffectiva.ProcessPerSec, affectivaToolStripMenuItem.Checked));
             if(affectivaToolStripMenuItem.Checked || SetupAffectiva.Post)
-                arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch, 20, SetupAffectiva.Post));
+                arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch, SetupAffectiva.ProcessPerSec, SetupAffectiva.Post));
             arrayOfRecordingTools.Add(new RecordingTool.Recorder(mAudioDevice, mAudioCodecName,mCodecInfo, mSelectArea,(int)( FPSUPDOWN.Value), mqualty, mBaseFilePath));
          //   arrayOfRecordingTools.Add(new Audio());
         }     

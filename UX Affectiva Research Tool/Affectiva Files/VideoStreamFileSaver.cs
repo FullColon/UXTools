@@ -23,6 +23,8 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
         int countofFramesToadd = 0;
         AffectivaCameraRecordingTool mCamDect;
         string mFilePath;
+        private int mFrameRate;
+
         public string getFilePath()
         {
             return mFilePath;
@@ -44,8 +46,9 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
         /// Pass in Affectiva Camera Tool to receive frames from it;
         /// </summary>
         /// <param name="_camdect"></param>
-        public VideoStreamFileSaver(AffectivaCameraRecordingTool _camdect, String _BaseFilePath)
+        public VideoStreamFileSaver(AffectivaCameraRecordingTool _camdect, String _BaseFilePath, int _FrameRate)
         {
+            mFrameRate = _FrameRate;
             mSaveAvi = new SaveFileDialog();
             mSaveAvi.Filter = "Avi Files (*.avi)|*.avi";
             mCamDect = _camdect;
@@ -66,7 +69,7 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
             int w = currentImage.Width;
            // if (mSaveAvi.ShowDialog() == System.Windows.Forms.DialogResult.OK)
              
-            mFileWriter.Open(mFilePath, w, h, 30, AForge.Video.FFMPEG.VideoCodec.Default, 5000000);
+            mFileWriter.Open(mFilePath, w, h, mFrameRate, AForge.Video.FFMPEG.VideoCodec.Default, 5000000);
            
             mAllocatedPointer = System.Runtime.InteropServices.Marshal.AllocHGlobal(_currenFrame.getBGRByteArray().Length);
             mOpened = true;

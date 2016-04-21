@@ -41,11 +41,11 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
          //   mFilerWriterForVideo = new Affectiva_Files.VideoStreamFileSaver(mCameraAffectivaRecorder);
            // mFileStreamThread = new System.Threading.Thread(FilerStreamerThread);
         }
-        public AffectivaCameraFaceRecordingAndVideoRecording(String _FilePath, float _valenceEmotion, float _timeStep, int _cameraId, double _camperaCaptureRate, double _processRate, bool _FaceDetection)
+        public AffectivaCameraFaceRecordingAndVideoRecording(String _FilePath, float _valenceEmotion, float _timeStep, int _cameraId, int _camperaCaptureRate, double _processRate, bool _FaceDetection)
         {
-            mCameraAffectivaRecorder = new AffectivaCameraRecordingTool( _valenceEmotion,  _timeStep,  _cameraId,  _camperaCaptureRate,  _processRate, _FaceDetection);
+            mCameraAffectivaRecorder = new AffectivaCameraRecordingTool( _valenceEmotion,  _timeStep,  _cameraId, (double) _camperaCaptureRate,  _processRate, _FaceDetection);
 
-            mFilerWriterForVideo = new Affectiva_Files.VideoStreamFileSaver(mCameraAffectivaRecorder,_FilePath);
+            mFilerWriterForVideo = new Affectiva_Files.VideoStreamFileSaver(mCameraAffectivaRecorder,_FilePath,(int)_camperaCaptureRate);
             mFileStreamThread = new System.Threading.Thread(FilerStreamerThread);
         }
         /// <summary>
