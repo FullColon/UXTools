@@ -21,6 +21,8 @@ using NAudio.CoreAudioApi;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using Microsoft.Win32;
+using System.IO;
+using System.Reflection;
 
 namespace UX_Affectiva_Research_Tool
 {
@@ -51,6 +53,7 @@ namespace UX_Affectiva_Research_Tool
         public RecordGui()
         {
             InitializeComponent();
+            InitAudioDll();
            SetUpOptions();
             InitAvailableDisplays();
 
@@ -68,13 +71,21 @@ namespace UX_Affectiva_Research_Tool
         
             InitializeComponent();
             mDocablePanel = _DocPanel;
-
+            InitAudioDll();
             InitAvailableDisplays();
             InitAvailableCodecs();
             InitAvailableAudioSources();
             SetUpRecordingTools();
         }
-
+        /// <summary>
+        /// Initializes the audio DLL.
+        /// </summary>
+        private void InitAudioDll()
+        {
+            var asmDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var dllName = string.Format("libmp3lame.{0}.dll", Environment.Is64BitProcess ? "64" : "32");
+            Mp3AudioEncoderLame.SetLameDllLocation(Path.Combine(asmDir, dllName));
+        }
 
         /// <summary>
         /// Sets the screen area.
