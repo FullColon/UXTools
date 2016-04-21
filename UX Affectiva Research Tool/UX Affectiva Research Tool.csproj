@@ -56,9 +56,15 @@
       <HintPath>..\packages\CsvHelper.2.13.5.0\lib\net40-client\CsvHelper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DirectX.Capture">
+      <HintPath>..\DirectXshowDll\DirectX.Capture.dll</HintPath>
+    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="DShowNET">
+      <HintPath>..\DirectXshowDll\DShowNET.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
@@ -204,6 +210,7 @@
     <Compile Include="ScreenCapturePlaybackWindow.Designer.cs">
       <DependentUpon>ScreenCapturePlaybackWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="WebCamRecorder.cs" />
     <EmbeddedResource Include="Affectiva Files\AffectivaOptions.resx">
       <DependentUpon>AffectivaOptions.cs</DependentUpon>
     </EmbeddedResource>

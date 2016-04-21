@@ -129,11 +129,14 @@ namespace UX_Affectiva_Research_Tool
         }
         public void SetUpRecordingTools()
         {
+            panel1.Width = this.Width;
+            panel1.Height = this.Height;
             arrayOfRecordingTools = new List<RecordingToolBase>();
            // arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch,20,true));
-                arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording());
-           //   arrayOfRecordingTools.Add(new mySharpAVI.myRecorder(mAudioDevice, mCodecInfo));
-
+           //     arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording());
+            //   arrayOfRecordingTools.Add(new mySharpAVI.myRecorder(mAudioDevice, mCodecInfo));
+            arrayOfRecordingTools.Add(new WebCamRecorder(ref panel1));
+            
 
             // arrayOfRecordingTools.Add(new Audio());
         }

@@ -132,14 +132,15 @@ namespace UX_Affectiva_Research_Tool
                  setTimeStep(.1f);
                 setDataDirectory( Environment.CurrentDirectory + "\\AffectivaFiles\\data");
                setLincenseDirectory (Environment.CurrentDirectory + "\\AffectivaFiles\\sdk_shawns@fullsail.com.license.txt");
-                mcamDetector = new CameraDetector(0, 30, 30.0f, maxAmountOfFaces, FaceDetectorMode.SMALL_FACES);
+                mcamDetector = new CameraDetector(0, 30,1, maxAmountOfFaces, FaceDetectorMode.SMALL_FACES);
                 setLicensePath(getLincenseDirectory());
                 setClassiferFolderPath(getDataDirectory());
                 /// turn on detectors for defualt
-                mcamDetector.setDetectAllEmotions(true);
-                mcamDetector.setDetectAllExpressions(true);
+                mcamDetector.setDetectAllEmotions(false);
+                mcamDetector.setDetectAllEmojis(false);
+                mcamDetector.setDetectAllExpressions(false);
                 /// set types of detectors for Affdex
-                mcamDetector.setFaceListener(this);
+                //mcamDetector.setFaceListener(this);
                 mcamDetector.setImageListener(this);
            //     mcamDetector.setProcessStatusListener(this);
                 maffectData = new AffectivaDataRecordingEmotionsandExpressions();//[maxAmountOfFaces];

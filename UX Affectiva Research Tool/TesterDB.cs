@@ -78,7 +78,7 @@ namespace UX_Affectiva_Research_Tool
 
         }
         //--------------------------------------------------------------------------------
-        public void LoadChartFromDB()
+        public void LoadChartFromDB( ref Chart _chart)
         {
             inputFile = "C:\\Users\\Wesley Osborn\\Desktop\\MyTextDB\\Teststuff.db";
             connString = String.Format("Data Source={0}", inputFile);
@@ -90,7 +90,7 @@ namespace UX_Affectiva_Research_Tool
             sda.Fill(dt);
             DataView dv = new DataView(dt.Tables[0]);
             //replace chart1 with name of chart trying to display to
-            chart1.Series[0].Points.DataBindXY(dv, "Xvalue", dv, "Yvalue");
+            _chart.Series[0].Points.DataBindXY(dv, "Xvalue", dv, "Yvalue");
         }
         //--------------------------------------------------------------------------------------------
         public void LoadToChart(ref Chart _chart)//from a series

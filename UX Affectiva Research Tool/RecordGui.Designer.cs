@@ -59,6 +59,7 @@
             this.buttonFilePath = new System.Windows.Forms.Button();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -198,6 +199,7 @@
             // 
             // splitContainer4.Panel2
             // 
+            this.splitContainer4.Panel2.Controls.Add(this.panel1);
             this.splitContainer4.Panel2.Controls.Add(this.label1);
             this.splitContainer4.Panel2.Controls.Add(this.labelPath);
             this.splitContainer4.Panel2.Controls.Add(this.buttonFilePath);
@@ -350,6 +352,13 @@
             this.splitContainer2.SplitterDistance = 548;
             this.splitContainer2.TabIndex = 0;
             // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(148, 211);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(317, 208);
+            this.panel1.TabIndex = 11;
+            // 
             // RecordGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -408,6 +417,7 @@
         private System.Windows.Forms.Button buttonFilePath;
         private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.Panel panel1;
     }
 
 
