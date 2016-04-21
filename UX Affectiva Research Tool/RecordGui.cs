@@ -12,6 +12,8 @@ using System.Diagnostics;
 using UX_Affectiva_Research_Tool.Affectiva_Files;
 using WeifenLuo.WinFormsUI.Docking;
 using RecordingTool;
+//using mySharpAVI;
+
 using SharpAvi.Codecs;
 using SharpAvi;
 using NAudio.Wave;
@@ -23,6 +25,7 @@ using System.Collections.ObjectModel;
 using Microsoft.Win32;
 using System.IO;
 using System.Reflection;
+
 
 namespace UX_Affectiva_Research_Tool
 {
@@ -170,12 +173,13 @@ namespace UX_Affectiva_Research_Tool
         {
             SetScreenArea();
             arrayOfRecordingTools = new List<RecordingToolBase>();
-            
-            arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording(mBaseFilePath,(float) SetupAffectiva.DectectionValence, .1f, 0, (int)(FPSUPDOWN.Value), SetupAffectiva.ProcessPerSec, affectivaToolStripMenuItem.Checked));
-            if(affectivaToolStripMenuItem.Checked || SetupAffectiva.Post)
-                arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch, SetupAffectiva.ProcessPerSec, SetupAffectiva.Post));
-            arrayOfRecordingTools.Add(new RecordingTool.Recorder(mAudioDevice, mAudioCodecName,mCodecInfo, mSelectArea,(int)( FPSUPDOWN.Value), mqualty, mBaseFilePath));
-         //   arrayOfRecordingTools.Add(new Audio());
+
+              arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording(mBaseFilePath,(float) SetupAffectiva.DectectionValence, .1f, 0, (int)(FPSUPDOWN.Value), SetupAffectiva.ProcessPerSec, affectivaToolStripMenuItem.Checked));
+                if(affectivaToolStripMenuItem.Checked || SetupAffectiva.Post)
+                  arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch, SetupAffectiva.ProcessPerSec, SetupAffectiva.Post));
+                 arrayOfRecordingTools.Add(new RecordingTool.Recorder(mAudioDevice, mAudioCodecName,mCodecInfo, mSelectArea,(int)( FPSUPDOWN.Value), mqualty, mBaseFilePath));
+          //  arrayOfRecordingTools.Add(new mySharpAVI.myRecorder(mAudioDevice,mCodecInfo));
+            //   arrayOfRecordingTools.Add(new Audio());
         }     
         private void MakeNeedForms()
         {

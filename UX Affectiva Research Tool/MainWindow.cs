@@ -28,16 +28,15 @@ namespace UX_Affectiva_Research_Tool
             InitializeComponent();
 
 
-       //     ScreenCapturePlaybackWindow screenCapturePlaybackWindow = new ScreenCapturePlaybackWindow();
-       //     screenCapturePlaybackWindow.Show();
-       //      screenCapturePlaybackWindow.Show(mainDockPanel, DockState.DockTop);
-       //      CameraFeedPlaybackWindow cameraFeeddPlaybackWindow = new CameraFeedPlaybackWindow();
-       //      cameraFeeddPlaybackWindow.Show(screenCapturePlaybackWindow.Pane, DockAlignment.Right, 0.5);
+            //     ScreenCapturePlaybackWindow screenCapturePlaybackWindow = new ScreenCapturePlaybackWindow();
+            //     screenCapturePlaybackWindow.Show();
+            //      screenCapturePlaybackWindow.Show(mainDockPanel, DockState.DockTop);
+            //      CameraFeedPlaybackWindow cameraFeeddPlaybackWindow = new CameraFeedPlaybackWindow();
+            //      cameraFeeddPlaybackWindow.Show(screenCapturePlaybackWindow.Pane, DockAlignment.Right, 0.5);
 
-       //     Affectiva_Files.WebRecording cam = new Affectiva_Files.WebRecording();
-      //      cam.Show(screenCapturePlaybackWindow.Pane, DockAlignment.Bottom, 0.5);
-
-
+            //     Affectiva_Files.WebRecording cam = new Affectiva_Files.WebRecording();
+            //      cam.Show(screenCapturePlaybackWindow.Pane, DockAlignment.Bottom, 0.5);
+           
         }
        
         private void openRecordWindowToolStripMenuItem_Click(object sender, EventArgs e)
