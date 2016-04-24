@@ -128,22 +128,25 @@ namespace UX_Affectiva_Research_Tool
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            
-            mBaseFilePath =  labelPath.Text + "\\" + textBoxName.Text;
-            SetUpRecordingTools();
-            //Wes test code for DataBase (Saved on External for REF)
-            stopWatch.Start();
-           for (int count = 0; count < arrayOfRecordingTools.Count; count++)
-           {
-               arrayOfRecordingTools[count].startRecording();
-             
-           }
+            if (labelPath.Text != "File_Path")
+            {
+                mBaseFilePath = labelPath.Text + "\\" + textBoxName.Text;
+                SetUpRecordingTools();
+                //Wes test code for DataBase (Saved on External for REF)
+                stopWatch.Start();
+                for (int count = 0; count < arrayOfRecordingTools.Count; count++)
+                {
+                    arrayOfRecordingTools[count].startRecording();
 
-            SetScreenArea();
+                }
+
+                SetScreenArea();
 
 
-            SetVisibility(true);
-       
+                SetVisibility(true);
+            }
+            else
+                MessageBox.Show("Please select a file path.");
         }
 
         private void stopButton_Click(object sender, EventArgs e)
@@ -160,6 +163,7 @@ namespace UX_Affectiva_Research_Tool
            SetVisibility(false);
            MakeNeedForms();
             arrayOfRecordingTools.Clear();
+            labelPath.Text = "File_Path";
         }
 
         public void SetVisibility(bool _visibility)
@@ -174,7 +178,7 @@ namespace UX_Affectiva_Research_Tool
             SetScreenArea();
             arrayOfRecordingTools = new List<RecordingToolBase>();
 
-              arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording(mBaseFilePath,(float) SetupAffectiva.DectectionValence, .1f, 0, (int)(FPSUPDOWN.Value), SetupAffectiva.ProcessPerSec, affectivaToolStripMenuItem.Checked));
+             arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording(mBaseFilePath,(float) SetupAffectiva.DectectionValence, .1f, 0, (int)(FPSUPDOWN.Value), SetupAffectiva.ProcessPerSec, affectivaToolStripMenuItem.Checked));
                 if(affectivaToolStripMenuItem.Checked || SetupAffectiva.Post)
                   arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch, SetupAffectiva.ProcessPerSec, SetupAffectiva.Post));
                  arrayOfRecordingTools.Add(new RecordingTool.Recorder(mAudioDevice, mAudioCodecName,mCodecInfo, mSelectArea,(int)( FPSUPDOWN.Value), mqualty, mBaseFilePath));

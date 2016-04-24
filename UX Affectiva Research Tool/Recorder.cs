@@ -104,7 +104,7 @@ namespace RecordingTool
                     }
                     break;
             }
-
+            
             if (mIsEncoded)
             {
                 mEncoder = new Mpeg4VideoEncoderVcm(mScreenArea.Width, mScreenArea.Height, mFramesPerSecond, 0, mQuality, mSelectedCodec);

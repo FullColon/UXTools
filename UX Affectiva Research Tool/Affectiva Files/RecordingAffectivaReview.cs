@@ -412,7 +412,7 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
         /// </summary>
         private void PointOnGraph()
         {
-            if (EmotionIndex != -1)
+            if (EmotionIndex != -1 && LastSeris != null)
             {
                 LastPoint = LastSeris.Points[EmotionIndex];
                 textBoxLabel.Text = LastSeris.Points[EmotionIndex].Label;
@@ -431,33 +431,67 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
         //Load data from DataBase (returns table, named dt that holds all the data from the DB)
         private void Load_Button_Click(object sender, EventArgs e)
         {
-            try
-            {
-                TesterDB temp = new TesterDB();
-                temp.LoadToChart(ref chart1);
-            }
-            catch (Exception ex)
-            {
+           // Stream myStream = null;
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
-                MessageBox.Show(ex.Message);
+            openFileDialog1.InitialDirectory = "c:\\";
+            openFileDialog1.Filter = "db files (*.db)|*.db|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 2;
+            openFileDialog1.RestoreDirectory = true;
+            FolderBrowserDialog FolderSelect = new FolderBrowserDialog();
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    if (openFileDialog1.OpenFile() != null)
+                    {
+                        TesterDB temp = new TesterDB();
+                        temp.LoadToChart(ref chart1, openFileDialog1.InitialDirectory+"\\"+openFileDialog1.FileName);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                }
             }
-                   
+            //if (FolderSelect.ShowDialog() == DialogResult.OK)
+            //{
+            //    try
+            //    {
+            //        TesterDB temp = new TesterDB();
+            //        temp.LoadToChart(ref chart1, FolderSelect.SelectedPath);
+            //    }
+            //    catch (Exception ex)
+            //    {
+
+            //        MessageBox.Show(ex.Message);
+            //    }
+            //} 
         }
         //------------------------------------------------------------------------------------------------
-        
+
 
         private void SaveDataToDataBase()
         {
-            TesterDB TempDataBase = new TesterDB();
-            TempDataBase.CreateNewDBConnection();
-            TempDataBase.NewTableCommand();
-            List<Series> temp = new List<Series>();
-            for (int i = 0; i < chart1.Series.Count; i++)
+            FolderBrowserDialog FolderSelect = new FolderBrowserDialog();
+            if (FolderSelect.ShowDialog() == DialogResult.OK)
             {
-                temp.Add(chart1.Series[i]);
-            }
 
-            TempDataBase.PopulateNewTable(temp);
+
+
+                string tm = FolderSelect.SelectedPath + "\\" + "testStyle.db";
+                TesterDB TempDataBase = new TesterDB();
+                TempDataBase.CreateNewDBConnection(tm);
+                TempDataBase.NewTableCommand();
+                List<Series> temp = new List<Series>();
+                for (int i = 0; i < chart1.Series.Count; i++)
+                {
+                    temp.Add(chart1.Series[i]);
+                }
+
+                TempDataBase.PopulateNewTable(temp);
+            }
+           
         }
     }
 }

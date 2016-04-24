@@ -44,9 +44,10 @@ namespace UX_Affectiva_Research_Tool
 
         public string Emotion { get; set; }
         public int TimeStamp { get; set; }
-        public void CreateNewDBConnection()
-        {
 
+        public void CreateNewDBConnection(String inputFile)
+        {
+            this.inputFile = inputFile;
             connString = String.Format("Data Source={0}", inputFile);
             sqlite_conn = new SQLiteConnection(connString);
             // sqlite_conn.Open();
@@ -78,9 +79,9 @@ namespace UX_Affectiva_Research_Tool
 
         }
         //--------------------------------------------------------------------------------
-        public void LoadChartFromDB()
+        public void LoadChartFromDB(string inputFile )
         {
-            inputFile = "C:\\Users\\Wesley Osborn\\Desktop\\MyTextDB\\Teststuff.db";
+          //  inputFile = "C:\\Users\\Wesley Osborn\\Desktop\\MyTextDB\\Teststuff.db";
             connString = String.Format("Data Source={0}", inputFile);
             SQLiteConnection newConn = new SQLiteConnection(connString);
             newConn.Open();
@@ -93,7 +94,7 @@ namespace UX_Affectiva_Research_Tool
             //chart1.Series[0].Points.DataBindXY(dv, "Xvalue", dv, "Yvalue");
         }
         //--------------------------------------------------------------------------------------------
-        public void LoadToChart(ref Chart _chart)//from a series
+        public void LoadToChart(ref Chart _chart, string inputFile)//from a series
         {
 
             connString = String.Format("Data Source={0}", inputFile);

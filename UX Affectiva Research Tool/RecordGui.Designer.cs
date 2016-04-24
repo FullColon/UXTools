@@ -38,6 +38,8 @@
             this.affectivaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moreOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.lbl_screenSelect = new System.Windows.Forms.Label();
+            this.cmbx_selectDisplay = new System.Windows.Forms.ComboBox();
             this.FPSUPDOWN = new System.Windows.Forms.NumericUpDown();
             this.FPSLabel = new System.Windows.Forms.Label();
             this.label_screenAudioDevice = new System.Windows.Forms.Label();
@@ -50,8 +52,6 @@
             this.buttonFilePath = new System.Windows.Forms.Button();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.cmbx_selectDisplay = new System.Windows.Forms.ComboBox();
-            this.lbl_screenSelect = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -200,6 +200,23 @@
             this.splitContainer4.SplitterDistance = 546;
             this.splitContainer4.TabIndex = 0;
             // 
+            // lbl_screenSelect
+            // 
+            this.lbl_screenSelect.AutoSize = true;
+            this.lbl_screenSelect.Location = new System.Drawing.Point(9, 125);
+            this.lbl_screenSelect.Name = "lbl_screenSelect";
+            this.lbl_screenSelect.Size = new System.Drawing.Size(74, 13);
+            this.lbl_screenSelect.TabIndex = 9;
+            this.lbl_screenSelect.Text = "Screen Select";
+            // 
+            // cmbx_selectDisplay
+            // 
+            this.cmbx_selectDisplay.FormattingEnabled = true;
+            this.cmbx_selectDisplay.Location = new System.Drawing.Point(89, 117);
+            this.cmbx_selectDisplay.Name = "cmbx_selectDisplay";
+            this.cmbx_selectDisplay.Size = new System.Drawing.Size(169, 21);
+            this.cmbx_selectDisplay.TabIndex = 8;
+            // 
             // FPSUPDOWN
             // 
             this.FPSUPDOWN.Location = new System.Drawing.Point(89, 91);
@@ -265,7 +282,6 @@
             this.comboBox_screenCodecs.Name = "comboBox_screenCodecs";
             this.comboBox_screenCodecs.Size = new System.Drawing.Size(169, 21);
             this.comboBox_screenCodecs.TabIndex = 1;
-            this.comboBox_screenCodecs.Visible = false;
             this.comboBox_screenCodecs.SelectedIndexChanged += new System.EventHandler(this.comboBox_screenCodecs_SelectedIndexChanged);
             // 
             // label_RecordOptions
@@ -329,23 +345,6 @@
             this.splitContainer2.Size = new System.Drawing.Size(1134, 67);
             this.splitContainer2.SplitterDistance = 548;
             this.splitContainer2.TabIndex = 0;
-            // 
-            // cmbx_selectDisplay
-            // 
-            this.cmbx_selectDisplay.FormattingEnabled = true;
-            this.cmbx_selectDisplay.Location = new System.Drawing.Point(89, 117);
-            this.cmbx_selectDisplay.Name = "cmbx_selectDisplay";
-            this.cmbx_selectDisplay.Size = new System.Drawing.Size(169, 21);
-            this.cmbx_selectDisplay.TabIndex = 8;
-            // 
-            // lbl_screenSelect
-            // 
-            this.lbl_screenSelect.AutoSize = true;
-            this.lbl_screenSelect.Location = new System.Drawing.Point(9, 125);
-            this.lbl_screenSelect.Name = "lbl_screenSelect";
-            this.lbl_screenSelect.Size = new System.Drawing.Size(74, 13);
-            this.lbl_screenSelect.TabIndex = 9;
-            this.lbl_screenSelect.Text = "Screen Select";
             // 
             // RecordGui
             // 
