@@ -57,7 +57,7 @@ namespace UX_Affectiva_Research_Tool
         {
             try
             {
-                string createsql = "CREATE TABLE IF NOT EXISTS Emotions (emotion VARCHAR(20), Xvalue FLOAT, Yvalue FLOAT)";
+                string createsql = "CREATE TABLE IF NOT EXISTS Emotions (emotion VARCHAR(20), Xvalue FLOAT, Yvalue FLOAT, NameDesc VARCHAR(20), Description VARCHAR(50))";
                 connString = String.Format("Data Source={0}", inputFile);
                 SQLiteConnection newConn = new SQLiteConnection(connString);
                 newConn.Open();
@@ -93,34 +93,55 @@ namespace UX_Affectiva_Research_Tool
             //replace chart1 with name of chart trying to display to
             //chart1.Series[0].Points.DataBindXY(dv, "Xvalue", dv, "Yvalue");
         }
+        public DataTable GetDataTable(string sql, string connString)
+        {
+            DataTable dt = new System.Data.DataTable();
+            try
+            {
+                SQLiteConnection newConn = new SQLiteConnection(connString);
+                newConn.Open();
+                SQLiteCommand mycmd = new SQLiteCommand(newConn);
+                mycmd.CommandText = sql;
+                SQLiteDataReader reader = mycmd.ExecuteReader();
+                dt.Load(reader);
+                reader.Close();
+                newConn.Close();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+                
+            }
+            return dt;
+        }
         //--------------------------------------------------------------------------------------------
-        public void LoadToChart(ref Chart _chart, string inputFile)//from a series
+        public void LoadToChart(ref List<Series> _chart, string inputFile)//from a series
         {
 
             connString = String.Format("Data Source={0}", inputFile);
-            SQLiteConnection newConn = new SQLiteConnection(connString);
-            SQLiteCommand newComm = new SQLiteCommand("Select * From Emotions", newConn);
-            SQLiteDataReader sdr;
+            
+
             try
             {
-                newConn.Open();
-                sdr = newComm.ExecuteReader();
-                _chart.Series.Add(new Series("0"));
-                _chart.Series.Add(new Series("1"));
-                _chart.Series.Add(new Series("2"));
-                _chart.Series.Add(new Series("3"));
-                _chart.Series.Add(new Series("4"));
-                _chart.Series.Add(new Series("5"));
-                int i = 0;
-                while (sdr.Read() && i < 6 )
-                {          
-                    //query out emotion column, xvalue column, yvalue column
-                    string name = sdr.GetString(0);
-                    if (name != "6")
-                        _chart.Series[name].Points.AddXY(sdr.GetFloat(1), sdr.GetFloat(2));
-                    else
-                        name = "0";
-                    i++;           
+               
+             
+                DataTable table;
+                table = GetDataTable("Select * From Emotions", connString);
+       
+
+                foreach(DataRow row in table.Rows)
+                {
+                
+                 
+                     string name=   (string) row[table.Columns[0]];
+                      _chart[int.Parse(name)].Points.AddXY(row[table.Columns[1]],row[table.Columns[2]]);
+                    _chart[int.Parse(name)].Points.Last().Label = (string) row[table.Columns[3]];
+                    _chart[int.Parse(name)].Points.Last().ToolTip = (string)row[table.Columns[4]];
+                    if (_chart[int.Parse(name)].Points.Last().Label != "")
+                    {
+                        _chart[int.Parse(name)].Points.Last().MarkerStyle = MarkerStyle.Star6;
+                        _chart[int.Parse(name)].Points.Last().MarkerSize = 20;
+                    }
                 }
             }
             catch (Exception ex)
@@ -143,7 +164,7 @@ namespace UX_Affectiva_Research_Tool
             {
                 for (var j = 0; j < _newData[i].Points.Count; j++)
                 {
-                    sql = "INSERT INTO Emotions (emotion, Xvalue, Yvalue) VALUES ('" + i.ToString() + "','" + _newData[i].Points[j].XValue + "','" + _newData[i].Points[j].YValues[0] + "')";
+                    sql = "INSERT INTO Emotions (emotion, Xvalue, Yvalue, NameDesc, Description) VALUES ('" + i.ToString() + "','" + _newData[i].Points[j].XValue + "','" + _newData[i].Points[j].YValues[0] + "','" + _newData[i].Points[j].Label + "','" + _newData[i].Points[j].ToolTip + "')";
                     sqlite_cmd.CommandText = sql;//"INSERT INTO Emotions (emotion, Xvalue, Yvalue) VALUES ('" + i.ToString() + "','" + _newData[i].Points[j].XValue + "','" + _newData[i].Points[j].YValues[0] + "')";
                     int rowsUpdated = sqlite_cmd.ExecuteNonQuery();
                 }

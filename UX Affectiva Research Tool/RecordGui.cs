@@ -11,8 +11,8 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using UX_Affectiva_Research_Tool.Affectiva_Files;
 using WeifenLuo.WinFormsUI.Docking;
-using RecordingTool;
-//using mySharpAVI;
+//using RecordingTool;
+using mySharpAVI;
 
 using SharpAvi.Codecs;
 using SharpAvi;
@@ -164,6 +164,7 @@ namespace UX_Affectiva_Research_Tool
            MakeNeedForms();
             arrayOfRecordingTools.Clear();
             labelPath.Text = "File_Path";
+         //   this.Close();
         }
 
         public void SetVisibility(bool _visibility)
@@ -179,10 +180,12 @@ namespace UX_Affectiva_Research_Tool
             arrayOfRecordingTools = new List<RecordingToolBase>();
 
              arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording(mBaseFilePath,(float) SetupAffectiva.DectectionValence, .1f, 0, (int)(FPSUPDOWN.Value), SetupAffectiva.ProcessPerSec, affectivaToolStripMenuItem.Checked));
-                if(affectivaToolStripMenuItem.Checked || SetupAffectiva.Post)
-                  arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch, SetupAffectiva.ProcessPerSec, SetupAffectiva.Post));
-                 arrayOfRecordingTools.Add(new RecordingTool.Recorder(mAudioDevice, mAudioCodecName,mCodecInfo, mSelectArea,(int)( FPSUPDOWN.Value), mqualty, mBaseFilePath));
-          //  arrayOfRecordingTools.Add(new mySharpAVI.myRecorder(mAudioDevice,mCodecInfo));
+             if(affectivaToolStripMenuItem.Checked || SetupAffectiva.Post)
+               arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch, SetupAffectiva.ProcessPerSec, SetupAffectiva.Post));
+
+
+          //  arrayOfRecordingTools.Add(new RecordingTool.Recorder(mAudioDevice, mAudioCodecName,mCodecInfo, mSelectArea,(int)( FPSUPDOWN.Value), mqualty, mBaseFilePath));
+            arrayOfRecordingTools.Add(new mySharpAVI.myRecorder(mAudioDevice,mCodecInfo, mBaseFilePath));
             //   arrayOfRecordingTools.Add(new Audio());
         }     
         private void MakeNeedForms()

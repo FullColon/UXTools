@@ -47,11 +47,11 @@ namespace mySharpAVI
             return mFullPath;
         }
 
-        public myRecorder(AudioDevice _myDevice, CodecInfo _myCodec)
+        public myRecorder(AudioDevice _myDevice, CodecInfo _myCodec, string basefilepath)
         {
             mAudioDevice = _myDevice;
             mCodecInfo = _myCodec;
-
+            mFullPath = basefilepath + "_screenRecord.avi";
             InitializeRecorder();
         }
 
@@ -65,10 +65,10 @@ namespace mySharpAVI
             mScreenWidth = Screen.PrimaryScreen.Bounds.Width;
             mScreenHeight = Screen.PrimaryScreen.Bounds.Height;
 
-            string currentDirectory = Environment.CurrentDirectory;
-            string newDir = Path.GetDirectoryName(Path.GetDirectoryName(currentDirectory));
+            //string currentDirectory = Environment.CurrentDirectory;
+            //string newDir = Path.GetDirectoryName(Path.GetDirectoryName(currentDirectory));
 
-            mFullPath = newDir + @"\SaveFolder\screenRecord.avi";
+            //mFullPath = newDir + @"\SaveFolder\screenRecord.avi";
 
 
 

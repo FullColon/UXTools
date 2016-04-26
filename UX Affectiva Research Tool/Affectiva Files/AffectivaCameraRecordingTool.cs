@@ -236,6 +236,7 @@ namespace UX_Affectiva_Research_Tool
 
                 Recording = false;
                 mcamDetector.stop();
+                
                
                 
             }

@@ -47,8 +47,8 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
         {
             InitializeComponent();
             comboBoxEmotionSelect.SelectedIndex = 1;
-            LastSeris = chart1.Series[comboBoxEmotionSelect.Text];
-            comboBoxEmotionSelect.SelectedIndex = 0;
+            LoadChart();
+          
         }
         /// <summary>
         /// For setting up for post processing
@@ -64,11 +64,12 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
             SetupChart(_AFCAMandVIdeo);
 
         }
+      
         /// <summary>
         /// For Starting a chart from Recording Tool
         /// </summary>
         /// <param name="AfCFRAVR"></param>
-       private void SetupChart(AffectivaDataRecordingEmotionsandExpressions AfCFRAVR)
+        private void SetupChart(AffectivaDataRecordingEmotionsandExpressions AfCFRAVR)
        {
            SetupChartFromSeries(AfCFRAVR.GetChartSeriesOfData());
       
@@ -427,11 +428,9 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
         {
             SaveDataToDataBase();
         }
-
-        //Load data from DataBase (returns table, named dt that holds all the data from the DB)
-        private void Load_Button_Click(object sender, EventArgs e)
+        private void LoadChart()
         {
-           // Stream myStream = null;
+            // Stream myStream = null;
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
             openFileDialog1.InitialDirectory = "c:\\";
@@ -445,8 +444,15 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
                 {
                     if (openFileDialog1.OpenFile() != null)
                     {
+
+
                         TesterDB temp = new TesterDB();
-                        temp.LoadToChart(ref chart1, openFileDialog1.InitialDirectory+"\\"+openFileDialog1.FileName);
+
+                        AffectivaDataRecordingEmotionsandExpressions tempdata = new AffectivaDataRecordingEmotionsandExpressions();
+                        List<System.Windows.Forms.DataVisualization.Charting.Series> seri;
+                        seri = tempdata.GetChartSeriesOfData();
+                        temp.LoadToChart(ref seri, openFileDialog1.FileName);
+                        MergeInSeriesOfList(seri);
                     }
                 }
                 catch (Exception ex)
@@ -454,19 +460,12 @@ namespace UX_Affectiva_Research_Tool.Affectiva_Files
                     MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
                 }
             }
-            //if (FolderSelect.ShowDialog() == DialogResult.OK)
-            //{
-            //    try
-            //    {
-            //        TesterDB temp = new TesterDB();
-            //        temp.LoadToChart(ref chart1, FolderSelect.SelectedPath);
-            //    }
-            //    catch (Exception ex)
-            //    {
-
-            //        MessageBox.Show(ex.Message);
-            //    }
-            //} 
+        }
+        //Load data from DataBase (returns table, named dt that holds all the data from the DB)
+        private void Load_Button_Click(object sender, EventArgs e)
+        {
+            LoadChart();
+         
         }
         //------------------------------------------------------------------------------------------------
 
