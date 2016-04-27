@@ -293,6 +293,7 @@ namespace RecordingTool
 
         private IAviAudioStream CreateAudioStream(WaveFormat _waveFormat, string _encode, int _bitRate)
         {
+            _encode = "MP3";
             // Create encoding or simple stream based on settings
             if (_encode == "MP3")
             {

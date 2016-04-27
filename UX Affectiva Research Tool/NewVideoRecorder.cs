@@ -51,7 +51,7 @@ namespace mySharpAVI
         {
             mAudioDevice = _myDevice;
             mCodecInfo = _myCodec;
-            mFullPath = basefilepath + "_screenRecord.avi";
+            mFullPath = basefilepath + "\\_screenRecord.avi";
             InitializeRecorder();
         }
 

@@ -11,8 +11,8 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using UX_Affectiva_Research_Tool.Affectiva_Files;
 using WeifenLuo.WinFormsUI.Docking;
-//using RecordingTool;
-using mySharpAVI;
+using RecordingTool;
+//using mySharpAVI;
 
 using SharpAvi.Codecs;
 using SharpAvi;
@@ -38,22 +38,26 @@ namespace UX_Affectiva_Research_Tool
         AudioDevice mAudioDevice;
         CodecInfo mCodecInfo;
         Rectangle mSelectArea;
-//        AffectOptions SetupAffectiva = new AffectOptions();
+        AffectOptions SetupAffectiva = new AffectOptions();
 
         private List<string> mListOfScreens;
         //  TesterDB temp;
         int mqualty = 50;
+        string mBaseFilePath;
 
 
 
 
-        string mBaseFilePath = "C:\\";
 
 
 
 
         public RecordGui()
         {
+
+
+
+            mBaseFilePath = "C:\\";
             InitializeComponent();
             InitAudioDll();
            SetUpOptions();
@@ -66,7 +70,7 @@ namespace UX_Affectiva_Research_Tool
         }
         public void SetUpOptions()
         {
-//            SetupAffectiva = new AffectOptions();
+            SetupAffectiva = new AffectOptions();
         }
         public RecordGui(MainWindow _DocPanel)
         {
@@ -178,13 +182,13 @@ namespace UX_Affectiva_Research_Tool
             SetScreenArea();
             arrayOfRecordingTools = new List<RecordingToolBase>();
 
-//             arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording(mBaseFilePath,(float) SetupAffectiva.DectectionValence, .1f, 0, (int)(FPSUPDOWN.Value), SetupAffectiva.ProcessPerSec, affectivaToolStripMenuItem.Checked));
-//             if(affectivaToolStripMenuItem.Checked || SetupAffectiva.Post)
-//               arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch, SetupAffectiva.ProcessPerSec, SetupAffectiva.Post));
+             arrayOfRecordingTools.Add(new AffectivaCameraFaceRecordingAndVideoRecording(mBaseFilePath,(float) SetupAffectiva.DectectionValence, .1f, 0, (int)(FPSUPDOWN.Value), SetupAffectiva.ProcessPerSec, affectivaToolStripMenuItem.Checked));
+             if(affectivaToolStripMenuItem.Checked || SetupAffectiva.Post)
+               arrayOfRecordingTools.Add(new ManuelTagRecordingTool(stopWatch, SetupAffectiva.ProcessPerSec, SetupAffectiva.Post));
 
 
-          //  arrayOfRecordingTools.Add(new RecordingTool.Recorder(mAudioDevice, mAudioCodecName,mCodecInfo, mSelectArea,(int)( FPSUPDOWN.Value), mqualty, mBaseFilePath));
-            arrayOfRecordingTools.Add(new mySharpAVI.myRecorder(mAudioDevice,mCodecInfo, mBaseFilePath));
+            arrayOfRecordingTools.Add(new RecordingTool.Recorder(mAudioDevice, mAudioCodecName,mCodecInfo, mSelectArea,(int)( FPSUPDOWN.Value), mqualty, mBaseFilePath));
+        //    arrayOfRecordingTools.Add(new mySharpAVI.myRecorder(mAudioDevice,mCodecInfo, mBaseFilePath));
             //   arrayOfRecordingTools.Add(new Audio());
         }     
         private void MakeNeedForms()
@@ -258,12 +262,12 @@ namespace UX_Affectiva_Research_Tool
 
         private void moreOptionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-//            AffectivaOptions Aff = new AffectivaOptions();
+            AffectivaOptions Aff = new AffectivaOptions();
          
-//            if (DialogResult.OK == Aff.ShowDialog())
+            if (DialogResult.OK == Aff.ShowDialog())
             {
 
-//                this.SetupAffectiva = Aff.InformationSetup;
+                this.SetupAffectiva = Aff.InformationSetup;
               
             }
         }
@@ -274,6 +278,7 @@ namespace UX_Affectiva_Research_Tool
              if (FolderSelect.ShowDialog() == DialogResult.OK)
              {
       
+
                 labelPath.Text = FolderSelect.SelectedPath;
                 
              }

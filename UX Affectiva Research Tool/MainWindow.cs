@@ -52,7 +52,7 @@ namespace UX_Affectiva_Research_Tool
                ScreenCapturePlaybackWindow gameFeed;
                gameFeed = new ScreenCapturePlaybackWindow(((mySharpAVI.myRecorder)_RecorderType).GetFullName());
 
-               gameFeed.Show(cameraFeed.Pane, DockAlignment.Left, 0.5);
+        //       gameFeed.Show(cameraFeed.Pane, DockAlignment.Left, 0.5);
                Panels.Add(gameFeed);
 
             }
